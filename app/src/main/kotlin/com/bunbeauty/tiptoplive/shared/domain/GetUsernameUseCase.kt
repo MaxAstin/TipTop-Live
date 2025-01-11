@@ -1,4 +1,4 @@
-package com.bunbeauty.tiptoplive.features.domain
+package com.bunbeauty.tiptoplive.shared.domain
 
 import com.bunbeauty.tiptoplive.common.domain.KeyValueStorage
 import javax.inject.Inject

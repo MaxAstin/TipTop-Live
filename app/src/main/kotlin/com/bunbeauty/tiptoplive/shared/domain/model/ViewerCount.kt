@@ -1,4 +1,4 @@
-package com.bunbeauty.tiptoplive.features.domain.model
+package com.bunbeauty.tiptoplive.shared.domain.model
 
 enum class ViewerCount(
     val text: String,

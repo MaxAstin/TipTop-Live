@@ -92,7 +92,7 @@ fun StreamScreen(navController: NavHostController) {
                 is Stream.Event.GoBack -> {
                     navController.navigate(
                         route = NavigationRote.Preparation(
-                            durationInSeconds = event.durationInSeconds
+                            durationInSeconds = event.duration.value
                         )
                     ) {
                         popUpTo<NavigationRote.Preparation> {

@@ -3,7 +3,7 @@ package com.bunbeauty.tiptoplive.features.preparation.presentation
 import android.net.Uri
 import com.bunbeauty.tiptoplive.common.presentation.Base
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
-import com.bunbeauty.tiptoplive.features.domain.model.ViewerCount
+import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
 
 interface Preparation {
 

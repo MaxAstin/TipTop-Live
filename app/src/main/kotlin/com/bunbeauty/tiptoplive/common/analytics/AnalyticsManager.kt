@@ -1,6 +1,7 @@
 package com.bunbeauty.tiptoplive.common.analytics
 
 import android.util.Log
+import com.bunbeauty.tiptoplive.common.util.Seconds
 import com.bunbeauty.tiptoplive.common.util.toTimeString
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
@@ -42,6 +43,7 @@ private const val ERROR_EVENT = "billing_error"
 private const val ITEM_ALREADY_OWNED_EVENT = "billing_item_already_owned"
 private const val ITEM_NOT_OWNED_EVENT = "billing_item_not_owned"
 private const val NETWORK_ERROR_EVENT = "billing_network_error"
+private const val USED_DAYS_EVENT = "used_day_"
 
 private const val ANALYTICS_TAG = "analytics"
 
@@ -61,20 +63,20 @@ class AnalyticsManager @Inject constructor(
         )
     }
 
-    fun trackStreamStop(durationInSeconds: Int) {
+    fun trackStreamStop(duration: Seconds) {
         trackEvent(
             event = STREAM_STOPPED_EVENT,
             params = mapOf(
-                STREAM_DURATION_PARAM to durationInSeconds.toTimeString()
+                STREAM_DURATION_PARAM to duration.toTimeString()
             )
         )
     }
 
-    fun trackStreamFinish(durationInSeconds: Int) {
+    fun trackStreamFinish(duration: Seconds) {
         trackEvent(
             event = STREAM_FINISHED_EVENT,
             params = mapOf(
-                STREAM_DURATION_PARAM to durationInSeconds.toTimeString()
+                STREAM_DURATION_PARAM to duration.toTimeString()
             )
         )
     }
@@ -170,6 +172,10 @@ class AnalyticsManager @Inject constructor(
 
     fun trackNetworkError() {
         trackEvent(event = NETWORK_ERROR_EVENT)
+    }
+
+    fun trackUsedDays(days: String) {
+        trackEvent(event = "$USED_DAYS_EVENT$days")
     }
 
     private fun trackEvent(event: String, params: Map<String, Any> = emptyMap()) {

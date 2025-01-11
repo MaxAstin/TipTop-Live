@@ -4,9 +4,11 @@ import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
-import com.bunbeauty.tiptoplive.features.domain.GetImageUriFlowUseCase
-import com.bunbeauty.tiptoplive.features.domain.GetUsernameUseCase
-import com.bunbeauty.tiptoplive.features.domain.GetViewerCountUseCase
+import com.bunbeauty.tiptoplive.common.util.Seconds
+import com.bunbeauty.tiptoplive.common.util.getCurrentTimeSeconds
+import com.bunbeauty.tiptoplive.shared.domain.GetImageUriFlowUseCase
+import com.bunbeauty.tiptoplive.shared.domain.GetUsernameUseCase
+import com.bunbeauty.tiptoplive.shared.domain.GetViewerCountUseCase
 import com.bunbeauty.tiptoplive.features.stream.CameraUtil
 import com.bunbeauty.tiptoplive.features.stream.domain.GetCommentsDelayUseCase
 import com.bunbeauty.tiptoplive.features.stream.domain.GetCommentsUseCase
@@ -44,7 +46,7 @@ class StreamViewModel @Inject constructor(
                 unreadQuestionCount = null,
                 currentQuestionToAnswer = null,
             ),
-            startStreamTimeMillis = System.currentTimeMillis(),
+            startStreamTimeSeconds = getCurrentTimeSeconds(),
             isCameraEnabled = cameraUtil.hasCamera(),
             isCameraFront = cameraUtil.hasFrontCamera(),
             showJoinRequests = false,
@@ -215,19 +217,19 @@ class StreamViewModel @Inject constructor(
 
             Stream.Action.Start -> {
                 setState {
-                    copy(startStreamTimeMillis = System.currentTimeMillis())
+                    copy(startStreamTimeSeconds = getCurrentTimeSeconds())
                 }
             }
 
             Stream.Action.Stop -> {
-                val durationInSeconds = getStreamDurationInSeconds()
-                analyticsManager.trackStreamStop(durationInSeconds = durationInSeconds)
+                val duration = getStreamDuration()
+                analyticsManager.trackStreamStop(duration = duration)
             }
 
             Stream.Action.FinishStreamClick -> {
-                val durationInSeconds = getStreamDurationInSeconds()
-                analyticsManager.trackStreamFinish(durationInSeconds = durationInSeconds)
-                sendEvent(Stream.Event.GoBack(durationInSeconds = durationInSeconds))
+                val duration = getStreamDuration()
+                analyticsManager.trackStreamFinish(duration = duration)
+                sendEvent(Stream.Event.GoBack(duration = duration))
             }
 
             is Stream.Action.CameraError -> {
@@ -351,10 +353,10 @@ class StreamViewModel @Inject constructor(
         }
     }
 
-    private fun getStreamDurationInSeconds(): Int {
-        val start = mutableState.value.startStreamTimeMillis
-        val finish = System.currentTimeMillis()
+    private fun getStreamDuration(): Seconds {
+        val start = mutableState.value.startStreamTimeSeconds
+        val finish = getCurrentTimeSeconds()
 
-        return (finish - start).toInt() / 1000
+        return finish - start
     }
 }

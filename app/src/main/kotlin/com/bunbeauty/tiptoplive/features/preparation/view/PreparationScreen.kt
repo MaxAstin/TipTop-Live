@@ -46,7 +46,7 @@ import com.bunbeauty.tiptoplive.common.ui.noEffectClickable
 import com.bunbeauty.tiptoplive.common.ui.rippleClickable
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
-import com.bunbeauty.tiptoplive.features.domain.model.ViewerCount
+import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
 import com.bunbeauty.tiptoplive.features.main.view.FeedbackDialog
 import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation
 import com.bunbeauty.tiptoplive.features.preparation.presentation.PreparationViewModel

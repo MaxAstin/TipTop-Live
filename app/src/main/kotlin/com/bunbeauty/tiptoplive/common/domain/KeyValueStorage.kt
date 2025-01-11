@@ -10,6 +10,8 @@ interface KeyValueStorage {
     suspend fun saveShouldAskFeedback(shouldAsk: Boolean)
     suspend fun saveShouldHighlightDonate(shouldHighlight: Boolean)
     suspend fun saveIsIntroViewed(isIntroViewed: Boolean)
+    suspend fun saveLastUsedDate(date: String)
+    suspend fun saveUsedDayCount(count: Int)
 
     fun getImageUriFlow(): Flow<String?>
     suspend fun getUsername(): String?
@@ -17,5 +19,7 @@ interface KeyValueStorage {
     suspend fun getShouldAskFeedback(defaultValue: Boolean): Boolean
     suspend fun getShouldHighlightDonate(defaultValue: Boolean): Boolean
     suspend fun getIsIntroViewed(defaultValue: Boolean): Boolean
+    suspend fun getLastUsedDate(): String?
+    suspend fun getUsedDayCount(defaultValue: Int): Int
 
 }

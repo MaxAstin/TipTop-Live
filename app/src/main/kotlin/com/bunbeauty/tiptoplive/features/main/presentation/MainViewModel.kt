@@ -2,19 +2,27 @@ package com.bunbeauty.tiptoplive.features.main.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
-import com.bunbeauty.tiptoplive.features.domain.SaveImageUriUseCase
+import com.bunbeauty.tiptoplive.features.main.domain.UpdateUsedDaysUseCase
+import com.bunbeauty.tiptoplive.shared.domain.SaveImageUriUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val saveImageUriUseCase: SaveImageUriUseCase
+    private val saveImageUriUseCase: SaveImageUriUseCase,
+    private val updateUsedDaysUseCase: UpdateUsedDaysUseCase
 ) : BaseViewModel<Main.State, Main.Action, Main.Event>(
     initState = {
         Main.State(showNoCameraPermission = false)
     }
 ) {
+
+    init {
+        viewModelScope.launch {
+            updateUsedDaysUseCase()
+        }
+    }
 
     override fun onAction(action: Main.Action) {
         when (action) {

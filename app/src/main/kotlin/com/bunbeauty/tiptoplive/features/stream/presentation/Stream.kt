@@ -2,6 +2,7 @@ package com.bunbeauty.tiptoplive.features.stream.presentation
 
 import android.net.Uri
 import com.bunbeauty.tiptoplive.common.presentation.Base
+import com.bunbeauty.tiptoplive.common.util.Seconds
 import com.bunbeauty.tiptoplive.features.stream.domain.model.Comment
 import com.bunbeauty.tiptoplive.features.stream.domain.model.Question
 
@@ -14,7 +15,7 @@ interface Stream {
         val comments: List<Comment>,
         val reactionCount: Int,
         val questionState: QuestionState,
-        val startStreamTimeMillis: Long,
+        val startStreamTimeSeconds: Seconds,
         val isCameraEnabled: Boolean,
         val isCameraFront: Boolean,
         val showJoinRequests: Boolean,
@@ -68,7 +69,7 @@ interface Stream {
     }
 
     sealed interface Event : Base.Event {
-        data class GoBack(val durationInSeconds: Int) : Event
+        data class GoBack(val duration: Seconds) : Event
         data object ShowFilterNotAvailable : Event
     }
 }

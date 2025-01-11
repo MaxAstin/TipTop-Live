@@ -7,7 +7,7 @@ import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.bunbeauty.tiptoplive.features.domain.model.ViewerCount
+import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 
 @Composable

@@ -1,7 +1,7 @@
-package com.bunbeauty.tiptoplive.features.domain
+package com.bunbeauty.tiptoplive.shared.domain
 
 import com.bunbeauty.tiptoplive.common.domain.KeyValueStorage
-import com.bunbeauty.tiptoplive.features.domain.model.ViewerCount
+import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
 import javax.inject.Inject
 
 class GetViewerCountUseCase @Inject constructor(

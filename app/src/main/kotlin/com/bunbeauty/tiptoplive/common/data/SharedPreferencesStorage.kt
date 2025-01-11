@@ -15,6 +15,8 @@ private const val VIEWER_COUNT_INDEX_KEY = "viewer count index"
 private const val SHOULD_ASK_FEEDBACK_KEY = "should ask feedback"
 private const val SHOULD_HIGHLIGHT_DONATE_KEY = "should highlight donate"
 private const val IS_INTRO_VIEWED = "is intro viewed"
+private const val LAST_USED_DATE = "last used date"
+private const val USED_DAY_COUNT = "used day count"
 
 class SharedPreferencesStorage @Inject constructor(
     @ApplicationContext private val context: Context
@@ -60,6 +62,18 @@ class SharedPreferencesStorage @Inject constructor(
         }
     }
 
+    override suspend fun saveLastUsedDate(date: String) {
+        sharedPreferences.edit {
+            putString(LAST_USED_DATE, date)
+        }
+    }
+
+    override suspend fun saveUsedDayCount(count: Int) {
+        sharedPreferences.edit {
+            putInt(USED_DAY_COUNT, count)
+        }
+    }
+
     override fun getImageUriFlow(): Flow<String?> {
         return mutableImageUriFlow.asStateFlow()
     }
@@ -82,6 +96,14 @@ class SharedPreferencesStorage @Inject constructor(
 
     override suspend fun getIsIntroViewed(defaultValue: Boolean): Boolean {
         return sharedPreferences.getBoolean(IS_INTRO_VIEWED, defaultValue)
+    }
+
+    override suspend fun getLastUsedDate(): String? {
+        return sharedPreferences.getString(LAST_USED_DATE, null)
+    }
+
+    override suspend fun getUsedDayCount(defaultValue: Int): Int {
+        return sharedPreferences.getInt(USED_DAY_COUNT, defaultValue)
     }
 
     private fun getImageUri(): String? {
