@@ -50,7 +50,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val GOOGLE_PLAY_LINK = "https://play.google.com/store/apps/details?id=com.bunbeauty.fakelivestream"
+private const val GOOGLE_PLAY_LINK = "https://play.google.com/store/apps/details?id=com.bunbeauty.tiptoplive"
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
