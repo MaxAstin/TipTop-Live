@@ -1,13 +1,13 @@
 [versions]
-activityCompose = "1.9.3"
+activityCompose = "1.10.0"
 application = "8.7.3"
 billingKtx = "7.1.1"
 camera2 = "1.4.1"
 coilCompose = "2.6.0"
-composeBom = "2024.12.01"
+composeBom = "2025.01.00"
 coreKtx = "1.15.0"
 coreSplashscreen = "1.0.1"
-firebase = "33.7.0"
+firebase = "33.8.0"
 googleServicesVersion = "4.4.2"
 hiltNavigationCompose = "1.2.0"
 imageCropper = "4.6.0"
@@ -40,14 +40,9 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 # Compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-compose-foundation = { module = "androidx.compose.foundation:foundation" }
-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
-compose-ui = { module = "androidx.compose.ui:ui" }
-compose-material = { module = "androidx.compose.material:material" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-review = { module = "com.google.android.play:review", version.ref = "review" }
 
 # Camera
 camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camera2" }
@@ -68,6 +63,9 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 
+# Review
+review = { module = "com.google.android.play:review", version.ref = "review" }
+
 [plugins]
 application = { id = "com.android.application", version.ref = "application" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -80,10 +78,6 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 
 [bundles]
 compose = [
-    "compose-foundation",
-    "compose-foundation-layout",
-    "compose-ui",
-    "compose-material",
     "compose-material3",
     "compose-ui-tooling",
     "compose-ui-tooling-preview"
