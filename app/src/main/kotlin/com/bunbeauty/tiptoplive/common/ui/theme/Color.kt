@@ -12,8 +12,10 @@ val Black100 = Color(0xFF1A1A1A)
 val Gray400 = Color(0xFF262626)
 val Gray300 = Color(0xFF6D6D6D)
 val Gray200 = Color(0xFF888888)
+val Gray150 = Color(0xFFADADAD)
 val Gray100 = Color(0xFFDBDBDB)
 val Blue = Color(0xFF0195F7)
+val Green = Color(0xFF35C27F)
 val Pink = Color(0xFFDB0D67)
 val BrightPurple = Color(0xFFCD00BD)
 val Scarlet = Color(0xFFFF1E44)
@@ -32,8 +34,10 @@ class ColorScheme(
     onSurfaceVariant: Color,
     background: Color,
     onBackground: Color,
+    onBackgroundVariant: Color,
     border: Color,
     borderVariant: Color,
+    positive: Color,
     instagram: InstagramColors,
 ) {
 
@@ -70,10 +74,16 @@ class ColorScheme(
     var onBackground by mutableStateOf(onBackground)
         internal set
 
+    var onBackgroundVariant by mutableStateOf(onBackgroundVariant)
+        internal set
+
     var border by mutableStateOf(border)
         internal set
 
     var borderVariant by mutableStateOf(borderVariant)
+        internal set
+
+    var positive by mutableStateOf(positive)
         internal set
 
     var instagram by mutableStateOf(instagram)
@@ -92,8 +102,10 @@ class ColorScheme(
         onSurfaceVariant: Color = this.onSurfaceVariant,
         background: Color = this.background,
         onBackground: Color = this.onBackground,
+        onBackgroundVariant: Color = this.onBackgroundVariant,
         border: Color = this.border,
         borderVariant: Color = this.borderVariant,
+        positive: Color = this.positive,
         instagram: InstagramColors = this.instagram,
     ): ColorScheme = ColorScheme(
         interactive = interactive,
@@ -107,8 +119,10 @@ class ColorScheme(
         onSurfaceVariant = onSurfaceVariant,
         background = background,
         onBackground = onBackground,
+        onBackgroundVariant = onBackgroundVariant,
         border = border,
         borderVariant = borderVariant,
+        positive = positive,
         instagram = instagram.copy(
             logo1 = instagram.logo1,
             logo2 = instagram.logo2,

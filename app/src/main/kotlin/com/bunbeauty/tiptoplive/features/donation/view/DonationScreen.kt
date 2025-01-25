@@ -28,7 +28,7 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.ui.LocalePreview
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveIconButton
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLivePrimaryButton
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.bold
 import com.bunbeauty.tiptoplive.features.billing.Product
 import com.bunbeauty.tiptoplive.features.donation.presentation.Donation
@@ -77,7 +77,7 @@ private fun DonationContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = FakeLiveStreamTheme.colors.background
+        containerColor = FakeLiveTheme.colors.background
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
             Column(
@@ -89,7 +89,7 @@ private fun DonationContent(
             ) {
                 FakeLiveIconButton(
                     iconId = R.drawable.ic_back,
-                    iconTint = FakeLiveStreamTheme.colors.onBackground,
+                    iconTint = FakeLiveTheme.colors.onBackground,
                     contentDescription = "Back",
                     withBorder = false,
                     onClick = {
@@ -112,13 +112,13 @@ private fun DonationContent(
                         id = R.string.donation_title,
                         stringResource(R.string.app_name)
                     ),
-                    style = FakeLiveStreamTheme.typography.titleLarge.bold,
+                    style = FakeLiveTheme.typography.titleLarge.bold,
                     textAlign = TextAlign.Center
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.donation_descriptio),
-                    style = FakeLiveStreamTheme.typography.bodyLarge,
+                    style = FakeLiveTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify
                 )
                 Spacer(modifier = Modifier.weight(1f))

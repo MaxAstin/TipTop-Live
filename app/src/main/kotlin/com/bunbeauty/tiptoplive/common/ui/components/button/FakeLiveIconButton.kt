@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.tiptoplive.R
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.util.rememberMultipleEventsCutter
 
 @Composable
@@ -28,7 +28,7 @@ fun FakeLiveIconButton(
     contentDescription: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    iconTint: Color = FakeLiveStreamTheme.colors.interactive,
+    iconTint: Color = FakeLiveTheme.colors.interactive,
     hasMarker: Boolean = false,
     withBorder: Boolean = true,
 ) {
@@ -41,7 +41,7 @@ fun FakeLiveIconButton(
                 if (withBorder) {
                     border(
                         width = 1.dp,
-                        color = FakeLiveStreamTheme.colors.interactive,
+                        color = FakeLiveTheme.colors.interactive,
                         shape = RoundedCornerShape(6.dp)
                     )
                 } else {
@@ -68,11 +68,11 @@ fun FakeLiveIconButton(
                         .align(Alignment.TopEnd)
                         .border(
                             width = 1.dp,
-                            color = FakeLiveStreamTheme.colors.background,
+                            color = FakeLiveTheme.colors.background,
                             shape = CircleShape
                         )
                         .padding(1.dp),
-                    containerColor = FakeLiveStreamTheme.colors.important,
+                    containerColor = FakeLiveTheme.colors.important,
                 )
             }
         }

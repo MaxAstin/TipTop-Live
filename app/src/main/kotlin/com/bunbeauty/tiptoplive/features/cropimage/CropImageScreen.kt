@@ -30,7 +30,6 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.navigation.NavigationRote
 import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveDialogButton
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.features.main.CropImageDefaults
 import com.canhub.cropper.CropImageView
@@ -52,7 +51,7 @@ fun CropImageScreen(
 
     Column(
         modifier = Modifier
-            .background(FakeLiveStreamTheme.colors.background)
+            .background(FakeLiveTheme.colors.background)
             .fillMaxSize()
     ) {
         Row(modifier = Modifier.padding(16.dp)) {
@@ -64,7 +63,7 @@ fun CropImageScreen(
                     },
                 imageVector = ImageVector.vectorResource(R.drawable.ic_close),
                 contentDescription = "Close",
-                tint = FakeLiveStreamTheme.colors.onBackground,
+                tint = FakeLiveTheme.colors.onBackground,
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
@@ -75,7 +74,7 @@ fun CropImageScreen(
                     },
                 imageVector = ImageVector.vectorResource(R.drawable.ic_magic_wand),
                 contentDescription = "Magic wand",
-                tint = FakeLiveStreamTheme.colors.onBackground,
+                tint = FakeLiveTheme.colors.onBackground,
             )
         }
         CropImageView(
@@ -95,7 +94,7 @@ fun CropImageScreen(
             text = stringResource(R.string.crop_image_next),
             iconId = R.drawable.ic_forward,
             shape = RoundedCornerShape(40.dp),
-            background = FakeLiveStreamTheme.colors.interactive,
+            background = FakeLiveTheme.colors.interactive,
             onClick = {
                 scope.launch {
                     cropEvent.send(Unit)

@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 @Composable
 fun ViewersDropdownMenu(
@@ -18,7 +18,7 @@ fun ViewersDropdownMenu(
     modifier: Modifier = Modifier,
 ) {
     DropdownMenu(
-        modifier = modifier.background(FakeLiveStreamTheme.colors.background),
+        modifier = modifier.background(FakeLiveTheme.colors.background),
         expanded = expanded,
         onDismissRequest = onDismissRequest
     ) {
@@ -40,15 +40,15 @@ private fun ViewersDropdownMenuItem(
     onClick: () -> Unit,
 ) {
     DropdownMenuItem(
-        modifier = Modifier.background(FakeLiveStreamTheme.colors.background),
+        modifier = Modifier.background(FakeLiveTheme.colors.background),
         text = {
             Text(
                 text = text,
-                style = FakeLiveStreamTheme.typography.bodyMedium,
+                style = FakeLiveTheme.typography.bodyMedium,
             )
         },
         colors = MenuDefaults.itemColors(
-            textColor = FakeLiveStreamTheme.colors.onBackground,
+            textColor = FakeLiveTheme.colors.onBackground,
         ),
         onClick = onClick
     )

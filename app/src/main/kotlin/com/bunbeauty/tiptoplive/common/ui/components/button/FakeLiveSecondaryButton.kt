@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.util.rememberMultipleEventsCutter
 
@@ -31,8 +30,8 @@ fun FakeLiveSecondaryButton(
     ) {
         Text(
             text = text,
-            color = FakeLiveStreamTheme.colors.onSurfaceVariant,
-            style = FakeLiveStreamTheme.typography.titleSmall,
+            color = FakeLiveTheme.colors.onSurfaceVariant,
+            style = FakeLiveTheme.typography.titleSmall,
         )
     }
 }

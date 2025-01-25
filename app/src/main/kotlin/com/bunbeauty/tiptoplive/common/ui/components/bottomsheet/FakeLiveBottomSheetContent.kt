@@ -18,14 +18,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 @Composable
 fun ColumnScope.FakeLiveBottomSheetContent(
     title: String,
     @DrawableRes topIconId: Int? = null,
-    titleColor: Color = FakeLiveStreamTheme.colors.onSurface,
-    dividerColor: Color = FakeLiveStreamTheme.colors.border,
+    titleColor: Color = FakeLiveTheme.colors.onSurface,
+    dividerColor: Color = FakeLiveTheme.colors.border,
     content: @Composable () -> Unit
 ) {
     Spacer(modifier = Modifier.height(16.dp))
@@ -43,7 +43,7 @@ fun ColumnScope.FakeLiveBottomSheetContent(
         modifier = Modifier.fillMaxWidth(),
         text = title,
         color = titleColor,
-        style = FakeLiveStreamTheme.typography.titleMedium,
+        style = FakeLiveTheme.typography.titleMedium,
         textAlign = TextAlign.Center
     )
     HorizontalDivider(

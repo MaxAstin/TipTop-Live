@@ -22,4 +22,7 @@ interface NavigationRote {
     @Serializable
     object Stream
 
+    @Serializable
+    object Subscription
+
 }

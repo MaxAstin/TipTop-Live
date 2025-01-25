@@ -6,6 +6,9 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
+import com.bunbeauty.tiptoplive.features.preparation.domain.SaveShouldAskFeedbackUseCase
+import com.bunbeauty.tiptoplive.features.preparation.domain.ShouldAskFeedbackUseCase
+import com.bunbeauty.tiptoplive.features.preparation.domain.ShouldHighlightDonateUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetImageUriFlowUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetUsernameUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetViewerCountUseCase
@@ -13,10 +16,6 @@ import com.bunbeauty.tiptoplive.shared.domain.SaveImageUriUseCase
 import com.bunbeauty.tiptoplive.shared.domain.SaveUsernameUseCase
 import com.bunbeauty.tiptoplive.shared.domain.SaveViewerCountUseCase
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
-import com.bunbeauty.tiptoplive.features.preparation.domain.SaveShouldAskFeedbackUseCase
-import com.bunbeauty.tiptoplive.features.preparation.domain.SaveShouldHighlightDonateUseCase
-import com.bunbeauty.tiptoplive.features.preparation.domain.ShouldAskFeedbackUseCase
-import com.bunbeauty.tiptoplive.features.preparation.domain.ShouldHighlightDonateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
@@ -39,7 +38,6 @@ class PreparationViewModel @Inject constructor(
     private val shouldAskFeedbackUseCase: ShouldAskFeedbackUseCase,
     private val saveShouldAskFeedbackUseCase: SaveShouldAskFeedbackUseCase,
     private val shouldHighlightDonateUseCase: ShouldHighlightDonateUseCase,
-    private val saveShouldHighlightDonateUseCase: SaveShouldHighlightDonateUseCase,
     private val analyticsManager: AnalyticsManager,
 ) : BaseViewModel<Preparation.State, Preparation.Action, Preparation.Event>(
     initState = {
@@ -139,15 +137,9 @@ class PreparationViewModel @Inject constructor(
                 analyticsManager.trackShare()
                 sendEvent(Preparation.Event.HandleShareClick)
             }
-            Preparation.Action.DonateClick -> {
-                setState {
-                    copy(highlightDonate = false)
-                }
-                viewModelScope.launch {
-                    saveShouldHighlightDonateUseCase(shouldHighlight = false)
-                }
-                analyticsManager.trackDonate()
-                sendEvent(Preparation.Event.HandleDonateClick)
+            Preparation.Action.PremiumClick -> {
+                analyticsManager.trackPremiumClick()
+                sendEvent(Preparation.Event.HandlePremiumClick)
             }
         }
     }

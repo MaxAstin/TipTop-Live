@@ -43,6 +43,7 @@ import com.bunbeauty.tiptoplive.features.main.presentation.MainViewModel
 import com.bunbeauty.tiptoplive.features.main.view.CameraIsRequiredDialog
 import com.bunbeauty.tiptoplive.features.preparation.view.PreparationScreen
 import com.bunbeauty.tiptoplive.features.stream.view.StreamScreen
+import com.bunbeauty.tiptoplive.features.subscription.view.SubscriptionScreen
 import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -229,6 +230,9 @@ class MainActivity : ComponentActivity() {
                         ).show()
                     }
                 )
+            }
+            composable<NavigationRote.Subscription> {
+                SubscriptionScreen(navController = navController)
             }
         }
     }

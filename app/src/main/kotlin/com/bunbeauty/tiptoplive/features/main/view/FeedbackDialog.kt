@@ -26,7 +26,7 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.ui.LocalePreview
 import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveDialogButton
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +42,7 @@ fun FeedbackDialog(
         Column(
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
-                .background(FakeLiveStreamTheme.colors.background)
+                .background(FakeLiveTheme.colors.background)
                 .padding(24.dp)
         ) {
             Row {
@@ -52,8 +52,8 @@ fun FeedbackDialog(
                         R.string.do_you_like,
                         stringResource(R.string.app_name)
                     ),
-                    color = FakeLiveStreamTheme.colors.onBackground,
-                    style = FakeLiveStreamTheme.typography.titleMedium,
+                    color = FakeLiveTheme.colors.onBackground,
+                    style = FakeLiveTheme.typography.titleMedium,
                 )
                 Icon(
                     modifier = Modifier
@@ -63,7 +63,7 @@ fun FeedbackDialog(
                             onAction(Preparation.Action.CloseFeedbackDialogClick)
                         },
                     painter = painterResource(R.drawable.ic_close),
-                    tint = FakeLiveStreamTheme.colors.onSurfaceVariant,
+                    tint = FakeLiveTheme.colors.onSurfaceVariant,
                     contentDescription = "close"
                 )
             }
@@ -75,8 +75,8 @@ fun FeedbackDialog(
                     R.string.help_us_improve,
                     stringResource(R.string.app_name)
                 ),
-                color = FakeLiveStreamTheme.colors.onBackground,
-                style = FakeLiveStreamTheme.typography.bodyMedium,
+                color = FakeLiveTheme.colors.onBackground,
+                style = FakeLiveTheme.typography.bodyMedium,
             )
             Image(
                 modifier = Modifier

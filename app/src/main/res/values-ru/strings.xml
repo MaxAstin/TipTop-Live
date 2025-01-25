@@ -31,6 +31,7 @@
     <string name="preparation_username_hint">user_name</string>
     <string name="preparation_viewer_count">Количество зрителей</string>
     <string name="preparation_start_live">Начать стрим</string>
+    <string name="preparation_premium">Премиум</string>
 
     <string name="crop_image_next">Далее</string>
 
@@ -39,6 +40,12 @@
     <string name="donation_donate">Пожертвовать %s</string>
     <string name="donation_success">Успешно</string>
     <string name="donation_ok">ОК</string>
+
+    <string name="subscription_unlimited_access">Получите неограниченный доступ</string>
+    <string name="subscription_unlimited_time">🚀 Безлимитное время в прямом эфире</string>
+    <string name="subscription_comments_and_reactions">💕 Бесконечные комментарии и реакции</string>
+    <string name="subscription_questions">💎 Вопросы для фанатов, созданные ИИ</string>
+    <string name="subscription_checkout">Перейти к оплате</string>
 
     <string name="stream_join_requests_title">Запросы на присоединение</string>
     <string name="stream_join_requests_body">Запросов пока нет</string>

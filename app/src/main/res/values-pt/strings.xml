@@ -32,7 +32,7 @@
     <string name="preparation_username_hint">user_name</string>
     <string name="preparation_viewer_count">Contagem de espectadores</string>
     <string name="preparation_start_live">Iniciar Ao Vivo</string>
-
+    <string name="preparation_premium">Premium</string>
     <string name="crop_image_next">Próximo</string>
 
     <string name="donation_title">Suporte %s</string>
@@ -40,6 +40,13 @@
     <string name="donation_donate">Doar %s</string>
     <string name="donation_success">Sucesso</string>
     <string name="donation_ok">OK</string>
+
+    <string name="subscription_unlimited_access">Obtenha acesso ilimitado</string>
+    <string name="subscription_unlimited_time">🚀 Tempo ilimitado ao vivo</string>
+    <string name="subscription_comments_and_reactions">💕 Comentários e reações infinitos</string>
+    <string name="subscription_questions">💎 Perguntas geradas por IA para fãs</string>
+    <string name="subscription_checkout">Continuar para o pagamento</string>
+
 
     <string name="stream_join_requests_title">Solicitações para participar</string>
     <string name="stream_join_requests_body">Sem solicitações ainda</string>

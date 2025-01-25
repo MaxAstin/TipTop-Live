@@ -17,7 +17,6 @@ import com.bunbeauty.tiptoplive.common.ui.components.bottomsheet.FakeLiveBottomS
 import com.bunbeauty.tiptoplive.common.ui.components.bottomsheet.FakeLiveBottomSheetContent
 import com.bunbeauty.tiptoplive.common.ui.components.bottomsheet.FakeLiveBottomSheetDefaults
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLivePrimaryButton
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.features.billing.Product
 import com.bunbeauty.tiptoplive.features.donation.presentation.Donation
@@ -32,13 +31,13 @@ fun DonationBottomSheet(
     if (product != null) {
         FakeLiveBottomSheet(
             modifier = modifier,
-            containerColor = FakeLiveStreamTheme.colors.background,
+            containerColor = FakeLiveTheme.colors.background,
             onDismissRequest = {
                 onAction(Donation.Action.HideDonation)
             },
             dragHandle = {
                 FakeLiveBottomSheetDefaults.DragHandle(
-                    color = FakeLiveStreamTheme.colors.borderVariant
+                    color = FakeLiveTheme.colors.borderVariant
                 )
             },
         ) {
@@ -57,15 +56,15 @@ private fun ColumnScope.DonationBottomSheetContent(
 ) {
     FakeLiveBottomSheetContent(
         title = product.name,
-        titleColor = FakeLiveStreamTheme.colors.onBackground,
-        dividerColor = FakeLiveStreamTheme.colors.borderVariant,
+        titleColor = FakeLiveTheme.colors.onBackground,
+        dividerColor = FakeLiveTheme.colors.borderVariant,
     ) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
             text = product.description,
-            style = FakeLiveStreamTheme.typography.bodyLarge,
+            style = FakeLiveTheme.typography.bodyLarge,
             textAlign = TextAlign.Justify
         )
         FakeLivePrimaryButton(

@@ -25,7 +25,9 @@ private const val OPEN_QUESTIONS_EVENT = "open_questions"
 private const val SELECT_QUESTION_EVENT = "select_question"
 
 private const val SHARE_EVENT = "share"
-private const val DONATE_EVENT = "donate"
+private const val PREMIUM_CLICK_EVENT = "premium_click"
+private const val PREMIUM_QUITE_EVENT = "premium_quite"
+private const val CHECKOUT_CLICK_PREFIX = "checkout_click_"
 
 private const val USED_DAYS_PREFIX = "used_day_"
 
@@ -107,8 +109,16 @@ class AnalyticsManager @Inject constructor(
         trackEvent(event = SHARE_EVENT)
     }
 
-    fun trackDonate() {
-        trackEvent(event = DONATE_EVENT)
+    fun trackPremiumClick() {
+        trackEvent(event = PREMIUM_CLICK_EVENT)
+    }
+
+    fun trackPremiumQuite() {
+        trackEvent(event = PREMIUM_QUITE_EVENT)
+    }
+
+    fun trackCheckoutClick(productId: String) {
+        trackEvent(event = "$CHECKOUT_CLICK_PREFIX$productId")
     }
 
     fun trackOpenDonation(productId: String) {

@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 private val filters = listOf(
@@ -53,7 +52,7 @@ fun FiltersRow(
     ) {
         itemsIndexed(filters) { i, filterResId ->
             val borderColor = if (i == selectedIndex) {
-                FakeLiveStreamTheme.colors.icon
+                FakeLiveTheme.colors.icon
             } else {
                 Color.Transparent
             }

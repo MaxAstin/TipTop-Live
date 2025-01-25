@@ -30,7 +30,7 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.navigation.NavigationRote
 import com.bunbeauty.tiptoplive.common.ui.LocalePreview
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLivePrimaryButton
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.bold
 import com.bunbeauty.tiptoplive.features.intro.presentation.Intro
 import com.bunbeauty.tiptoplive.features.intro.presentation.IntroViewModel
@@ -75,7 +75,7 @@ private fun IntroContent(
     onAction: (Intro.Action) -> Unit
 ) {
     if (isChecked) {
-        Column(modifier = Modifier.background(FakeLiveStreamTheme.colors.background)) {
+        Column(modifier = Modifier.background(FakeLiveTheme.colors.background)) {
             Column(
                 modifier = Modifier
                     .padding(16.dp)
@@ -99,13 +99,13 @@ private fun IntroContent(
                         id = R.string.intro_welcome,
                         stringResource(R.string.app_name)
                     ),
-                    style = FakeLiveStreamTheme.typography.titleLarge.bold,
+                    style = FakeLiveTheme.typography.titleLarge.bold,
                     textAlign = TextAlign.Center
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.intro_description),
-                    style = FakeLiveStreamTheme.typography.bodyLarge,
+                    style = FakeLiveTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -113,7 +113,7 @@ private fun IntroContent(
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp,
-                color = FakeLiveStreamTheme.colors.borderVariant,
+                color = FakeLiveTheme.colors.borderVariant,
             )
             FakeLivePrimaryButton(
                 modifier = Modifier

@@ -26,7 +26,7 @@ interface Preparation {
         data class FeedbackClick(val isPositive: Boolean): Action
         data class NotShowFeedbackChecked(val checked: Boolean): Action
         data object ShareClick: Action
-        data object DonateClick: Action
+        data object PremiumClick: Action
     }
 
     sealed interface Event: Base.Event {
@@ -34,7 +34,7 @@ interface Preparation {
         data object HandlePositiveFeedbackClick: Event
         data object HandleAvatarClick: Event
         data object HandleShareClick: Event
-        data object HandleDonateClick: Event
+        data object HandlePremiumClick: Event
     }
 
 }
