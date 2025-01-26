@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
@@ -36,7 +35,6 @@ import com.bunbeauty.tiptoplive.common.util.openSettings
 import com.bunbeauty.tiptoplive.common.util.openSharing
 import com.bunbeauty.tiptoplive.features.billing.BillingService
 import com.bunbeauty.tiptoplive.features.cropimage.CropImageScreen
-import com.bunbeauty.tiptoplive.features.donation.view.DonationScreen
 import com.bunbeauty.tiptoplive.features.intro.view.IntroScreen
 import com.bunbeauty.tiptoplive.features.main.presentation.Main
 import com.bunbeauty.tiptoplive.features.main.presentation.MainViewModel
@@ -48,7 +46,6 @@ import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val GOOGLE_PLAY_LINK = "https://play.google.com/store/apps/details?id=com.bunbeauty.tiptoplive"
@@ -187,25 +184,6 @@ class MainActivity : ComponentActivity() {
                             showToast(
                                 message = getString(R.string.common_something_went_wrong)
                             )
-                        }
-                    }
-                )
-            }
-            composable<NavigationRote.Donation> {
-                val scope = rememberCoroutineScope()
-                DonationScreen(
-                    navController = navController,
-                    onDonateClick = { productId ->
-                        scope.launch {
-                            val isSuccessful = billingService.get().launchOneTypeProductFlow(
-                                activity = this@MainActivity,
-                                id = productId,
-                            )
-                            if (!isSuccessful) {
-                                showToast(
-                                    message = getString(R.string.common_something_went_wrong)
-                                )
-                            }
                         }
                     }
                 )

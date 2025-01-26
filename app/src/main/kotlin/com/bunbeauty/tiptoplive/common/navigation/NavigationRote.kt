@@ -14,9 +14,6 @@ interface NavigationRote {
     )
 
     @Serializable
-    object Donation
-
-    @Serializable
     data class CropImage(val uri: String)
 
     @Serializable
