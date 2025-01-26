@@ -20,11 +20,7 @@ class UpdateUsedDaysUseCase @Inject constructor(
             keyValueStorage.saveLastUsedDate(date = currentDate)
             val updatedCount = usedDayCount + 1
             keyValueStorage.saveUsedDayCount(count = updatedCount)
-            when (updatedCount) {
-                in 1..4 -> analyticsManager.trackUsedDays(days = updatedCount.toString())
-                5 -> analyticsManager.trackUsedDays(days = "5+")
-                else -> Unit // Do not send
-            }
+            analyticsManager.trackUsedDays(usedDayCount = updatedCount)
         }
     }
 

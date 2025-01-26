@@ -27,6 +27,8 @@ private const val SELECT_QUESTION_EVENT = "select_question"
 private const val SHARE_EVENT = "share"
 private const val DONATE_EVENT = "donate"
 
+private const val USED_DAYS_PREFIX = "used_day_"
+
 private const val OPEN_DONATION_EVENT = "open_donation_"
 private const val PRODUCT_NOT_FOUND_EVENT = "product_not_found_"
 private const val START_BILLING_FLOW_EVENT = "start_billing_flow_"
@@ -43,7 +45,6 @@ private const val ERROR_EVENT = "billing_error"
 private const val ITEM_ALREADY_OWNED_EVENT = "billing_item_already_owned"
 private const val ITEM_NOT_OWNED_EVENT = "billing_item_not_owned"
 private const val NETWORK_ERROR_EVENT = "billing_network_error"
-private const val USED_DAYS_EVENT = "used_day_"
 
 private const val ANALYTICS_TAG = "analytics"
 
@@ -174,8 +175,12 @@ class AnalyticsManager @Inject constructor(
         trackEvent(event = NETWORK_ERROR_EVENT)
     }
 
-    fun trackUsedDays(days: String) {
-        trackEvent(event = "$USED_DAYS_EVENT$days")
+    fun trackUsedDays(usedDayCount: Int) {
+        val eventPostfix = when (usedDayCount) {
+            in 1..7 -> usedDayCount.toString()
+            else -> "8_and_more"
+        }
+        trackEvent(event = "$USED_DAYS_PREFIX$eventPostfix")
     }
 
     private fun trackEvent(event: String, params: Map<String, Any> = emptyMap()) {
