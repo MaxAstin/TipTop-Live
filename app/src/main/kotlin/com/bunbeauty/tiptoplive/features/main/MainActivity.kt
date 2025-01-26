@@ -98,6 +98,17 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.onAction(Main.Action.AppStart)
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        mainViewModel.onAction(Main.Action.AppStop)
+    }
+
     private fun requestCameraPermission() {
         val isCameraPermissionDenied = ActivityCompat.shouldShowRequestPermissionRationale(this, CAMERA)
         if (isCameraPermissionDenied) {
