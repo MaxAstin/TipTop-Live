@@ -54,11 +54,12 @@ private val blurredBackground: Color
 
 data class SubscriptionItem(
     val id: String,
-    val title: String,
-    val price: String,
-    val oldPrice: String?,
-    val label: String?,
-    val isSelected: Boolean,
+    val name: String,
+    val currentPrice: String,
+    val previousPrice: String?,
+    val discountPercent: String?,
+    val isLifetime: Boolean,
+    val isSelected: Boolean
 )
 
 @Composable
@@ -146,7 +147,7 @@ private fun SubscriptionContent(
                 )
                 FeatureText(
                     text = stringResource(R.string.subscription_comments_and_reactions)
-                   )
+                )
                 FeatureText(
                     text = stringResource(R.string.subscription_questions)
                 )
@@ -233,42 +234,35 @@ private fun SubscriptionItem(
                 .padding(8.dp)
         ) {
             Text(
-                text = subscriptionItem.title,
+                text = subscriptionItem.name,
                 color = FakeLiveTheme.colors.onBackgroundVariant,
                 style = FakeLiveTheme.typography.bodyMedium.bold,
             )
             Column(modifier = Modifier.padding(top = 8.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = subscriptionItem.price,
+                        text = subscriptionItem.currentPrice,
                         color = FakeLiveTheme.colors.onBackground,
                         style = FakeLiveTheme.typography.titleMedium,
                     )
-                    subscriptionItem.label?.let { label ->
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .clip(RoundedCornerShape(16.dp))
-                                .background(
-                                    FakeLiveTheme.colors.interactive.copy(alpha = 0.1f)
-                                )
-                                .padding(
-                                    horizontal = 6.dp,
-                                    vertical = 2.dp
-                                )
-                        ) {
-                            Text(
-                                text = label,
-                                color = FakeLiveTheme.colors.interactive,
-                                style = FakeLiveTheme.typography.bodySmall,
+                    if (subscriptionItem.isLifetime) {
+                        Label(
+                            modifier = Modifier.padding(start = 8.dp),
+                            text = stringResource(R.string.subscription_use_forever)
+                        )
+                    } else {
+                        subscriptionItem.discountPercent?.let { discountPercent ->
+                            Label(
+                                modifier = Modifier.padding(start = 8.dp),
+                                text = stringResource(R.string.subscription_save, discountPercent)
                             )
                         }
                     }
                 }
-                subscriptionItem.oldPrice?.let {
+                subscriptionItem.previousPrice?.let {
                     Text(
                         modifier = Modifier.padding(top = 2.dp),
-                        text = subscriptionItem.oldPrice,
+                        text = subscriptionItem.previousPrice,
                         color = FakeLiveTheme.colors.onBackgroundVariant,
                         style = FakeLiveTheme.typography.bodyMedium.copy(
                             textDecoration = TextDecoration.LineThrough
@@ -289,6 +283,30 @@ private fun SubscriptionItem(
     }
 }
 
+@Composable
+private fun Label(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(
+                FakeLiveTheme.colors.interactive.copy(alpha = 0.1f)
+            )
+            .padding(
+                horizontal = 6.dp,
+                vertical = 2.dp
+            )
+    ) {
+        Text(
+            text = text,
+            color = FakeLiveTheme.colors.interactive,
+            style = FakeLiveTheme.typography.bodySmall,
+        )
+    }
+}
+
 @Preview
 @Composable
 private fun SubscriptionScreenPreview() {
@@ -298,18 +316,20 @@ private fun SubscriptionScreenPreview() {
                 subscriptions = listOf(
                     SubscriptionItem(
                         id = "1",
-                        title = "Weekly",
-                        price = "$2,99/week",
-                        oldPrice = "$10,99/month",
-                        label = "Save 70%",
+                        name = "Weekly",
+                        currentPrice = "$2,99/week",
+                        previousPrice = "$10,99/month",
+                        discountPercent = "Save 70%",
+                        isLifetime = false,
                         isSelected = true
                     ),
                     SubscriptionItem(
                         id = "2",
-                        title = "Lifetime",
-                        price = "$6,99",
-                        oldPrice = "$20,99/month",
-                        label = "Pay once and use forever",
+                        name = "Lifetime",
+                        currentPrice = "$6,99",
+                        previousPrice = "$20,99/month",
+                        discountPercent = null,
+                        isLifetime = true,
                         isSelected = false
                     )
                 )

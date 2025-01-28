@@ -22,6 +22,7 @@ object BillingModule {
     ): BillingClient {
         val pendingPurchasesParams = PendingPurchasesParams.newBuilder()
             .enableOneTimeProducts()
+            .enablePrepaidPlans()
             .build()
 
         return BillingClient.newBuilder(context)

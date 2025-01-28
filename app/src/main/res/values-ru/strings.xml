@@ -46,6 +46,8 @@
     <string name="subscription_comments_and_reactions">💕 Бесконечные комментарии и реакции</string>
     <string name="subscription_questions">💎 Вопросы для фанатов, созданные ИИ</string>
     <string name="subscription_checkout">Перейти к оплате</string>
+    <string name="subscription_use_forever">Заплатите один раз и пользуйтесь навсегда</string>
+    <string name="subscription_save">Сэкономьте %s</string>
 
     <string name="stream_join_requests_title">Запросы на присоединение</string>
     <string name="stream_join_requests_body">Запросов пока нет</string>

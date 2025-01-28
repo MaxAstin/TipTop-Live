@@ -1,38 +1,40 @@
 package com.bunbeauty.tiptoplive.features.subscription.presentation
 
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
-import com.bunbeauty.tiptoplive.features.subscription.view.SubscriptionItem
+import com.bunbeauty.tiptoplive.features.billing.BillingService
+import com.bunbeauty.tiptoplive.features.subscription.mapper.toSubscriptions
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SubscriptionViewModel @Inject constructor(
-    private val analyticsManager: AnalyticsManager
+    private val analyticsManager: AnalyticsManager,
+    private val billingService: BillingService,
 ) : BaseViewModel<Subscription.State, Subscription.Action, Subscription.Event>(
-        initState = {
-            Subscription.State(
-                subscriptions = listOf(
-                    SubscriptionItem(
-                        id = "1",
-                        title = "Weekly",
-                        price = "$2,99/week",
-                        oldPrice = "$10,99/month",
-                        label = "Save 70%",
-                        isSelected = true
-                    ),
-                    SubscriptionItem(
-                        id = "2",
-                        title = "Lifetime",
-                        price = "$6,99",
-                        oldPrice = "$20,99/month",
-                        label = "Pay once and use forever",
-                        isSelected = false
-                    )
-                )
-            )
+    initState = {
+        Subscription.State(
+            subscriptions = emptyList()
+        )
+    }
+) {
+
+    init {
+        viewModelScope.launch {
+            try {
+                val subscriptions = billingService.getProducts(
+                    listOf("monthly", "lifetime")
+                ).toSubscriptions()
+                setState {
+                    copy(subscriptions = subscriptions)
+                }
+            } catch (e: Exception) {
+                // TODO handle error
+            }
         }
-    ) {
+    }
 
     override fun onAction(action: Subscription.Action) {
         when (action) {

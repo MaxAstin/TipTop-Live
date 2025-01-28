@@ -3,6 +3,7 @@ package com.bunbeauty.tiptoplive.features.billing
 data class Product(
     val id: String,
     val name: String,
-    val description: String,
-    val price: String,
+    val currentPrice: String,
+    val previousPrice: String?,
+    val discountPercent: Int?
 )

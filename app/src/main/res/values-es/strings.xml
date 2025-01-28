@@ -46,6 +46,8 @@
     <string name="subscription_comments_and_reactions">💕 Comentarios y reacciones infinitos</string>
     <string name="subscription_questions">💎 Preguntas generadas por IA para fans</string>
     <string name="subscription_checkout">Continuar al pago</string>
+    <string name="subscription_use_forever">Paga una vez y úsalo para siempre</string>
+    <string name="subscription_save">Ahorre %s</string>
 
     <string name="stream_join_requests_title">Solicitudes para unirse</string>
     <string name="stream_join_requests_body">Aún no hay solicitudes</string>

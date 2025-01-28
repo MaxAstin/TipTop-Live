@@ -9,6 +9,8 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.queryProductDetails
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
+import com.bunbeauty.tiptoplive.features.billing.mapper.inAppProductToProduct
+import com.bunbeauty.tiptoplive.features.billing.mapper.subscriptionToProduct
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,18 +24,21 @@ class BillingService @Inject constructor(
     private val analyticsManager: AnalyticsManager,
 ) {
 
-    suspend fun getOneTypeProducts(ids: List<String>): List<Product>? {
-        return getProducts(
-            type = BillingClient.ProductType.INAPP,
-            ids = ids
-        )
-    }
-
-    suspend fun getSubscriptionProducts(ids: List<String>): List<Product>? {
-        return getProducts(
+    suspend fun getProducts(ids: List<String>): List<Product> {
+        val subscriptions = getProducts(
             type = BillingClient.ProductType.SUBS,
             ids = ids
-        )
+        ).mapNotNull { productDetails ->
+            productDetails.subscriptionToProduct(percent = 25)
+        }
+        val inAppProducts = getProducts(
+            type = BillingClient.ProductType.INAPP,
+            ids = ids
+        ).mapNotNull { productDetails ->
+            productDetails.inAppProductToProduct(percent = 65)
+        }
+
+        return subscriptions + inAppProducts
     }
 
     suspend fun launchOneTypeProductFlow(
@@ -71,22 +76,13 @@ class BillingService @Inject constructor(
     private suspend fun getProducts(
         type: String,
         ids: List<String>
-    ): List<Product>? {
+    ): List<ProductDetails> {
         val isSuccessful = init()
         return if (isSuccessful) {
             getProductDetails(
                 type = type,
                 ids = ids,
-            )?.mapNotNull { productDetails ->
-                productDetails.oneTimePurchaseOfferDetails?.formattedPrice?.let { price ->
-                    Product(
-                        id = productDetails.productId,
-                        name = productDetails.name,
-                        description = productDetails.description,
-                        price = price,
-                    )
-                }
-            }
+            ).orEmpty()
         } else {
             emptyList()
         }
@@ -106,15 +102,12 @@ class BillingService @Inject constructor(
                             continuation.resume(isSuccessful)
                         } catch (exception: Exception) {
                             // TODO handle
+                            continuation.resume(false)
                         }
                     }
 
                     override fun onBillingServiceDisconnected() {
-                        try {
-                            continuation.resume(false)
-                        } catch (exception: Exception) {
-                            // TODO handle
-                        }
+                        continuation.resume(false)
                     }
                 }
             )
