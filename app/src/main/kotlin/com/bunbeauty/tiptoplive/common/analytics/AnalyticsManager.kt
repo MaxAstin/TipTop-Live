@@ -31,7 +31,6 @@ private const val CHECKOUT_CLICK_PREFIX = "checkout_click_"
 
 private const val USED_DAYS_PREFIX = "used_day_"
 
-private const val OPEN_DONATION_EVENT = "open_donation_"
 private const val PRODUCT_NOT_FOUND_EVENT = "product_not_found_"
 private const val START_BILLING_FLOW_EVENT = "start_billing_flow_"
 private const val FAIL_BILLING_FLOW_EVENT = "fail_billing_flow_"
@@ -121,10 +120,6 @@ class AnalyticsManager @Inject constructor(
         trackEvent(event = "$CHECKOUT_CLICK_PREFIX$productId")
     }
 
-    fun trackOpenDonation(productId: String) {
-        trackEvent(event = "$OPEN_DONATION_EVENT$productId")
-    }
-
     fun trackProductNotFound(productId: String) {
         trackEvent(event = "$PRODUCT_NOT_FOUND_EVENT$productId")
     }
@@ -138,6 +133,10 @@ class AnalyticsManager @Inject constructor(
     }
 
     fun trackPurchaseProduct(productId: String) {
+        trackEvent(event = "$PURCHASE_PRODUCT_EVENT$productId")
+    }
+
+    fun trackAcknowledgeProduct(productId: String) {
         trackEvent(event = "$PURCHASE_PRODUCT_EVENT$productId")
     }
 

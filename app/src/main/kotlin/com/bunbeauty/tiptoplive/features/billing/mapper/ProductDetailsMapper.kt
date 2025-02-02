@@ -1,7 +1,7 @@
 package com.bunbeauty.tiptoplive.features.billing.mapper
 
 import com.android.billingclient.api.ProductDetails
-import com.bunbeauty.tiptoplive.features.billing.Product
+import com.bunbeauty.tiptoplive.features.billing.model.Product
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -10,6 +10,7 @@ fun ProductDetails.inAppProductToProduct(percent: Int): Product? {
 
     return Product(
         id = productId,
+        offerToken = null,
         name = name,
         currentPrice = details.formattedPrice,
         previousPrice = details.formattedPrice.calculatePreviousPrice(percent = percent),
@@ -23,6 +24,7 @@ fun ProductDetails.subscriptionToProduct(percent: Int): Product? {
 
     return Product(
         id = productId,
+        offerToken = subscriptionOfferDetail.offerToken,
         name = name,
         currentPrice = pricingPhase.formattedPrice,
         previousPrice = pricingPhase.formattedPrice.calculatePreviousPrice(percent = percent),

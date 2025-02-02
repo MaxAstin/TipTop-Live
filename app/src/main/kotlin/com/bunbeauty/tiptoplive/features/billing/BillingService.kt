@@ -1,17 +1,25 @@
 package com.bunbeauty.tiptoplive.features.billing
 
 import android.app.Activity
+import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryProductDetails
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.features.billing.mapper.inAppProductToProduct
 import com.bunbeauty.tiptoplive.features.billing.mapper.subscriptionToProduct
+import com.bunbeauty.tiptoplive.features.billing.model.Product
+import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
+import com.bunbeauty.tiptoplive.features.billing.model.PurchasedProduct
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,6 +31,8 @@ class BillingService @Inject constructor(
     private val billingClient: BillingClient,
     private val analyticsManager: AnalyticsManager,
 ) {
+
+    private val mutex = Mutex()
 
     suspend fun getProducts(ids: List<String>): List<Product> {
         val subscriptions = getProducts(
@@ -41,22 +51,47 @@ class BillingService @Inject constructor(
         return subscriptions + inAppProducts
     }
 
-    suspend fun launchOneTypeProductFlow(
+    suspend fun getPurchases(): List<PurchasedProduct> {
+        val isSuccessful = init()
+        return if (isSuccessful) {
+            (queryPurchases(BillingClient.ProductType.SUBS) +
+                queryPurchases(BillingClient.ProductType.INAPP)).mapNotNull { purchase ->
+                purchase.products.firstOrNull()?.let { product ->
+                    PurchasedProduct(
+                        id = product,
+                        token = purchase.purchaseToken
+                    )
+                }
+            }
+        } else {
+            emptyList()
+        }
+    }
+
+    suspend fun launchBillingFlow(
         activity: Activity,
-        id: String
+        purchaseData: PurchaseData
     ): Boolean {
-        val product = getProductDetails(
+        val product = getProducts(
+            type = BillingClient.ProductType.SUBS,
+            ids = listOf(purchaseData.productId)
+        ).firstOrNull() ?: getProducts(
             type = BillingClient.ProductType.INAPP,
-            ids = listOf(id)
-        )?.firstOrNull()
+            ids = listOf(purchaseData.productId)
+        ).firstOrNull()
         if (product == null) {
-            analyticsManager.trackProductNotFound(productId = id)
+            analyticsManager.trackProductNotFound(productId = purchaseData.productId)
             return false
         }
 
         val productDetailsParams = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
                 .setProductDetails(product)
+                .apply {
+                    if (purchaseData.offerToken != null) {
+                        setOfferToken(purchaseData.offerToken)
+                    }
+                }
                 .build()
         )
         val billingFlowParams = BillingFlowParams.newBuilder()
@@ -65,12 +100,23 @@ class BillingService @Inject constructor(
         val result = billingClient.launchBillingFlow(activity, billingFlowParams)
         val isSuccessful = result.responseCode == BillingClient.BillingResponseCode.OK
         if (isSuccessful) {
-            analyticsManager.trackStartBillingFlow(productId = id)
+            analyticsManager.trackStartBillingFlow(productId = purchaseData.productId)
         } else {
-            analyticsManager.trackFailBillingFlow(productId = id)
+            analyticsManager.trackFailBillingFlow(productId = purchaseData.productId)
         }
 
         return isSuccessful
+    }
+
+    fun acknowledgePurchase(purchasedProduct: PurchasedProduct) {
+        val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
+            .setPurchaseToken(purchasedProduct.token)
+            .build()
+        billingClient.acknowledgePurchase(acknowledgePurchaseParams) { result ->
+            if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                analyticsManager.trackAcknowledgeProduct(productId = purchasedProduct.id)
+            }
+        }
     }
 
     private suspend fun getProducts(
@@ -89,28 +135,30 @@ class BillingService @Inject constructor(
     }
 
     private suspend fun init(): Boolean {
-        if (billingClient.isReady) {
-            return true
-        }
+        mutex.withLock {
+            if (billingClient.isReady) {
+                return true
+            }
 
-        return suspendCoroutine { continuation ->
-            billingClient.startConnection(
-                object : BillingClientStateListener {
-                    override fun onBillingSetupFinished(billingResult: BillingResult) {
-                        val isSuccessful = billingResult.responseCode == BillingClient.BillingResponseCode.OK
-                        try {
-                            continuation.resume(isSuccessful)
-                        } catch (exception: Exception) {
-                            // TODO handle
+            return suspendCoroutine { continuation ->
+                billingClient.startConnection(
+                    object : BillingClientStateListener {
+                        override fun onBillingSetupFinished(billingResult: BillingResult) {
+                            val isSuccessful = billingResult.responseCode == BillingClient.BillingResponseCode.OK
+                            try {
+                                continuation.resume(isSuccessful)
+                            } catch (exception: Exception) {
+                                // TODO handle
+                                continuation.resume(false)
+                            }
+                        }
+
+                        override fun onBillingServiceDisconnected() {
                             continuation.resume(false)
                         }
                     }
-
-                    override fun onBillingServiceDisconnected() {
-                        continuation.resume(false)
-                    }
-                }
-            )
+                )
+            }
         }
     }
 
@@ -144,6 +192,23 @@ class BillingService @Inject constructor(
             .setProductId(id)
             .setProductType(type)
             .build()
+    }
+
+    private suspend fun queryPurchases(productType: String): List<Purchase> {
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(productType)
+            .build()
+
+        return suspendCoroutine { continuation ->
+            billingClient.queryPurchasesAsync(params) { billingResult, purchasesList ->
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    purchasesList.first().purchaseState
+                    continuation.resume(purchasesList)
+                } else {
+                    continuation.resume(emptyList())
+                }
+            }
+        }
     }
 
 }

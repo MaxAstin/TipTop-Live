@@ -48,6 +48,7 @@
     <string name="subscription_checkout">Continuar para o pagamento</string>
     <string name="subscription_use_forever">Pague uma vez e use para sempre</string>
     <string name="subscription_save">Economize %s</string>
+    <string name="subscription_checkout_failed">Falha ao concluir a operação</string>
 
     <string name="stream_join_requests_title">Solicitações para participar</string>
     <string name="stream_join_requests_body">Sem solicitações ainda</string>

@@ -48,6 +48,7 @@
     <string name="subscription_checkout">Перейти к оплате</string>
     <string name="subscription_use_forever">Заплатите один раз и пользуйтесь навсегда</string>
     <string name="subscription_save">Сэкономьте %s</string>
+    <string name="subscription_checkout_failed">Не удалось выполнить операцию</string>
 
     <string name="stream_join_requests_title">Запросы на присоединение</string>
     <string name="stream_join_requests_body">Запросов пока нет</string>

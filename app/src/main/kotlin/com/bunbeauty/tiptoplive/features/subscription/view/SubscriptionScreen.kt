@@ -39,10 +39,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.bunbeauty.tiptoplive.R
+import com.bunbeauty.tiptoplive.common.navigation.NavigationRote
 import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLivePrimaryButton
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.bold
+import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
 import com.bunbeauty.tiptoplive.features.subscription.presentation.Subscription
 import com.bunbeauty.tiptoplive.features.subscription.presentation.SubscriptionViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -54,16 +56,20 @@ private val blurredBackground: Color
 
 data class SubscriptionItem(
     val id: String,
+    val offerToken: String?,
     val name: String,
     val currentPrice: String,
     val previousPrice: String?,
     val discountPercent: String?,
     val isLifetime: Boolean,
-    val isSelected: Boolean
+    val isSelected: Boolean,
 )
 
 @Composable
-fun SubscriptionScreen(navController: NavHostController) {
+fun SubscriptionScreen(
+    navController: NavHostController,
+    startCheckout: (PurchaseData) -> Unit
+) {
     val viewModel: SubscriptionViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val onAction = remember {
@@ -79,8 +85,18 @@ fun SubscriptionScreen(navController: NavHostController) {
     LaunchedEffect(Unit) {
         viewModel.event.onEach { event ->
             when (event) {
-                Subscription.Event.HandleCloseClicked -> {
+                Subscription.Event.NavigateBack -> {
                     navController.popBackStack()
+                }
+
+                is Subscription.Event.StartCheckout -> {
+                    startCheckout(event.purchaseData)
+                }
+
+                is Subscription.Event.NavigateToPurchase -> {
+                    navController.navigate(
+                        NavigationRote.SuccessfullyPurchased(subscriptionName = event.subscriptionName)
+                    )
                 }
             }
         }.launchIn(this)
@@ -316,6 +332,7 @@ private fun SubscriptionScreenPreview() {
                 subscriptions = listOf(
                     SubscriptionItem(
                         id = "1",
+                        offerToken = "",
                         name = "Weekly",
                         currentPrice = "$2,99/week",
                         previousPrice = "$10,99/month",
@@ -325,6 +342,7 @@ private fun SubscriptionScreenPreview() {
                     ),
                     SubscriptionItem(
                         id = "2",
+                        offerToken = null,
                         name = "Lifetime",
                         currentPrice = "$6,99",
                         previousPrice = "$20,99/month",

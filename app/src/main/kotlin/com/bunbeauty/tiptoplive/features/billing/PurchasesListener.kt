@@ -5,6 +5,7 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
+import com.bunbeauty.tiptoplive.features.billing.model.PurchasedProduct
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
@@ -15,14 +16,20 @@ class PurchasesListener @Inject constructor(
     private val analyticsManager: AnalyticsManager
 ) : PurchasesUpdatedListener {
 
-    private val mutableSuccessPurchaseFlow = MutableSharedFlow<String>()
-    val successPurchaseFlow = mutableSuccessPurchaseFlow.asSharedFlow()
+    private val _purchasedProduct = MutableSharedFlow<PurchasedProduct>()
+    val purchasedProduct = _purchasedProduct.asSharedFlow()
 
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                val productId = purchases?.firstOrNull()?.products?.firstOrNull() ?: return
-                mutableSuccessPurchaseFlow.tryEmit(productId)
+                val purchase = purchases?.firstOrNull() ?: return
+                val productId = purchase.products.firstOrNull() ?: return
+
+                val purchasedProduct = PurchasedProduct(
+                    id = productId,
+                    token = purchase.purchaseToken
+                )
+                _purchasedProduct.tryEmit(purchasedProduct)
                 analyticsManager.trackPurchaseProduct(productId = productId)
             }
 

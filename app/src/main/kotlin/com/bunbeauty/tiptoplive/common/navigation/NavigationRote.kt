@@ -22,4 +22,7 @@ interface NavigationRote {
     @Serializable
     object Subscription
 
+    @Serializable
+    data class SuccessfullyPurchased(val subscriptionName: String)
+
 }

@@ -49,6 +49,7 @@
     <string name="subscription_checkout">Continue to Checkout</string>
     <string name="subscription_use_forever">Pay once and use forever</string>
     <string name="subscription_save">Save %s</string>
+    <string name="subscription_checkout_failed">Failed to complete the operation</string>
 
     <string name="stream_join_requests_title">Requests to join</string>
     <string name="stream_join_requests_body">No Requests Yet</string>

@@ -1,6 +1,7 @@
 package com.bunbeauty.tiptoplive.features.subscription.presentation
 
 import com.bunbeauty.tiptoplive.common.presentation.Base
+import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
 import com.bunbeauty.tiptoplive.features.subscription.view.SubscriptionItem
 
 interface Subscription {
@@ -21,7 +22,9 @@ interface Subscription {
     }
 
     sealed interface Event: Base.Event {
-        data object HandleCloseClicked: Event
+        data object NavigateBack: Event
+        data class StartCheckout(val purchaseData: PurchaseData): Event
+        data class NavigateToPurchase(val subscriptionName: String): Event
     }
 
 }
