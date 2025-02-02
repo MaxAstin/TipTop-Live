@@ -62,7 +62,7 @@ class PurchasesListener @Inject constructor(
             }
 
             BillingClient.BillingResponseCode.ERROR -> {
-                analyticsManager.trackError()
+                analyticsManager.trackBillingError()
             }
 
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {

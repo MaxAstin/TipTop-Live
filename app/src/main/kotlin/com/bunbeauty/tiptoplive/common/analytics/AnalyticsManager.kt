@@ -5,6 +5,7 @@ import com.bunbeauty.tiptoplive.common.util.Seconds
 import com.bunbeauty.tiptoplive.common.util.toTimeString
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
+import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -42,10 +43,12 @@ private const val SERVICE_UNAVAILABLE_EVENT = "billing_service_unavailable"
 private const val BILLING_UNAVAILABLE_EVENT = "billing_unavailable"
 private const val ITEM_UNAVAILABLE_EVENT = "billing_item_unavailable"
 private const val DEVELOPER_ERROR_EVENT = "billing_developer_error"
-private const val ERROR_EVENT = "billing_error"
+private const val BILLING_ERROR_EVENT = "billing_error"
 private const val ITEM_ALREADY_OWNED_EVENT = "billing_item_already_owned"
 private const val ITEM_NOT_OWNED_EVENT = "billing_item_not_owned"
 private const val NETWORK_ERROR_EVENT = "billing_network_error"
+
+private const val ERROR_PREFIX = "error_"
 
 private const val ANALYTICS_TAG = "analytics"
 
@@ -168,8 +171,8 @@ class AnalyticsManager @Inject constructor(
         trackEvent(event = DEVELOPER_ERROR_EVENT)
     }
 
-    fun trackError() {
-        trackEvent(event = ERROR_EVENT)
+    fun trackBillingError() {
+        trackEvent(event = BILLING_ERROR_EVENT)
     }
 
     fun trackItemAlreadyOwned() {
@@ -190,6 +193,10 @@ class AnalyticsManager @Inject constructor(
             else -> "8_and_more"
         }
         trackEvent(event = "$USED_DAYS_PREFIX$eventPostfix")
+    }
+
+    fun trackError(exception: Exception) {
+        trackEvent(event = "$ERROR_PREFIX${exception::class.simpleName}")
     }
 
     private fun trackEvent(event: String, params: Map<String, Any> = emptyMap()) {

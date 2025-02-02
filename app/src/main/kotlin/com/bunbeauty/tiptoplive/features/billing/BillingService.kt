@@ -35,35 +35,48 @@ class BillingService @Inject constructor(
     private val mutex = Mutex()
 
     suspend fun getProducts(ids: List<String>): List<Product> {
-        val subscriptions = getProducts(
-            type = BillingClient.ProductType.SUBS,
-            ids = ids
-        ).mapNotNull { productDetails ->
-            productDetails.subscriptionToProduct(percent = 25)
-        }
-        val inAppProducts = getProducts(
-            type = BillingClient.ProductType.INAPP,
-            ids = ids
-        ).mapNotNull { productDetails ->
-            productDetails.inAppProductToProduct(percent = 65)
-        }
+        return try {
+            val subscriptions = getProducts(
+                type = BillingClient.ProductType.SUBS,
+                ids = ids
+            ).mapNotNull { productDetails ->
+                productDetails.subscriptionToProduct(percent = 25)
+            }
+            val inAppProducts = getProducts(
+                type = BillingClient.ProductType.INAPP,
+                ids = ids
+            ).mapNotNull { productDetails ->
+                productDetails.inAppProductToProduct(percent = 65)
+            }
 
-        return subscriptions + inAppProducts
+            subscriptions + inAppProducts
+        } catch (exception: Exception) {
+            analyticsManager.trackError(exception)
+            emptyList()
+        }
     }
 
     suspend fun getPurchases(): List<PurchasedProduct> {
-        val isSuccessful = init()
-        return if (isSuccessful) {
-            (queryPurchases(BillingClient.ProductType.SUBS) +
-                queryPurchases(BillingClient.ProductType.INAPP)).mapNotNull { purchase ->
-                purchase.products.firstOrNull()?.let { product ->
-                    PurchasedProduct(
-                        id = product,
-                        token = purchase.purchaseToken
-                    )
-                }
+        return try {
+            val isSuccessful = init()
+            if (isSuccessful) {
+                (queryPurchases(BillingClient.ProductType.SUBS) +
+                    queryPurchases(BillingClient.ProductType.INAPP))
+                    .filter { purchase ->
+                        purchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                    }.mapNotNull { purchase ->
+                        purchase.products.firstOrNull()?.let { product ->
+                            PurchasedProduct(
+                                id = product,
+                                token = purchase.purchaseToken
+                            )
+                        }
+                    }
+            } else {
+                emptyList()
             }
-        } else {
+        } catch (exception: Exception) {
+            analyticsManager.trackError(exception)
             emptyList()
         }
     }

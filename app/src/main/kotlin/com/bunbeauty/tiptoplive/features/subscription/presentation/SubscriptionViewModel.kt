@@ -5,8 +5,8 @@ import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
 import com.bunbeauty.tiptoplive.features.billing.BillingService
 import com.bunbeauty.tiptoplive.features.billing.PurchasesListener
-import com.bunbeauty.tiptoplive.features.subscription.mapper.toSubscriptions
 import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
+import com.bunbeauty.tiptoplive.features.subscription.mapper.toSubscriptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,6 +27,7 @@ class SubscriptionViewModel @Inject constructor(
 ) {
 
     init {
+        // TODO remove
         loadPurchases()
         loadSubscriptions()
         subscribeOnPurchaseFlow()
@@ -71,32 +72,24 @@ class SubscriptionViewModel @Inject constructor(
 
     private fun loadPurchases() {
         viewModelScope.launch {
-            try {
-                val purchase = billingService.getPurchases().firstOrNull()
-                if (purchase != null) {
-                    sendEvent(
-                        Subscription.Event.NavigateToPurchase(
-                            subscriptionName = purchase.id
-                        )
+            val purchase = billingService.getPurchases().firstOrNull()
+            if (purchase != null) {
+                sendEvent(
+                    Subscription.Event.NavigateToPurchase(
+                        subscriptionName = purchase.id
                     )
-                }
-            } catch (e: Exception) {
-                // TODO handle error
+                )
             }
         }
     }
 
     private fun loadSubscriptions() {
         viewModelScope.launch {
-            try {
-                val subscriptions = billingService.getProducts(
-                    listOf("monthly", "lifetime")
-                ).toSubscriptions()
-                setState {
-                    copy(subscriptions = subscriptions)
-                }
-            } catch (e: Exception) {
-                // TODO handle error
+            val subscriptions = billingService.getProducts(
+                listOf("monthly", "lifetime")
+            ).toSubscriptions()
+            setState {
+                copy(subscriptions = subscriptions)
             }
         }
     }
