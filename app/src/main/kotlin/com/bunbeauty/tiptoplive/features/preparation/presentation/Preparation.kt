@@ -4,16 +4,23 @@ import android.net.Uri
 import com.bunbeauty.tiptoplive.common.presentation.Base
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
+import kotlinx.collections.immutable.ImmutableList
 
 interface Preparation {
 
     data class State(
         val image: ImageSource<*>,
         val username: String,
+        val viewerCountList: ImmutableList<ViewerCountItem>,
         val viewerCount: ViewerCount,
         val status: Status,
         val showFeedbackDialog: Boolean,
     ): Base.State
+
+    data class ViewerCountItem(
+        val viewerCount: ViewerCount,
+        val isAvailable: Boolean
+    )
 
     enum class Status {
         LOADING,

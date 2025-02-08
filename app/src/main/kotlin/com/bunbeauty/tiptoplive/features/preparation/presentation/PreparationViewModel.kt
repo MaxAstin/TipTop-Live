@@ -9,6 +9,7 @@ import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
 import com.bunbeauty.tiptoplive.features.billing.domain.IsPremiumAvailableUseCase
 import com.bunbeauty.tiptoplive.features.preparation.domain.SaveShouldAskFeedbackUseCase
 import com.bunbeauty.tiptoplive.features.preparation.domain.ShouldAskFeedbackUseCase
+import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation.ViewerCountItem
 import com.bunbeauty.tiptoplive.shared.domain.GetImageUriFlowUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetUsernameUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetViewerCountUseCase
@@ -17,6 +18,8 @@ import com.bunbeauty.tiptoplive.shared.domain.SaveUsernameUseCase
 import com.bunbeauty.tiptoplive.shared.domain.SaveViewerCountUseCase
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.debounce
@@ -45,6 +48,7 @@ class PreparationViewModel @Inject constructor(
         Preparation.State(
             image = ImageSource.ResId(R.drawable.img_default_avatar),
             username = "",
+            viewerCountList = persistentListOf(),
             viewerCount = ViewerCount.V_100_200,
             status = Preparation.Status.LOADING,
             showFeedbackDialog = false,
@@ -138,10 +142,12 @@ class PreparationViewModel @Inject constructor(
                     saveShouldAskFeedbackUseCase(shouldAsk = !action.checked)
                 }
             }
+
             Preparation.Action.ShareClick -> {
                 analyticsManager.trackShare()
                 sendEvent(Preparation.Event.HandleShareClick)
             }
+
             Preparation.Action.PremiumClick -> {
                 analyticsManager.trackPremiumClick()
                 sendEvent(Preparation.Event.HandlePremiumClick)
@@ -184,7 +190,16 @@ class PreparationViewModel @Inject constructor(
                 Preparation.Status.FREE
             }
             setState {
-                copy(status = status)
+                copy(
+                    status = status,
+                    viewerCountList = ViewerCount.entries.map { viewerCount ->
+                        ViewerCountItem(
+                            viewerCount = viewerCount,
+                            isAvailable = viewerCount == ViewerCount.V_100_200
+                                || status == Preparation.Status.PREMIUM,
+                        )
+                    }.toImmutableList()
+                )
             }
         }
     }

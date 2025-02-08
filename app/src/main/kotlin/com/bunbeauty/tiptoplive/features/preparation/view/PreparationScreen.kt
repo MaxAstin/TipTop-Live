@@ -50,6 +50,7 @@ import com.bunbeauty.tiptoplive.features.main.view.FeedbackDialog
 import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation
 import com.bunbeauty.tiptoplive.features.preparation.presentation.PreparationViewModel
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -222,6 +223,7 @@ private fun PreparationContent(
                 )
                 ViewersDropdownMenu(
                     expanded = menuExpanded,
+                    viewerCountList = state.viewerCountList,
                     onDismissRequest = {
                         menuExpanded = false
                     },
@@ -334,6 +336,7 @@ private fun PreparationCFreePreview() {
                 image = ImageSource.ResId(R.drawable.img_default_avatar),
                 username = "",
                 viewerCount = ViewerCount.V_100_200,
+                viewerCountList = persistentListOf(),
                 status = Preparation.Status.FREE,
                 showFeedbackDialog = false,
             ),
@@ -351,6 +354,7 @@ private fun PreparationPremiumPreview() {
                 image = ImageSource.ResId(R.drawable.img_default_avatar),
                 username = "",
                 viewerCount = ViewerCount.V_100_200,
+                viewerCountList = persistentListOf(),
                 status = Preparation.Status.PREMIUM,
                 showFeedbackDialog = false,
             ),
