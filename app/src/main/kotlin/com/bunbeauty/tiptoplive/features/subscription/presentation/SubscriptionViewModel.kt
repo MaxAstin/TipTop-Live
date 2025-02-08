@@ -4,8 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
 import com.bunbeauty.tiptoplive.features.billing.BillingService
-import com.bunbeauty.tiptoplive.features.billing.PurchasesListener
+import com.bunbeauty.tiptoplive.features.billing.PurchaseResultListener
 import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
+import com.bunbeauty.tiptoplive.features.billing.model.PurchaseResult
 import com.bunbeauty.tiptoplive.features.subscription.mapper.toSubscriptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class SubscriptionViewModel @Inject constructor(
     private val analyticsManager: AnalyticsManager,
     private val billingService: BillingService,
-    private val purchasesListener: PurchasesListener
+    private val purchaseResultListener: PurchaseResultListener
 ) : BaseViewModel<Subscription.State, Subscription.Action, Subscription.Event>(
     initState = {
         Subscription.State(
@@ -27,8 +28,6 @@ class SubscriptionViewModel @Inject constructor(
 ) {
 
     init {
-        // TODO remove
-        loadPurchases()
         loadSubscriptions()
         subscribeOnPurchaseFlow()
     }
@@ -70,19 +69,6 @@ class SubscriptionViewModel @Inject constructor(
         }
     }
 
-    private fun loadPurchases() {
-        viewModelScope.launch {
-            val purchase = billingService.getPurchases().firstOrNull()
-            if (purchase != null) {
-                sendEvent(
-                    Subscription.Event.NavigateToPurchase(
-                        subscriptionName = purchase.id
-                    )
-                )
-            }
-        }
-    }
-
     private fun loadSubscriptions() {
         viewModelScope.launch {
             val subscriptions = billingService.getProducts(
@@ -95,18 +81,34 @@ class SubscriptionViewModel @Inject constructor(
     }
 
     private fun subscribeOnPurchaseFlow() {
-        purchasesListener.purchasedProduct.onEach { product ->
-            billingService.acknowledgePurchase(purchasedProduct = product)
-            currentState.subscriptions.find { subscription ->
-                subscription.id == product.id
-            }?.let { purchasedSubscription ->
-                sendEvent(
-                    Subscription.Event.NavigateToPurchase(
-                        subscriptionName = purchasedSubscription.name
-                    )
-                )
+        purchaseResultListener.purchaseResult.onEach { result ->
+            when (result) {
+                is PurchaseResult.Success -> {
+                    billingService.acknowledgePurchase(purchasedProduct = result.product)
+                        .onSuccess { success ->
+                            currentState.subscriptions.find { subscription ->
+                                subscription.id == success.product.id
+                            }?.let { purchasedSubscription ->
+                                sendEvent(
+                                    Subscription.Event.NavigateToPurchase(
+                                        subscriptionName = purchasedSubscription.name
+                                    )
+                                )
+                            }
+                        }.onError {
+                            handleError()
+                        }
+                }
+
+                is PurchaseResult.Error -> {
+                    handleError()
+                }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun handleError() {
+        sendEvent(Subscription.Event.NavigateToPurchaseFailed)
     }
 
 }

@@ -18,10 +18,7 @@ import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 @Composable
-fun SuccessfullyPurchasedScreen(
-    navController: NavHostController,
-    subscriptionName: String
-) {
+fun PurchaseFailedScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -41,7 +38,7 @@ fun SuccessfullyPurchasedScreen(
         )
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = "You successfully purchased $subscriptionName",
+            text = "Something went wrong",
         )
     }
 }

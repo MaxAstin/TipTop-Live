@@ -43,6 +43,7 @@ import com.bunbeauty.tiptoplive.features.main.view.CameraIsRequiredDialog
 import com.bunbeauty.tiptoplive.features.preparation.view.PreparationScreen
 import com.bunbeauty.tiptoplive.features.stream.view.StreamScreen
 import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
+import com.bunbeauty.tiptoplive.features.subscription.view.PurchaseFailedScreen
 import com.bunbeauty.tiptoplive.features.subscription.view.SubscriptionScreen
 import com.bunbeauty.tiptoplive.features.subscription.view.SuccessfullyPurchasedScreen
 import dagger.Lazy
@@ -216,6 +217,9 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     subscriptionName = successfullyPurchasedRoute.subscriptionName
                 )
+            }
+            composable<NavigationRote.PurchaseFailed> {
+                PurchaseFailedScreen(navController = navController)
             }
         }
     }

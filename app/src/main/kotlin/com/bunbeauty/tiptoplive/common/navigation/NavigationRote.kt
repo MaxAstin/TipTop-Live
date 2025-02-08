@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 interface NavigationRote {
 
     @Serializable
-    object Intro
+    data object Intro
 
     @Serializable
     data class Preparation(
@@ -17,12 +17,15 @@ interface NavigationRote {
     data class CropImage(val uri: String)
 
     @Serializable
-    object Stream
+    data object Stream
 
     @Serializable
-    object Subscription
+    data object Subscription
 
     @Serializable
     data class SuccessfullyPurchased(val subscriptionName: String)
+
+    @Serializable
+    data object PurchaseFailed
 
 }

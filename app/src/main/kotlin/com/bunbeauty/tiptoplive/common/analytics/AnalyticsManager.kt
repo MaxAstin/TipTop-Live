@@ -36,17 +36,9 @@ private const val PRODUCT_NOT_FOUND_EVENT = "product_not_found_"
 private const val START_BILLING_FLOW_EVENT = "start_billing_flow_"
 private const val FAIL_BILLING_FLOW_EVENT = "fail_billing_flow_"
 private const val PURCHASE_PRODUCT_EVENT = "purchase_product_"
-private const val FEATURE_NOT_SUPPORTED_EVENT = "billing_not_supported"
-private const val SERVICE_DISCONNECTED_EVENT = "billing_disconnected"
-private const val USER_CANCELED_EVENT = "billing_user_canceled"
-private const val SERVICE_UNAVAILABLE_EVENT = "billing_service_unavailable"
-private const val BILLING_UNAVAILABLE_EVENT = "billing_unavailable"
-private const val ITEM_UNAVAILABLE_EVENT = "billing_item_unavailable"
-private const val DEVELOPER_ERROR_EVENT = "billing_developer_error"
-private const val BILLING_ERROR_EVENT = "billing_error"
-private const val ITEM_ALREADY_OWNED_EVENT = "billing_item_already_owned"
-private const val ITEM_NOT_OWNED_EVENT = "billing_item_not_owned"
-private const val NETWORK_ERROR_EVENT = "billing_network_error"
+private const val PURCHASE_FAILED_EVENT = "purchase_failed_"
+private const val ACKNOWLEDGE_PRODUCT_EVENT = "acknowledge_product_"
+private const val ACKNOWLEDGEMENT_FAILED_EVENT = "acknowledgement_failed_"
 
 private const val ERROR_PREFIX = "error_"
 
@@ -139,52 +131,16 @@ class AnalyticsManager @Inject constructor(
         trackEvent(event = "$PURCHASE_PRODUCT_EVENT$productId")
     }
 
+    fun trackPurchaseFailed(productId: String, reason: String) {
+        trackEvent(event = "$PURCHASE_FAILED_EVENT${productId}_$reason")
+    }
+
     fun trackAcknowledgeProduct(productId: String) {
-        trackEvent(event = "$PURCHASE_PRODUCT_EVENT$productId")
+        trackEvent(event = "$ACKNOWLEDGE_PRODUCT_EVENT$productId")
     }
 
-    fun trackFeatureNotSupported() {
-        trackEvent(event = FEATURE_NOT_SUPPORTED_EVENT)
-    }
-
-    fun trackServiceDisconnected() {
-        trackEvent(event = SERVICE_DISCONNECTED_EVENT)
-    }
-
-    fun trackUserCanceled() {
-        trackEvent(event = USER_CANCELED_EVENT)
-    }
-
-    fun trackServiceUnavailable() {
-        trackEvent(event = SERVICE_UNAVAILABLE_EVENT)
-    }
-
-    fun trackBillingUnavailable() {
-        trackEvent(event = BILLING_UNAVAILABLE_EVENT)
-    }
-
-    fun trackItemUnavailable() {
-        trackEvent(event = ITEM_UNAVAILABLE_EVENT)
-    }
-
-    fun trackDeveloperError() {
-        trackEvent(event = DEVELOPER_ERROR_EVENT)
-    }
-
-    fun trackBillingError() {
-        trackEvent(event = BILLING_ERROR_EVENT)
-    }
-
-    fun trackItemAlreadyOwned() {
-        trackEvent(event = ITEM_ALREADY_OWNED_EVENT)
-    }
-
-    fun trackItemNotOwned() {
-        trackEvent(event = ITEM_NOT_OWNED_EVENT)
-    }
-
-    fun trackNetworkError() {
-        trackEvent(event = NETWORK_ERROR_EVENT)
+    fun trackAcknowledgementFailed(productId: String, reason: String) {
+        trackEvent(event = "$ACKNOWLEDGEMENT_FAILED_EVENT${productId}_$reason")
     }
 
     fun trackUsedDays(usedDayCount: Int) {

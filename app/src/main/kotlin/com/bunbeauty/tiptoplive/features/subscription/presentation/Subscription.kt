@@ -25,6 +25,7 @@ interface Subscription {
         data object NavigateBack: Event
         data class StartCheckout(val purchaseData: PurchaseData): Event
         data class NavigateToPurchase(val subscriptionName: String): Event
+        data object NavigateToPurchaseFailed: Event
     }
 
 }

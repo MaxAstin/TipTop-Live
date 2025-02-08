@@ -14,10 +14,13 @@ import com.android.billingclient.api.queryProductDetails
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.features.billing.mapper.inAppProductToProduct
 import com.bunbeauty.tiptoplive.features.billing.mapper.subscriptionToProduct
+import com.bunbeauty.tiptoplive.features.billing.mapper.toPurchaseResultError
 import com.bunbeauty.tiptoplive.features.billing.model.Product
 import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
+import com.bunbeauty.tiptoplive.features.billing.model.PurchaseResult
 import com.bunbeauty.tiptoplive.features.billing.model.PurchasedProduct
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -121,13 +124,25 @@ class BillingService @Inject constructor(
         return isSuccessful
     }
 
-    fun acknowledgePurchase(purchasedProduct: PurchasedProduct) {
+    suspend fun acknowledgePurchase(purchasedProduct: PurchasedProduct): PurchaseResult {
         val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
             .setPurchaseToken(purchasedProduct.token)
             .build()
-        billingClient.acknowledgePurchase(acknowledgePurchaseParams) { result ->
-            if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                analyticsManager.trackAcknowledgeProduct(productId = purchasedProduct.id)
+
+        return suspendCancellableCoroutine { continuation ->
+            billingClient.acknowledgePurchase(acknowledgePurchaseParams) { result ->
+                if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                    analyticsManager.trackAcknowledgeProduct(productId = purchasedProduct.id)
+                    continuation.resume(PurchaseResult.Success(product = purchasedProduct))
+                } else {
+                    result.toPurchaseResultError()?.let { error ->
+                        analyticsManager.trackAcknowledgementFailed(
+                            productId = purchasedProduct.id,
+                            reason = error.reason
+                        )
+                        continuation.resume(error)
+                    } ?: continuation.cancel()
+                }
             }
         }
     }
@@ -161,7 +176,6 @@ class BillingService @Inject constructor(
                             try {
                                 continuation.resume(isSuccessful)
                             } catch (exception: Exception) {
-                                // TODO handle
                                 continuation.resume(false)
                             }
                         }

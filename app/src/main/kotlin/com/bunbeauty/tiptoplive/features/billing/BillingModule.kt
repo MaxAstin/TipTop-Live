@@ -18,7 +18,7 @@ object BillingModule {
     @Provides
     fun providesBillingClient(
         @ApplicationContext context: Context,
-        purchasesListener: PurchasesListener
+        purchaseResultListener: PurchaseResultListener
     ): BillingClient {
         val pendingPurchasesParams = PendingPurchasesParams.newBuilder()
             .enableOneTimeProducts()
@@ -27,7 +27,7 @@ object BillingModule {
 
         return BillingClient.newBuilder(context)
             .enablePendingPurchases(pendingPurchasesParams)
-            .setListener(purchasesListener)
+            .setListener(purchaseResultListener)
             .build()
     }
 
