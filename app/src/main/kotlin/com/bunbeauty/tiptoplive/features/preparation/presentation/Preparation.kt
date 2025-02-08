@@ -11,11 +11,18 @@ interface Preparation {
         val image: ImageSource<*>,
         val username: String,
         val viewerCount: ViewerCount,
-        val highlightDonate: Boolean,
+        val status: Status,
         val showFeedbackDialog: Boolean,
     ): Base.State
 
+    enum class Status {
+        LOADING,
+        FREE,
+        PREMIUM
+    }
+
     sealed interface Action: Base.Action {
+        data object StartScreen: Action
         data class ViewerCountSelect(val viewerCount: ViewerCount): Action
         data class UsernameUpdate(val username: String): Action
         data object AvatarClick: Action

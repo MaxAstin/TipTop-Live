@@ -6,9 +6,9 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
+import com.bunbeauty.tiptoplive.features.billing.domain.IsPremiumAvailableUseCase
 import com.bunbeauty.tiptoplive.features.preparation.domain.SaveShouldAskFeedbackUseCase
 import com.bunbeauty.tiptoplive.features.preparation.domain.ShouldAskFeedbackUseCase
-import com.bunbeauty.tiptoplive.features.preparation.domain.ShouldHighlightDonateUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetImageUriFlowUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetUsernameUseCase
 import com.bunbeauty.tiptoplive.shared.domain.GetViewerCountUseCase
@@ -18,6 +18,7 @@ import com.bunbeauty.tiptoplive.shared.domain.SaveViewerCountUseCase
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -35,9 +36,9 @@ class PreparationViewModel @Inject constructor(
     private val saveUsernameUseCase: SaveUsernameUseCase,
     private val getViewerCountUseCase: GetViewerCountUseCase,
     private val saveViewerCountUseCase: SaveViewerCountUseCase,
+    private val isPremiumAvailableUseCase: IsPremiumAvailableUseCase,
     private val shouldAskFeedbackUseCase: ShouldAskFeedbackUseCase,
     private val saveShouldAskFeedbackUseCase: SaveShouldAskFeedbackUseCase,
-    private val shouldHighlightDonateUseCase: ShouldHighlightDonateUseCase,
     private val analyticsManager: AnalyticsManager,
 ) : BaseViewModel<Preparation.State, Preparation.Action, Preparation.Event>(
     initState = {
@@ -45,7 +46,7 @@ class PreparationViewModel @Inject constructor(
             image = ImageSource.ResId(R.drawable.img_default_avatar),
             username = "",
             viewerCount = ViewerCount.V_100_200,
-            highlightDonate = false,
+            status = Preparation.Status.LOADING,
             showFeedbackDialog = false,
         )
     }
@@ -58,6 +59,10 @@ class PreparationViewModel @Inject constructor(
 
     override fun onAction(action: Preparation.Action) {
         when (action) {
+            Preparation.Action.StartScreen -> {
+                checkPremiumStatus()
+            }
+
             is Preparation.Action.ImageSelect -> {
                 action.uri?.let { imageUri ->
                     viewModelScope.launch {
@@ -146,11 +151,15 @@ class PreparationViewModel @Inject constructor(
 
     private fun initState() {
         viewModelScope.launch {
+            val usernameDeferred = async { getUsernameUseCase() }
+            val viewerCountDeferred = async { getViewerCountUseCase() }
+            val username = usernameDeferred.await()
+            val viewerCount = viewerCountDeferred.await()
+
             setState {
                 copy(
-                    username = getUsernameUseCase(),
-                    viewerCount = getViewerCountUseCase(),
-                    highlightDonate = shouldHighlightDonateUseCase()
+                    username = username,
+                    viewerCount = viewerCount
                 )
             }
         }
@@ -165,6 +174,19 @@ class PreparationViewModel @Inject constructor(
                 )
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun checkPremiumStatus() {
+        viewModelScope.launch {
+            val status = if (isPremiumAvailableUseCase()) {
+                Preparation.Status.PREMIUM
+            } else {
+                Preparation.Status.FREE
+            }
+            setState {
+                copy(status = status)
+            }
+        }
     }
 
     @OptIn(FlowPreview::class)

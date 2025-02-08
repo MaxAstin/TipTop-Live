@@ -82,6 +82,9 @@ fun PreparationScreen(
     }
 
     LaunchedEffect(Unit) {
+        viewModel.onAction(Preparation.Action.StartScreen)
+    }
+    LaunchedEffect(Unit) {
         viewModel.event.onEach { event ->
             when (event) {
                 Preparation.Event.OpenStream -> {
@@ -140,40 +143,11 @@ private fun PreparationContent(
             .background(FakeLiveTheme.colors.background)
             .padding(16.dp)
     ) {
-        Row(
+        Premium(
             modifier = Modifier.align(Alignment.TopEnd),
-            horizontalArrangement = spacedBy(8.dp)
-        ) {
-            FakeLivePrimaryButton(
-                text = stringResource(R.string.preparation_premium),
-                onClick = {
-                    onAction(Preparation.Action.PremiumClick)
-                },
-                contentPadding = PaddingValues(
-                    horizontal = 12.dp,
-                    vertical = 8.dp,
-                ),
-                leadingIcon = {
-                    Icon(
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .size(20.dp),
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_star),
-                        contentDescription = "Star",
-                        tint = FakeLiveTheme.colors.onSurface,
-                    )
-                }
-            )
-
-            // TODO: move to Settings
-//            FakeLiveIconButton(
-//                iconId = R.drawable.ic_share,
-//                contentDescription = "share",
-//                onClick = {
-//                    onAction(Preparation.Action.ShareClick)
-//                }
-//            )
-        }
+            status = state.status,
+            onAction = onAction
+        )
 
         Column(modifier = Modifier.align(Alignment.Center)) {
             CachedImage(
@@ -289,16 +263,95 @@ private fun PreparationContent(
     }
 }
 
+@Composable
+private fun Premium(
+    status: Preparation.Status,
+    onAction: (Preparation.Action) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    when (status) {
+        Preparation.Status.LOADING -> Unit
+        Preparation.Status.FREE -> {
+            FakeLivePrimaryButton(
+                modifier = modifier,
+                text = stringResource(R.string.preparation_premium),
+                onClick = {
+                    onAction(Preparation.Action.PremiumClick)
+                },
+                contentPadding = PaddingValues(
+                    horizontal = 12.dp,
+                    vertical = 8.dp,
+                ),
+                leadingIcon = {
+                    Icon(
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(20.dp),
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_star),
+                        contentDescription = "Star",
+                        tint = FakeLiveTheme.colors.onSurface,
+                    )
+                }
+            )
+        }
+
+        Preparation.Status.PREMIUM -> {
+            Row(
+                modifier = modifier
+                    .background(
+                        FakeLiveTheme.colors.surface,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(
+                        horizontal = 12.dp,
+                        vertical = 6.dp
+                    ),
+                horizontalArrangement = spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.preparation_premium),
+                    color = FakeLiveTheme.colors.onSurface,
+                    style = FakeLiveTheme.typography.titleSmall,
+                )
+                Icon(
+                    modifier = Modifier.size(20.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_infinity),
+                    contentDescription = "Star",
+                    tint = FakeLiveTheme.colors.onSurface,
+                )
+            }
+        }
+    }
+}
+
 @LocalePreview
 @Composable
-private fun PreparationContentPreview() {
+private fun PreparationCFreePreview() {
     FakeLiveTheme {
         PreparationContent(
             state = Preparation.State(
                 image = ImageSource.ResId(R.drawable.img_default_avatar),
                 username = "",
                 viewerCount = ViewerCount.V_100_200,
-                highlightDonate = true,
+                status = Preparation.Status.FREE,
+                showFeedbackDialog = false,
+            ),
+            onAction = {}
+        )
+    }
+}
+
+@LocalePreview
+@Composable
+private fun PreparationPremiumPreview() {
+    FakeLiveTheme {
+        PreparationContent(
+            state = Preparation.State(
+                image = ImageSource.ResId(R.drawable.img_default_avatar),
+                username = "",
+                viewerCount = ViewerCount.V_100_200,
+                status = Preparation.Status.PREMIUM,
                 showFeedbackDialog = false,
             ),
             onAction = {}
