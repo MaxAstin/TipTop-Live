@@ -16,6 +16,7 @@ private const val VIEWER_COUNT_EVENT = "viewer_count_"
 
 private const val STREAM_STOPPED_EVENT = "stream_stopped"
 private const val STREAM_FINISHED_EVENT = "stream_finished"
+private const val STREAM_AUTO_FINISHED_EVENT = "stream_auto_finished"
 private const val STREAM_DURATION_PARAM = "stream_duration"
 private const val CAMERA_ERROR_EVENT = "camera_error"
 
@@ -76,6 +77,10 @@ class AnalyticsManager @Inject constructor(
                 STREAM_DURATION_PARAM to duration.toTimeString()
             )
         )
+    }
+
+    fun trackStreamAutoFinish() {
+        trackEvent(event = STREAM_AUTO_FINISHED_EVENT)
     }
 
     fun trackCameraError() {

@@ -6,6 +6,7 @@ import com.bunbeauty.tiptoplive.common.analytics.AnalyticsManager
 import com.bunbeauty.tiptoplive.common.presentation.BaseViewModel
 import com.bunbeauty.tiptoplive.common.util.Seconds
 import com.bunbeauty.tiptoplive.common.util.getCurrentTimeSeconds
+import com.bunbeauty.tiptoplive.features.billing.domain.IsPremiumAvailableUseCase
 import com.bunbeauty.tiptoplive.features.stream.CameraUtil
 import com.bunbeauty.tiptoplive.features.stream.domain.GetCommentsDelayUseCase
 import com.bunbeauty.tiptoplive.features.stream.domain.GetCommentsUseCase
@@ -22,11 +23,14 @@ import javax.inject.Inject
 import kotlin.math.min
 import kotlin.random.Random
 
+private const val TIME_LIMIT_FOR_FREE_VERSION = 60_000L // 60 sec
+
 @HiltViewModel
 class StreamViewModel @Inject constructor(
     private val getImageUriFlowUseCase: GetImageUriFlowUseCase,
     private val getUsernameUseCase: GetUsernameUseCase,
     private val getViewerCountUseCase: GetViewerCountUseCase,
+    private val isPremiumAvailableUseCase: IsPremiumAvailableUseCase,
     private val getCommentsUseCase: GetCommentsUseCase,
     private val getCommentsDelayUseCase: GetCommentsDelayUseCase,
     private val getQuestionUseCase: GetQuestionUseCase,
@@ -60,6 +64,7 @@ class StreamViewModel @Inject constructor(
         setupAvatar()
         setupUsername()
         setupViewerCount()
+        checkPremiumStatus()
 
         startGenerateReactions()
         startGenerateViewersCount()
@@ -229,7 +234,7 @@ class StreamViewModel @Inject constructor(
             Stream.Action.FinishStreamClick -> {
                 val duration = getStreamDuration()
                 analyticsManager.trackStreamFinish(duration = duration)
-                sendEvent(Stream.Event.GoBack(duration = duration))
+                sendEvent(Stream.Event.NavigateBack(duration = duration))
             }
 
             is Stream.Action.CameraError -> {
@@ -254,6 +259,16 @@ class StreamViewModel @Inject constructor(
         viewModelScope.launch {
             setState {
                 copy(viewersCount = getViewerCountUseCase().min)
+            }
+        }
+    }
+
+    private fun checkPremiumStatus() {
+        viewModelScope.launch {
+            if (!isPremiumAvailableUseCase()) {
+                delay(TIME_LIMIT_FOR_FREE_VERSION)
+                analyticsManager.trackStreamAutoFinish()
+                sendEvent(Stream.Event.NavigateBack(duration = null))
             }
         }
     }

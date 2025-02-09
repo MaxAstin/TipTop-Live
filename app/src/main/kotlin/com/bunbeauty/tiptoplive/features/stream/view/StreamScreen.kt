@@ -88,10 +88,10 @@ fun StreamScreen(navController: NavHostController) {
     LaunchedEffect(Unit) {
         viewModel.event.onEach { event ->
             when (event) {
-                is Stream.Event.GoBack -> {
+                is Stream.Event.NavigateBack -> {
                     navController.navigate(
                         route = NavigationRote.Preparation(
-                            durationInSeconds = event.duration.value
+                            durationInSeconds = event.duration?.value
                         )
                     ) {
                         popUpTo<NavigationRote.Preparation> {
