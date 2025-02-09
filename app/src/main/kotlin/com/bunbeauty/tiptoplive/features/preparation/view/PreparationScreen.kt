@@ -104,7 +104,7 @@ fun PreparationScreen(
                     onShareClick()
                 }
 
-                Preparation.Event.HandlePremiumClick -> {
+                Preparation.Event.NavigateToSubscription -> {
                     navController.navigate(NavigationRote.Subscription)
                 }
             }
@@ -227,8 +227,10 @@ private fun PreparationContent(
                     onDismissRequest = {
                         menuExpanded = false
                     },
-                    onItemClick = { viewerCount ->
-                        onAction(Preparation.Action.ViewerCountSelect(viewerCount = viewerCount))
+                    onItemClick = { item ->
+                        onAction(
+                            Preparation.Action.ViewerCountSelect(item = item)
+                        )
                         menuExpanded = false
                     }
                 )

@@ -89,11 +89,15 @@ class PreparationViewModel @Inject constructor(
             }
 
             is Preparation.Action.ViewerCountSelect -> {
-                viewModelScope.launch {
-                    saveViewerCountUseCase(viewerCount = action.viewerCount)
-                }
-                mutableState.update { state ->
-                    state.copy(viewerCount = action.viewerCount)
+                if (action.item.isAvailable) {
+                    viewModelScope.launch {
+                        saveViewerCountUseCase(viewerCount = action.item.viewerCount)
+                    }
+                    mutableState.update { state ->
+                        state.copy(viewerCount = action.item.viewerCount)
+                    }
+                } else {
+                    sendEvent(Preparation.Event.NavigateToSubscription)
                 }
             }
 
@@ -150,7 +154,7 @@ class PreparationViewModel @Inject constructor(
 
             Preparation.Action.PremiumClick -> {
                 analyticsManager.trackPremiumClick()
-                sendEvent(Preparation.Event.HandlePremiumClick)
+                sendEvent(Preparation.Event.NavigateToSubscription)
             }
         }
     }

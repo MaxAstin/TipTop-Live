@@ -30,7 +30,7 @@ interface Preparation {
 
     sealed interface Action: Base.Action {
         data object StartScreen: Action
-        data class ViewerCountSelect(val viewerCount: ViewerCount): Action
+        data class ViewerCountSelect(val item: ViewerCountItem): Action
         data class UsernameUpdate(val username: String): Action
         data object AvatarClick: Action
         data class ImageSelect(val uri: Uri?): Action
@@ -48,7 +48,7 @@ interface Preparation {
         data object HandlePositiveFeedbackClick: Event
         data object HandleAvatarClick: Event
         data object HandleShareClick: Event
-        data object HandlePremiumClick: Event
+        data object NavigateToSubscription: Event
     }
 
 }

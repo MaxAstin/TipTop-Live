@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.tiptoplive.R
-import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation.ViewerCountItem
 import kotlinx.collections.immutable.ImmutableList
@@ -23,7 +22,7 @@ fun ViewersDropdownMenu(
     expanded: Boolean,
     viewerCountList: ImmutableList<ViewerCountItem>,
     onDismissRequest: () -> Unit,
-    onItemClick: (ViewerCount) -> Unit,
+    onItemClick: (ViewerCountItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     DropdownMenu(
@@ -35,7 +34,7 @@ fun ViewersDropdownMenu(
             ViewersDropdownMenuItem(
                 viewerCountItem = viewerCountItem,
                 onClick = {
-                    onItemClick(viewerCountItem.viewerCount)
+                    onItemClick(viewerCountItem)
                 }
             )
         }
@@ -47,6 +46,11 @@ private fun ViewersDropdownMenuItem(
     viewerCountItem: ViewerCountItem,
     onClick: () -> Unit,
 ) {
+    val color = if (viewerCountItem.isAvailable) {
+        FakeLiveTheme.colors.onBackground
+    } else {
+        FakeLiveTheme.colors.onBackgroundVariant
+    }
     DropdownMenuItem(
         modifier = Modifier.background(FakeLiveTheme.colors.background),
         trailingIcon = {
@@ -62,11 +66,12 @@ private fun ViewersDropdownMenuItem(
             Text(
                 text = viewerCountItem.viewerCount.text,
                 style = FakeLiveTheme.typography.bodyMedium,
+                color = color
             )
         },
-        enabled = viewerCountItem.isAvailable,
         colors = MenuDefaults.itemColors(
-            textColor = FakeLiveTheme.colors.onBackground,
+            textColor = color,
+            trailingIconColor = color
         ),
         onClick = onClick
     )
