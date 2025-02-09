@@ -229,7 +229,6 @@ class BillingService @Inject constructor(
         return suspendCoroutine { continuation ->
             billingClient.queryPurchasesAsync(params) { billingResult, purchasesList ->
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    purchasesList.first().purchaseState
                     continuation.resume(purchasesList)
                 } else {
                     continuation.resume(emptyList())

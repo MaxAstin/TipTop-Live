@@ -49,7 +49,7 @@ private fun ViewersDropdownMenuItem(
 ) {
     DropdownMenuItem(
         modifier = Modifier.background(FakeLiveTheme.colors.background),
-        leadingIcon = {
+        trailingIcon = {
             if (!viewerCountItem.isAvailable) {
                 Icon(
                     modifier = Modifier.size(16.dp),
