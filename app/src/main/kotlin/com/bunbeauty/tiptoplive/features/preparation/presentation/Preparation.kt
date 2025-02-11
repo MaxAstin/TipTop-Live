@@ -15,6 +15,7 @@ interface Preparation {
         val viewerCount: ViewerCount,
         val status: Status,
         val showFeedbackDialog: Boolean,
+        val showStreamDurationLimitsDialog: Boolean?,
     ): Base.State
 
     data class ViewerCountItem(
@@ -34,10 +35,12 @@ interface Preparation {
         data class UsernameUpdate(val username: String): Action
         data object AvatarClick: Action
         data class ImageSelect(val uri: Uri?): Action
+        data object ShowStreamDurationLimits: Action
         data object StartStreamClick: Action
         data class StreamFinished(val durationInSeconds: Int): Action
         data object CloseFeedbackDialogClick: Action
         data class FeedbackClick(val isPositive: Boolean): Action
+        data object PremiumLaterClick: Action
         data class NotShowFeedbackChecked(val checked: Boolean): Action
         data object ShareClick: Action
         data object PremiumClick: Action

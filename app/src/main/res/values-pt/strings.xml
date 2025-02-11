@@ -35,6 +35,11 @@
     <string name="preparation_premium">Premium</string>
     <string name="crop_image_next">Próximo</string>
 
+    <string name="limits_live_has_ended">A transmissão terminou ⏳</string>
+    <string name="limits_free_session_limited">As transmissões gratuitas são limitadas a %s segundos. Faça upgrade para o Premium e tenha transmissões ilimitadas e recursos exclusivos!</string>
+    <string name="limits_upgrade">Upgrade</string>
+    <string name="limits_later">Mais tarde</string>
+
     <string name="donation_title">Suporte %s</string>
     <string name="donation_descriptio">Este aplicativo foi criado por um desenvolvedor independente sem suporte financeiro externo. Cada contribuição é muito importante e você tem o poder de influenciar o desenvolvimento deste projeto.</string>
     <string name="donation_donate">Doar %s</string>

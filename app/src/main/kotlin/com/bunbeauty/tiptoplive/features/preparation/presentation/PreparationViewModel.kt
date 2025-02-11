@@ -52,6 +52,7 @@ class PreparationViewModel @Inject constructor(
             viewerCount = ViewerCount.V_100_200,
             status = Preparation.Status.LOADING,
             showFeedbackDialog = false,
+            showStreamDurationLimitsDialog = null
         )
     }
 ) {
@@ -67,6 +68,29 @@ class PreparationViewModel @Inject constructor(
                 checkPremiumStatus()
             }
 
+            is Preparation.Action.ViewerCountSelect -> {
+                if (action.item.isAvailable) {
+                    viewModelScope.launch {
+                        saveViewerCountUseCase(viewerCount = action.item.viewerCount)
+                    }
+                    mutableState.update { state ->
+                        state.copy(viewerCount = action.item.viewerCount)
+                    }
+                } else {
+                    sendEvent(Preparation.Event.NavigateToSubscription)
+                }
+            }
+
+            is Preparation.Action.UsernameUpdate -> {
+                mutableState.update { state ->
+                    state.copy(username = action.username)
+                }
+            }
+
+            Preparation.Action.AvatarClick -> {
+                sendEvent(Preparation.Event.HandleAvatarClick)
+            }
+
             is Preparation.Action.ImageSelect -> {
                 action.uri?.let { imageUri ->
                     viewModelScope.launch {
@@ -78,26 +102,11 @@ class PreparationViewModel @Inject constructor(
                 }
             }
 
-            Preparation.Action.AvatarClick -> {
-                sendEvent(Preparation.Event.HandleAvatarClick)
-            }
-
-            is Preparation.Action.UsernameUpdate -> {
-                mutableState.update { state ->
-                    state.copy(username = action.username)
-                }
-            }
-
-            is Preparation.Action.ViewerCountSelect -> {
-                if (action.item.isAvailable) {
-                    viewModelScope.launch {
-                        saveViewerCountUseCase(viewerCount = action.item.viewerCount)
+            Preparation.Action.ShowStreamDurationLimits -> {
+                if (currentState.showStreamDurationLimitsDialog == null) {
+                    setState {
+                        copy(showStreamDurationLimitsDialog = true)
                     }
-                    mutableState.update { state ->
-                        state.copy(viewerCount = action.item.viewerCount)
-                    }
-                } else {
-                    sendEvent(Preparation.Event.NavigateToSubscription)
                 }
             }
 
@@ -141,6 +150,13 @@ class PreparationViewModel @Inject constructor(
                 }
             }
 
+            is Preparation.Action.PremiumLaterClick -> {
+                analyticsManager.trackPremiumLaterClick()
+                setState {
+                    copy(showStreamDurationLimitsDialog = false)
+                }
+            }
+
             is Preparation.Action.NotShowFeedbackChecked -> {
                 viewModelScope.launch {
                     saveShouldAskFeedbackUseCase(shouldAsk = !action.checked)
@@ -153,6 +169,7 @@ class PreparationViewModel @Inject constructor(
             }
 
             Preparation.Action.PremiumClick -> {
+                setState { copy(showStreamDurationLimitsDialog = false) }
                 analyticsManager.trackPremiumClick()
                 sendEvent(Preparation.Event.NavigateToSubscription)
             }

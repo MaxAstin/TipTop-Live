@@ -23,7 +23,7 @@ import javax.inject.Inject
 import kotlin.math.min
 import kotlin.random.Random
 
-private const val TIME_LIMIT_FOR_FREE_VERSION = 60_000L // 60 sec
+const val TIME_LIMIT_FOR_FREE_VERSION = 60 // sec
 
 @HiltViewModel
 class StreamViewModel @Inject constructor(
@@ -234,7 +234,13 @@ class StreamViewModel @Inject constructor(
             Stream.Action.FinishStreamClick -> {
                 val duration = getStreamDuration()
                 analyticsManager.trackStreamFinish(duration = duration)
-                sendEvent(Stream.Event.NavigateBack(duration = duration))
+                sendEvent(
+                    Stream.Event.NavigateBack(
+                        type = Stream.Event.NavigateBack.Type.User(
+                            duration = duration
+                        )
+                    )
+                )
             }
 
             is Stream.Action.CameraError -> {
@@ -266,9 +272,13 @@ class StreamViewModel @Inject constructor(
     private fun checkPremiumStatus() {
         viewModelScope.launch {
             if (!isPremiumAvailableUseCase()) {
-                delay(TIME_LIMIT_FOR_FREE_VERSION)
+                delay(TIME_LIMIT_FOR_FREE_VERSION * 1_000L)
                 analyticsManager.trackStreamAutoFinish()
-                sendEvent(Stream.Event.NavigateBack(duration = null))
+                sendEvent(
+                    Stream.Event.NavigateBack(
+                        type = Stream.Event.NavigateBack.Type.Auto
+                    )
+                )
             }
         }
     }

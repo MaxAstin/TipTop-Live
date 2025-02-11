@@ -89,11 +89,17 @@ fun StreamScreen(navController: NavHostController) {
         viewModel.event.onEach { event ->
             when (event) {
                 is Stream.Event.NavigateBack -> {
-                    navController.navigate(
-                        route = NavigationRote.Preparation(
-                            durationInSeconds = event.duration?.value
-                        )
-                    ) {
+                    val route = when (event.type) {
+                        Stream.Event.NavigateBack.Type.Auto -> {
+                            NavigationRote.Preparation(showStreamDurationLimits = true)
+                        }
+                        is Stream.Event.NavigateBack.Type.User -> {
+                            NavigationRote.Preparation(
+                                durationInSeconds = event.type.duration.value
+                            )
+                        }
+                    }
+                    navController.navigate(route = route) {
                         popUpTo<NavigationRote.Preparation> {
                             inclusive = true
                         }

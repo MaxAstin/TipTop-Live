@@ -33,6 +33,11 @@
     <string name="preparation_start_live">Comenzar Directo</string>
     <string name="preparation_premium">Premium</string>
 
+    <string name="limits_live_has_ended">La transmisión ha terminado ⏳</string>
+    <string name="limits_free_session_limited">LLas transmisiones gratuitas están limitadas a %s segundos. ¡Mejora a Premium para transmisiones ilimitadas y funciones exclusivas!</string>
+    <string name="limits_upgrade">Mejorar</string>
+    <string name="limits_later">Más tarde</string>
+
     <string name="crop_image_next">Próximo</string>
 
     <string name="donation_title">Soporte %s</string>

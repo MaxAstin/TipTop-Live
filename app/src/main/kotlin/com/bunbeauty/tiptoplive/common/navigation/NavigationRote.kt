@@ -11,6 +11,7 @@ interface NavigationRote {
     data class Preparation(
         val uri: String? = null,
         val durationInSeconds: Int? = null,
+        val showStreamDurationLimits: Boolean = false
     )
 
     @Serializable

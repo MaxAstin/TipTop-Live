@@ -169,8 +169,9 @@ class MainActivity : ComponentActivity() {
                 val preparationRoute: NavigationRote.Preparation = navBackStackEntry.toRoute()
                 PreparationScreen(
                     navController = navController,
-                    streamDurationInSeconds = preparationRoute.durationInSeconds,
                     croppedImageUri = preparationRoute.uri?.toUri(),
+                    streamDurationInSeconds = preparationRoute.durationInSeconds,
+                    showStreamDurationLimits = preparationRoute.showStreamDurationLimits,
                     onStartStreamClick = {
                         requestCameraPermission()
                     },

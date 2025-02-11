@@ -34,6 +34,11 @@
     <string name="preparation_start_live">Start Live</string>
     <string name="preparation_premium">Premium</string>
 
+    <string name="limits_live_has_ended">Live has ended ⏳</string>
+    <string name="limits_free_session_limited">Free sessions are limited to %s seconds. Upgrade to Premium for unlimited Live streaming and more exclusive features!</string>
+    <string name="limits_upgrade">Upgrade</string>
+    <string name="limits_later">Later</string>
+
     <string name="crop_image_next">Next</string>
 
     <string name="donation_title">Support %s</string>

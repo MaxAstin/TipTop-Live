@@ -33,6 +33,11 @@
     <string name="preparation_start_live">Начать стрим</string>
     <string name="preparation_premium">Премиум</string>
 
+    <string name="limits_live_has_ended">Трансляция завершена ⏳</string>
+    <string name="limits_free_session_limited">Бесплатные трансляции ограничены %s секундами. Обновитесь до Премиум для безлимитных трансляций и эксклюзивных функций!</string>
+    <string name="limits_upgrade">Обновить</string>
+    <string name="limits_later">Позже</string>
+
     <string name="crop_image_next">Далее</string>
 
     <string name="donation_title">Поддержите %s</string>

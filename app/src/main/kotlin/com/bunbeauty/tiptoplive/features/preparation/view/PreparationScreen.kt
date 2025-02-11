@@ -46,7 +46,6 @@ import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLivePrimaryButto
 import com.bunbeauty.tiptoplive.common.ui.noEffectClickable
 import com.bunbeauty.tiptoplive.common.ui.rippleClickable
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
-import com.bunbeauty.tiptoplive.features.main.view.FeedbackDialog
 import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation
 import com.bunbeauty.tiptoplive.features.preparation.presentation.PreparationViewModel
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
@@ -61,6 +60,7 @@ fun PreparationScreen(
     navController: NavHostController,
     streamDurationInSeconds: Int?,
     croppedImageUri: Uri?,
+    showStreamDurationLimits: Boolean,
     onStartStreamClick: () -> Unit,
     onPositiveFeedbackClick: () -> Unit,
     onShareClick: () -> Unit,
@@ -123,6 +123,12 @@ fun PreparationScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        if (showStreamDurationLimits) {
+            viewModel.onAction(Preparation.Action.ShowStreamDurationLimits)
+        }
+    }
+
     PreparationContent(
         state = state,
         onAction = onAction,
@@ -130,6 +136,10 @@ fun PreparationScreen(
 
     if (state.showFeedbackDialog) {
         FeedbackDialog(onAction = onAction)
+    }
+
+    if (state.showStreamDurationLimitsDialog == true) {
+        StreamDurationLimitsDialog(onAction = onAction)
     }
 }
 
@@ -341,6 +351,7 @@ private fun PreparationCFreePreview() {
                 viewerCountList = persistentListOf(),
                 status = Preparation.Status.FREE,
                 showFeedbackDialog = false,
+                showStreamDurationLimitsDialog = false
             ),
             onAction = {}
         )
@@ -359,6 +370,7 @@ private fun PreparationPremiumPreview() {
                 viewerCountList = persistentListOf(),
                 status = Preparation.Status.PREMIUM,
                 showFeedbackDialog = false,
+                showStreamDurationLimitsDialog = false
             ),
             onAction = {}
         )
