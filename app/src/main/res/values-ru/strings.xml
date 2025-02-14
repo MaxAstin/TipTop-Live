@@ -41,9 +41,14 @@
     <string name="crop_image_next">Далее</string>
 
     <string name="subscription_unlimited_access">Получите неограниченный доступ</string>
-    <string name="subscription_unlimited_time">🚀 Безлимитное время в прямом эфире</string>
-    <string name="subscription_comments_and_reactions">💕 Бесконечные комментарии и реакции</string>
-    <string name="subscription_questions">💎 Вопросы для фанатов, созданные ИИ</string>
+    <string name="subscription_unlimited_time_title">Неограниченное время трансляции</string>
+    <string name="subscription_unlimited_time_description">Ведите стрим столько, сколько захотите, без прерываний</string>
+    <string name="subscription_1m_viewers_title">До 1 млн+ зрителей</string>
+    <string name="subscription_1m_viewers_description">Повышайте популярность с огромной виртуальной аудиторией</string>
+    <string name="subscription_ai_generated_title">Комментарии и вопросы, сгенерированные ИИ</string>
+    <string name="subscription_ai_generated_description">Испытайте реалистичное взаимодействие с фанатами, которое ощущается как реальная прямая трансляция</string>
+    <string name="subscription_other_features_title">И многие другие функции</string>
+    <string name="subscription_other_features_description">Новые эксклюзивные инструменты добавляются постоянно</string>
     <string name="subscription_checkout">Перейти к оплате</string>
     <string name="subscription_use_forever">Заплатите один раз и пользуйтесь навсегда</string>
     <string name="subscription_save">Сэкономьте %s</string>

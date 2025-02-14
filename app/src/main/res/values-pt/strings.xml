@@ -41,9 +41,14 @@
     <string name="limits_later">Mais tarde</string>
 
     <string name="subscription_unlimited_access">Obtenha acesso ilimitado</string>
-    <string name="subscription_unlimited_time">🚀 Tempo ilimitado ao vivo</string>
-    <string name="subscription_comments_and_reactions">💕 Comentários e reações infinitos</string>
-    <string name="subscription_questions">💎 Perguntas geradas por IA para fãs</string>
+    <string name="subscription_unlimited_time_title">Tempo de transmissão ilimitado</string>
+    <string name="subscription_unlimited_time_description">Transmita pelo tempo que quiser sem interrupções</string>
+    <string name="subscription_1m_viewers_title">Até 1M+ de espectadores</string>
+    <string name="subscription_1m_viewers_description">Aumente sua popularidade com enormes audiências virtuais</string>
+    <string name="subscription_ai_generated_title">Comentários e perguntas gerados por IA</string>
+    <string name="subscription_ai_generated_description">Experimente interações de fãs realistas que parecem uma transmissão ao vivo de verdade</string>
+    <string name="subscription_other_features_title">E muitos outros recursos</string>
+    <string name="subscription_other_features_description">Novos recursos exclusivos adicionados regularmente</string>
     <string name="subscription_checkout">Continuar para o pagamento</string>
     <string name="subscription_use_forever">Pague uma vez e use para sempre</string>
     <string name="subscription_save">Economize %s</string>

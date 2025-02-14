@@ -33,13 +33,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.navigation.NavigationRote
+import com.bunbeauty.tiptoplive.common.ui.LocalePreview
 import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLivePrimaryButton
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
@@ -160,16 +160,27 @@ private fun SubscriptionContent(
                     .clip(shape)
                     .background(blurredBackground)
                     .padding(16.dp),
-                verticalArrangement = spacedBy(8.dp)
+                verticalArrangement = spacedBy(12.dp)
             ) {
-                FeatureText(
-                    text = stringResource(R.string.subscription_unlimited_time)
+                FeatureItem(
+                    emoji = "⏰",
+                    title = stringResource(R.string.subscription_unlimited_time_title),
+                    description = stringResource(R.string.subscription_unlimited_time_description),
                 )
-                FeatureText(
-                    text = stringResource(R.string.subscription_comments_and_reactions)
+                FeatureItem(
+                    emoji = "\uD83D\uDC69\u200D❤\uFE0F\u200D\uD83D\uDC68",
+                    title = stringResource(R.string.subscription_1m_viewers_title),
+                    description = stringResource(R.string.subscription_1m_viewers_description),
                 )
-                FeatureText(
-                    text = stringResource(R.string.subscription_questions)
+                FeatureItem(
+                    emoji = "\uD83D\uDCAB",
+                    title = stringResource(R.string.subscription_ai_generated_title),
+                    description = stringResource(R.string.subscription_ai_generated_description),
+                )
+                FeatureItem(
+                    emoji = "\uD83D\uDC8E",
+                    title = stringResource(R.string.subscription_other_features_title),
+                    description = stringResource(R.string.subscription_other_features_description),
                 )
             }
 
@@ -215,12 +226,30 @@ private fun SubscriptionContent(
 }
 
 @Composable
-private fun FeatureText(text: String) {
-    Text(
-        text = text,
-        color = FakeLiveTheme.colors.onBackground,
-        style = FakeLiveTheme.typography.bodyLarge
-    )
+private fun FeatureItem(
+    emoji: String,
+    title: String,
+    description: String,
+) {
+    Row {
+        Text(
+            text = emoji,
+            style = FakeLiveTheme.typography.titleMedium
+        )
+        Column(modifier = Modifier.padding(start = 4.dp)) {
+            Text(
+                text = title,
+                color = FakeLiveTheme.colors.onBackground,
+                style = FakeLiveTheme.typography.titleMedium
+            )
+            Text(
+                modifier = Modifier.padding(top = 2.dp),
+                text = description,
+                color = FakeLiveTheme.colors.onSurfaceVariant,
+                style = FakeLiveTheme.typography.bodyMedium
+            )
+        }
+    }
 }
 
 @Composable
@@ -327,7 +356,7 @@ private fun Label(
     }
 }
 
-@Preview
+@LocalePreview
 @Composable
 private fun SubscriptionScreenPreview() {
     FakeLiveTheme {

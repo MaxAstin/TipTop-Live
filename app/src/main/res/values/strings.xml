@@ -34,7 +34,7 @@
     <string name="preparation_start_live">Start Live</string>
     <string name="preparation_premium">Premium</string>
 
-    <string name="limits_live_has_ended">Live has ended ⏳</string>
+    <string name="limits_live_has_ended">Live has ended ⌛</string>
     <string name="limits_free_session_limited">Free sessions are limited to %s seconds. Upgrade to Premium for unlimited Live streaming and more exclusive features!</string>
     <string name="limits_upgrade">Upgrade</string>
     <string name="limits_later">Later</string>
@@ -42,9 +42,14 @@
     <string name="crop_image_next">Next</string>
 
     <string name="subscription_unlimited_access">Get unlimited access</string>
-    <string name="subscription_unlimited_time">🚀 Unlimited Live time</string>
-    <string name="subscription_comments_and_reactions">💕 Infinite comments and reactions</string>
-    <string name="subscription_questions">💎 AI-generated fan questions</string>
+    <string name="subscription_unlimited_time_title">Unlimited Live time</string>
+    <string name="subscription_unlimited_time_description">Stream for as long as you want without interruptions</string>
+    <string name="subscription_1m_viewers_title">Up to 1M+ viewers</string>
+    <string name="subscription_1m_viewers_description">Boost your popularity with massive virtual audiences</string>
+    <string name="subscription_ai_generated_title">AI-generated comments &amp; questions</string>
+    <string name="subscription_ai_generated_description">Experience authentic-looking fan interactions that feel just like a real Live stream</string>
+    <string name="subscription_other_features_title">And many other features</string>
+    <string name="subscription_other_features_description">New exclusive tools are added regularly</string>
     <string name="subscription_checkout">Continue to Checkout</string>
     <string name="subscription_use_forever">Pay once and use forever</string>
     <string name="subscription_save">Save %s</string>
