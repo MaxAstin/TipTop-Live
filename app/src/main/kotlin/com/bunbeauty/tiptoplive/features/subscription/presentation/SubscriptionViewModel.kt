@@ -85,16 +85,8 @@ class SubscriptionViewModel @Inject constructor(
             when (result) {
                 is PurchaseResult.Success -> {
                     billingService.acknowledgePurchase(purchasedProduct = result.product)
-                        .onSuccess { success ->
-                            currentState.subscriptions.find { subscription ->
-                                subscription.id == success.product.id
-                            }?.let { purchasedSubscription ->
-                                sendEvent(
-                                    Subscription.Event.NavigateToPurchase(
-                                        subscriptionName = purchasedSubscription.name
-                                    )
-                                )
-                            }
+                        .onSuccess {
+                            sendEvent(Subscription.Event.NavigateToPurchase)
                         }.onError {
                             handleError()
                         }

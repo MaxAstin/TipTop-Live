@@ -15,7 +15,8 @@ val Gray200 = Color(0xFF888888)
 val Gray150 = Color(0xFFADADAD)
 val Gray100 = Color(0xFFDBDBDB)
 val Blue = Color(0xFF0195F7)
-val Green = Color(0xFF35C27F)
+val Green = Color(0xFF00BE64)
+val Red = Color(0xFFF95667)
 val Pink = Color(0xFFDB0D67)
 val BrightPurple = Color(0xFFCD00BD)
 val Scarlet = Color(0xFFFF1E44)
@@ -24,7 +25,6 @@ val Amber = Color(0xFFFFBF00)
 @Stable
 class ColorScheme(
     interactive: Color,
-    important: Color,
     icon: Color,
     iconVariant: Color,
     surface: Color,
@@ -38,13 +38,11 @@ class ColorScheme(
     border: Color,
     borderVariant: Color,
     positive: Color,
+    negative: Color,
     instagram: InstagramColors,
 ) {
 
     var interactive by mutableStateOf(interactive)
-        internal set
-
-    var important by mutableStateOf(important)
         internal set
 
     var icon by mutableStateOf(icon)
@@ -86,13 +84,15 @@ class ColorScheme(
     var positive by mutableStateOf(positive)
         internal set
 
+    var negative by mutableStateOf(negative)
+        internal set
+
     var instagram by mutableStateOf(instagram)
         internal set
 
 
     fun copy(
         interactive: Color = this.interactive,
-        important: Color = this.important,
         icon: Color = this.icon,
         iconVariant: Color = this.iconVariant,
         surface: Color = this.surface,
@@ -106,10 +106,10 @@ class ColorScheme(
         border: Color = this.border,
         borderVariant: Color = this.borderVariant,
         positive: Color = this.positive,
+        negative: Color = this.negative,
         instagram: InstagramColors = this.instagram,
     ): ColorScheme = ColorScheme(
         interactive = interactive,
-        important = important,
         icon = icon,
         iconVariant = iconVariant,
         surface = surface,
@@ -123,6 +123,7 @@ class ColorScheme(
         border = border,
         borderVariant = borderVariant,
         positive = positive,
+        negative = negative,
         instagram = instagram.copy(
             logo1 = instagram.logo1,
             logo2 = instagram.logo2,

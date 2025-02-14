@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 
 private val DarkColorScheme = ColorScheme(
-    important = Scarlet,
     interactive = Blue,
     icon = White,
     iconVariant = Gray200,
@@ -25,6 +24,7 @@ private val DarkColorScheme = ColorScheme(
     border = Gray300,
     borderVariant = Gray100,
     positive = Green,
+    negative = Red,
     instagram = InstagramColors(
         logo1 = BrightPurple,
         logo2 = Scarlet,
@@ -35,7 +35,6 @@ private val DarkColorScheme = ColorScheme(
 
 private val LightColorScheme = ColorScheme(
     interactive = Blue,
-    important = Scarlet,
     icon = White,
     iconVariant = Gray200,
     surface = Black200,
@@ -49,6 +48,7 @@ private val LightColorScheme = ColorScheme(
     border = Gray300,
     borderVariant = Gray100,
     positive = Green,
+    negative = Red,
     instagram = InstagramColors(
         logo1 = BrightPurple,
         logo2 = Scarlet,

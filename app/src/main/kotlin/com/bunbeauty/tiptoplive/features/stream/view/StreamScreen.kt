@@ -647,7 +647,7 @@ private fun BottomPanel(
             unreadQuestionCount?.let {
                 Badge(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    containerColor = FakeLiveTheme.colors.important,
+                    containerColor = FakeLiveTheme.colors.negative,
                     contentColor = FakeLiveTheme.colors.onSurface
                 ) {
                     Text(

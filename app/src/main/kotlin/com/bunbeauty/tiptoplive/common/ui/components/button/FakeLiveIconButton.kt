@@ -72,7 +72,7 @@ fun FakeLiveIconButton(
                             shape = CircleShape
                         )
                         .padding(1.dp),
-                    containerColor = FakeLiveTheme.colors.important,
+                    containerColor = FakeLiveTheme.colors.negative,
                 )
             }
         }

@@ -212,12 +212,8 @@ class MainActivity : ComponentActivity() {
                     startCheckout = ::startCheckout
                 )
             }
-            composable<NavigationRote.SuccessfullyPurchased> { navBackStackEntry ->
-                val successfullyPurchasedRoute: NavigationRote.SuccessfullyPurchased = navBackStackEntry.toRoute()
-                SuccessfullyPurchasedScreen(
-                    navController = navController,
-                    subscriptionName = successfullyPurchasedRoute.subscriptionName
-                )
+            composable<NavigationRote.SuccessfullyPurchased> {
+                SuccessfullyPurchasedScreen(navController = navController)
             }
             composable<NavigationRote.PurchaseFailed> {
                 PurchaseFailedScreen(navController = navController)

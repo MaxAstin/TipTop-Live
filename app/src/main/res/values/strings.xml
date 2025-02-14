@@ -41,12 +41,6 @@
 
     <string name="crop_image_next">Next</string>
 
-    <string name="donation_title">Support %s</string>
-    <string name="donation_descriptio">This app is created by an indie developer without external financial support. Every contribution matters greatly, and you have the power to influence the development of this project.</string>
-    <string name="donation_donate">Donate %s</string>
-    <string name="donation_success">Success</string>
-    <string name="donation_ok">OK</string>
-
     <string name="subscription_unlimited_access">Get unlimited access</string>
     <string name="subscription_unlimited_time">🚀 Unlimited Live time</string>
     <string name="subscription_comments_and_reactions">💕 Infinite comments and reactions</string>
@@ -55,6 +49,14 @@
     <string name="subscription_use_forever">Pay once and use forever</string>
     <string name="subscription_save">Save %s</string>
     <string name="subscription_checkout_failed">Failed to complete the operation</string>
+
+    <string name="subscription_success_title">Subscription successfully activated</string>
+    <string name="subscription_success_description">Now you can enjoy all premium features and make the most of your experience</string>
+    <string name="subscription_success_start_using">Start using</string>
+
+    <string name="subscription_failed_title">Something went wrong</string>
+    <string name="subscription_failed_description">Please check your payment or contact support for assistance</string>
+    <string name="subscription_failed_retry">Retry</string>
 
     <string name="stream_join_requests_title">Requests to join</string>
     <string name="stream_join_requests_body">No Requests Yet</string>

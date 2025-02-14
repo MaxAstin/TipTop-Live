@@ -94,17 +94,13 @@ fun SubscriptionScreen(
                 }
 
                 is Subscription.Event.NavigateToPurchase -> {
-                    navController.navigate(
-                        NavigationRote.SuccessfullyPurchased(subscriptionName = event.subscriptionName)
-                    ) {
+                    navController.navigate(NavigationRote.SuccessfullyPurchased) {
                         popUpTo<NavigationRote.Preparation> {}
                     }
                 }
 
                 is Subscription.Event.NavigateToPurchaseFailed -> {
-                    navController.navigate(NavigationRote.PurchaseFailed) {
-                        popUpTo<NavigationRote.Preparation> {}
-                    }
+                    navController.navigate(NavigationRote.PurchaseFailed)
                 }
             }
         }.launchIn(this)

@@ -40,12 +40,6 @@
     <string name="limits_upgrade">Upgrade</string>
     <string name="limits_later">Mais tarde</string>
 
-    <string name="donation_title">Suporte %s</string>
-    <string name="donation_descriptio">Este aplicativo foi criado por um desenvolvedor independente sem suporte financeiro externo. Cada contribuição é muito importante e você tem o poder de influenciar o desenvolvimento deste projeto.</string>
-    <string name="donation_donate">Doar %s</string>
-    <string name="donation_success">Sucesso</string>
-    <string name="donation_ok">OK</string>
-
     <string name="subscription_unlimited_access">Obtenha acesso ilimitado</string>
     <string name="subscription_unlimited_time">🚀 Tempo ilimitado ao vivo</string>
     <string name="subscription_comments_and_reactions">💕 Comentários e reações infinitos</string>
@@ -54,6 +48,14 @@
     <string name="subscription_use_forever">Pague uma vez e use para sempre</string>
     <string name="subscription_save">Economize %s</string>
     <string name="subscription_checkout_failed">Falha ao concluir a operação</string>
+
+    <string name="subscription_success_title">Assinatura ativada com sucesso</string>
+    <string name="subscription_success_description">Agora você pode aproveitar todos os recursos premium e tirar o máximo proveito da sua experiência</string>
+    <string name="subscription_success_start_using">Começar a usar</string>
+
+    <string name="subscription_failed_title">Algo deu errado</string>
+    <string name="subscription_failed_description">Verifique seu pagamento ou entre em contato com o suporte para obter ajuda</string>
+    <string name="subscription_failed_retry">Tentar novamente</string>
 
     <string name="stream_join_requests_title">Solicitações para participar</string>
     <string name="stream_join_requests_body">Sem solicitações ainda</string>

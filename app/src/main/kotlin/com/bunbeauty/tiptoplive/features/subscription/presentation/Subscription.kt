@@ -24,7 +24,7 @@ interface Subscription {
     sealed interface Event: Base.Event {
         data object NavigateBack: Event
         data class StartCheckout(val purchaseData: PurchaseData): Event
-        data class NavigateToPurchase(val subscriptionName: String): Event
+        data object NavigateToPurchase: Event
         data object NavigateToPurchaseFailed: Event
     }
 
