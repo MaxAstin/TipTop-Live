@@ -139,16 +139,8 @@ private fun SubscriptionContent(
         ) {
             Spacer(modifier = Modifier.weight(1f))
 
-            Image(
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(blurredBackground),
-                painter = painterResource(R.drawable.img_logo_without_bg),
-                contentDescription = "Logo"
-            )
             Text(
-                text = stringResource(R.string.subscription_unlimited_access),
+                text = stringResource(R.string.subscription_unlimited_possibilities),
                 color = FakeLiveTheme.colors.onBackground,
                 style = FakeLiveTheme.typography.titleLarge.bold,
                 textAlign = TextAlign.Center

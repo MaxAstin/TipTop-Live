@@ -341,7 +341,7 @@ private fun Premium(
 
 @LocalePreview
 @Composable
-private fun PreparationCFreePreview() {
+private fun PreparationFreePreview() {
     FakeLiveTheme {
         PreparationContent(
             state = Preparation.State(
