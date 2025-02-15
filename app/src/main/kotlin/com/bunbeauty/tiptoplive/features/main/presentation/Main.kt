@@ -10,6 +10,8 @@ interface Main {
     ): Base.State
 
     sealed interface Action: Base.Action {
+        data object AppStart: Action
+        data object AppStop: Action
         data object CameraPermissionDeny: Action
         data object CameraPermissionAccept: Action
         data object CloseCameraRequiredDialogClick: Action
