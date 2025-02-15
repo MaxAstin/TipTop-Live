@@ -16,8 +16,8 @@
     <string name="stream_question_title">Pergunta</string>
     <string name="stream_filter_not_available">Este filtro não está disponível</string>
 
-    <string name="required_camera_permisseon_title">Permitir que %s acesse sua câmera</string>
-    <string name="required_camera_permisseon_body">Isso permite iniciar o Ao Vivo.
+    <string name="required_camera_permission_title">Permitir que %s acesse sua câmera</string>
+    <string name="required_camera_permission_body">Isso permite iniciar o Ao Vivo.
         Você pode alterar isso a qualquer momento nas configurações do seu dispositivo.</string>
     <string name="settings">Configurações</string>
 
@@ -47,8 +47,8 @@
     <string name="subscription_1m_viewers_description">Aumente sua popularidade com enormes audiências virtuais</string>
     <string name="subscription_ai_generated_title">Comentários e perguntas gerados por IA</string>
     <string name="subscription_ai_generated_description">Experimente interações de fãs realistas que parecem uma transmissão ao vivo de verdade</string>
-    <string name="subscription_other_features_title">E muitos outros recursos</string>
-    <string name="subscription_other_features_description">Novos recursos exclusivos adicionados regularmente</string>
+    <string name="subscription_other_features_title">Muitos outros recursos exclusivos</string>
+    <string name="subscription_other_features_description">Novas ferramentas premium são adicionadas regularmente para melhorar sua experiência</string>
     <string name="subscription_checkout">Continuar para o pagamento</string>
     <string name="subscription_use_forever">Pague uma vez e use para sempre</string>
     <string name="subscription_save">Economize %s</string>

@@ -39,7 +39,7 @@ fun CameraIsRequiredDialog(
         ) {
             Text(
                 text = stringResource(
-                    R.string.required_camera_permisseon_title,
+                    R.string.required_camera_permission_title,
                     stringResource(R.string.app_name)
                 ),
                 color = FakeLiveTheme.colors.onBackground,
@@ -49,7 +49,7 @@ fun CameraIsRequiredDialog(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .fillMaxWidth(),
-                text = stringResource(R.string.required_camera_permisseon_body),
+                text = stringResource(R.string.required_camera_permission_body),
                 color = FakeLiveTheme.colors.onBackground,
                 style = FakeLiveTheme.typography.bodyMedium,
             )

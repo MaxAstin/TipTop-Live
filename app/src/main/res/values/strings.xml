@@ -16,8 +16,8 @@
     <string name="stream_question_title">Question</string>
     <string name="stream_filter_not_available">This filter is not available</string>
 
-    <string name="required_camera_permisseon_title">Allow %s to access your camera</string>
-    <string name="required_camera_permisseon_body">This lets you start the Live.
+    <string name="required_camera_permission_title">Allow %s to access your camera</string>
+    <string name="required_camera_permission_body">This lets you start the Live.
         You can change this anytime in your device settings.</string>
     <string name="settings">Settings</string>
 
@@ -48,9 +48,9 @@
     <string name="subscription_1m_viewers_description">Boost your popularity with massive virtual audiences</string>
     <string name="subscription_ai_generated_title">AI-generated comments &amp; questions</string>
     <string name="subscription_ai_generated_description">Experience authentic-looking fan interactions that feel just like a real Live stream</string>
-    <string name="subscription_other_features_title">And many other features</string>
-    <string name="subscription_other_features_description">New exclusive tools are added regularly</string>
-    <string name="subscription_checkout">Continue to Checkout</string>
+    <string name="subscription_other_features_title">Many other exclusive features</string>
+    <string name="subscription_other_features_description">New premium tools are added regularly to enhance your experience</string>
+    <string name="subscription_checkout">Continue to checkout</string>
     <string name="subscription_use_forever">Pay once and use forever</string>
     <string name="subscription_save">Save %s</string>
     <string name="subscription_checkout_failed">Failed to complete the operation</string>

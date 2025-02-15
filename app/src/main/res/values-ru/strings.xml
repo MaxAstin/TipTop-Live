@@ -15,8 +15,8 @@
     <string name="stream_question_title">Вопрос</string>
     <string name="stream_filter_not_available">Этот фильтр недоступен</string>
 
-    <string name="required_camera_permisseon_title">Разрешите %s to доступ к камере</string>
-    <string name="required_camera_permisseon_body">Это позволит начть стрим.
+    <string name="required_camera_permission_title">Разрешите %s to доступ к камере</string>
+    <string name="required_camera_permission_body">Это позволит начть стрим.
         Выбор в любое время можно изменить в настройках устройства.</string>
     <string name="settings">Настройки</string>
 
@@ -47,8 +47,8 @@
     <string name="subscription_1m_viewers_description">Повышайте популярность с огромной виртуальной аудиторией</string>
     <string name="subscription_ai_generated_title">Комментарии и вопросы, сгенерированные ИИ</string>
     <string name="subscription_ai_generated_description">Испытайте реалистичное взаимодействие с фанатами, которое ощущается как реальная прямая трансляция</string>
-    <string name="subscription_other_features_title">И многие другие функции</string>
-    <string name="subscription_other_features_description">Новые эксклюзивные инструменты добавляются постоянно</string>
+    <string name="subscription_other_features_title">Множество других эксклюзивных функций</string>
+    <string name="subscription_other_features_description">Новые премиум инструменты регулярно добавляются для улучшения вашего опыта</string>
     <string name="subscription_checkout">Перейти к оплате</string>
     <string name="subscription_use_forever">Заплатите один раз и пользуйтесь навсегда</string>
     <string name="subscription_save">Сэкономьте %s</string>

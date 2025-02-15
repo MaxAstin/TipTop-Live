@@ -16,8 +16,8 @@
     <string name="stream_question_title">Pregunta</string>
     <string name="stream_filter_not_available">Este filtro no está disponible</string>
 
-    <string name="required_camera_permisseon_title">Permitir que %s acceda a tu cámara</string>
-    <string name="required_camera_permisseon_body">Esto te permite iniciar el Directo. Puedes cambiar esto en cualquier momento en la configuración de tu dispositivo.</string>
+    <string name="required_camera_permission_title">Permitir que %s acceda a tu cámara</string>
+    <string name="required_camera_permission_body">Esto te permite iniciar el Directo. Puedes cambiar esto en cualquier momento en la configuración de tu dispositivo.</string>
     <string name="settings">Configuraciones</string>
 
     <string name="do_you_like">¿Te gusta la aplicación %s?</string>
@@ -47,8 +47,8 @@
     <string name="subscription_1m_viewers_description">Aumenta tu popularidad con grandes audiencias virtuales</string>
     <string name="subscription_ai_generated_title">Comentarios y preguntas generados por IA</string>
     <string name="subscription_ai_generated_description">Experimenta interacciones de fans realistas que se sienten como una transmisión en vivo auténtica</string>
-    <string name="subscription_other_features_title">Y muchas otras funciones</string>
-    <string name="subscription_other_features_description">Nuevas funciones exclusivas agregadas periódicamente</string>
+    <string name="subscription_other_features_title">Muchas otras funciones exclusivas</string>
+    <string name="subscription_other_features_description">Nuevas herramientas premium se añaden regularmente para mejorar tu experiencia</string>
     <string name="subscription_checkout">Continuar al pago</string>
     <string name="subscription_use_forever">Paga una vez y úsalo para siempre</string>
     <string name="subscription_save">Ahorre %s</string>
