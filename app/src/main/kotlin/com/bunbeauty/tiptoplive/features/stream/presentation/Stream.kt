@@ -69,7 +69,13 @@ interface Stream {
     }
 
     sealed interface Event : Base.Event {
-        data class GoBack(val duration: Seconds) : Event
+        data class NavigateBack(val type: Type) : Event {
+            sealed interface Type {
+                data object Auto: Type
+                data class User(val duration: Seconds): Type
+            }
+        }
         data object ShowFilterNotAvailable : Event
     }
+
 }

@@ -2,7 +2,6 @@ package com.bunbeauty.tiptoplive.features.main
 
 import android.Manifest.permission.CAMERA
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,12 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,18 +30,22 @@ import androidx.navigation.toRoute
 import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.navigation.NavigationRote
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
+import com.bunbeauty.tiptoplive.common.ui.util.showToast
 import com.bunbeauty.tiptoplive.common.util.launchInAppReview
 import com.bunbeauty.tiptoplive.common.util.openSettings
 import com.bunbeauty.tiptoplive.common.util.openSharing
 import com.bunbeauty.tiptoplive.features.billing.BillingService
 import com.bunbeauty.tiptoplive.features.cropimage.CropImageScreen
-import com.bunbeauty.tiptoplive.features.donation.view.DonationScreen
 import com.bunbeauty.tiptoplive.features.intro.view.IntroScreen
 import com.bunbeauty.tiptoplive.features.main.presentation.Main
 import com.bunbeauty.tiptoplive.features.main.presentation.MainViewModel
 import com.bunbeauty.tiptoplive.features.main.view.CameraIsRequiredDialog
 import com.bunbeauty.tiptoplive.features.preparation.view.PreparationScreen
 import com.bunbeauty.tiptoplive.features.stream.view.StreamScreen
+import com.bunbeauty.tiptoplive.features.billing.model.PurchaseData
+import com.bunbeauty.tiptoplive.features.subscription.view.PurchaseFailedScreen
+import com.bunbeauty.tiptoplive.features.subscription.view.SubscriptionScreen
+import com.bunbeauty.tiptoplive.features.subscription.view.SuccessfullyPurchasedScreen
 import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -166,8 +169,9 @@ class MainActivity : ComponentActivity() {
                 val preparationRoute: NavigationRote.Preparation = navBackStackEntry.toRoute()
                 PreparationScreen(
                     navController = navController,
-                    streamDurationInSeconds = preparationRoute.durationInSeconds,
                     croppedImageUri = preparationRoute.uri?.toUri(),
+                    streamDurationInSeconds = preparationRoute.durationInSeconds,
+                    showStreamDurationLimits = preparationRoute.showStreamDurationLimits,
                     onStartStreamClick = {
                         requestCameraPermission()
                     },
@@ -183,28 +187,7 @@ class MainActivity : ComponentActivity() {
                             ),
                         )
                         if (!isSuccessful) {
-                            showToast(
-                                message = getString(R.string.common_something_went_wrong)
-                            )
-                        }
-                    }
-                )
-            }
-            composable<NavigationRote.Donation> {
-                val scope = rememberCoroutineScope()
-                DonationScreen(
-                    navController = navController,
-                    onDonateClick = { productId ->
-                        scope.launch {
-                            val isSuccessful = billingService.get().launchOneTypeProductFlow(
-                                activity = this@MainActivity,
-                                id = productId,
-                            )
-                            if (!isSuccessful) {
-                                showToast(
-                                    message = getString(R.string.common_something_went_wrong)
-                                )
-                            }
+                            showToast(message = getString(R.string.common_something_went_wrong))
                         }
                     }
                 )
@@ -219,22 +202,37 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     uri = uri,
                     onMockClick = {
-                        showToast(
-                            message = getString(R.string.common_under_development)
-                        )
-                        Toast.makeText(
-                            this@MainActivity,
-                            getString(R.string.common_under_development),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showToast(message = getString(R.string.common_under_development))
                     }
                 )
+            }
+            composable<NavigationRote.Subscription> {
+                SubscriptionScreen(
+                    navController = navController,
+                    startCheckout = ::startCheckout
+                )
+            }
+            composable<NavigationRote.SuccessfullyPurchased> {
+                SuccessfullyPurchasedScreen(navController = navController)
+            }
+            composable<NavigationRote.PurchaseFailed> {
+                PurchaseFailedScreen(navController = navController)
             }
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-            .show()
+    private fun startCheckout(purchaseData: PurchaseData) {
+        lifecycleScope.launch {
+            val isSuccess = billingService.get()
+                .launchBillingFlow(
+                    activity = this@MainActivity,
+                    purchaseData = purchaseData
+                )
+            if (!isSuccess) {
+                showToast(
+                    message = getString(R.string.subscription_checkout_failed)
+                )
+            }
+        }
     }
 }

@@ -35,7 +35,6 @@ import com.bunbeauty.tiptoplive.common.ui.components.CachedImage
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
 import com.bunbeauty.tiptoplive.common.ui.components.bottomsheet.FakeLiveBottomSheet
 import com.bunbeauty.tiptoplive.common.ui.components.bottomsheet.FakeLiveBottomSheetContent
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.bold
 import com.bunbeauty.tiptoplive.features.stream.presentation.Stream
@@ -118,16 +117,16 @@ private fun ColumnScope.QuestionsContent(
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = stringResource(R.string.stream_questions_tap_to_answer),
-                                color = FakeLiveStreamTheme.colors.onSurface,
-                                style = FakeLiveStreamTheme.typography.titleMedium,
+                                color = FakeLiveTheme.colors.onSurface,
+                                style = FakeLiveTheme.typography.titleMedium,
                             )
                         }
                         item(key = "everyoneWatchingText") {
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = stringResource(R.string.stream_questions_everyone_watching),
-                                color = FakeLiveStreamTheme.colors.onSurfaceVariant,
-                                style = FakeLiveStreamTheme.typography.bodyMedium,
+                                color = FakeLiveTheme.colors.onSurfaceVariant,
+                                style = FakeLiveTheme.typography.bodyMedium,
                             )
                         }
                         items(
@@ -145,8 +144,8 @@ private fun ColumnScope.QuestionsContent(
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = stringResource(R.string.stream_questions_answered),
-                                color = FakeLiveStreamTheme.colors.onSurface,
-                                style = FakeLiveStreamTheme.typography.titleMedium,
+                                color = FakeLiveTheme.colors.onSurface,
+                                style = FakeLiveTheme.typography.titleMedium,
                             )
                         }
                         items(
@@ -174,12 +173,12 @@ private fun QuestionItem(
     modifier: Modifier = Modifier
 ) {
     val borderColor = if (question.isSelected) {
-        FakeLiveStreamTheme.colors.interactive
+        FakeLiveTheme.colors.interactive
     } else {
-        FakeLiveStreamTheme.colors.border
+        FakeLiveTheme.colors.border
     }
     val backgroundColor = if (question.isSelected) {
-        FakeLiveStreamTheme.colors.selectedSurface
+        FakeLiveTheme.colors.selectedSurface
     } else {
         Color.Transparent
     }
@@ -218,7 +217,7 @@ private fun QuestionItem(
             modifier = Modifier.padding(start = 12.dp),
             verticalArrangement = spacedBy(4.dp)
         ) {
-            val usernameStyle = FakeLiveStreamTheme.typography.titleSmall
+            val usernameStyle = FakeLiveTheme.typography.titleSmall
             val annotatedString = remember(question) {
                 buildAnnotatedString {
                     withStyle(style = usernameStyle.toSpanStyle()) {
@@ -230,8 +229,8 @@ private fun QuestionItem(
             Text(
                 modifier = Modifier.padding(top = 4.dp),
                 text = annotatedString,
-                color = FakeLiveStreamTheme.colors.onSurface,
-                style = FakeLiveStreamTheme.typography.bodySmall,
+                color = FakeLiveTheme.colors.onSurface,
+                style = FakeLiveTheme.typography.bodySmall,
             )
             Row(horizontalArrangement = spacedBy(16.dp)) {
                 Text(
@@ -239,16 +238,16 @@ private fun QuestionItem(
                         onAction(Stream.Action.DeleteQuestion(question.uuid))
                     },
                     text = stringResource(R.string.stream_questions_delete),
-                    color = FakeLiveStreamTheme.colors.onSurfaceVariant,
-                    style = FakeLiveStreamTheme.typography.bodySmall.bold,
+                    color = FakeLiveTheme.colors.onSurfaceVariant,
+                    style = FakeLiveTheme.typography.bodySmall.bold,
                 )
                 Text(
                     modifier = Modifier.clickableWithoutIndication {
                         onAction(Stream.Action.DeleteQuestion(question.uuid))
                     },
                     text = stringResource(R.string.stream_questions_report),
-                    color = FakeLiveStreamTheme.colors.onSurfaceVariant,
-                    style = FakeLiveStreamTheme.typography.bodySmall.bold,
+                    color = FakeLiveTheme.colors.onSurfaceVariant,
+                    style = FakeLiveTheme.typography.bodySmall.bold,
                 )
             }
         }

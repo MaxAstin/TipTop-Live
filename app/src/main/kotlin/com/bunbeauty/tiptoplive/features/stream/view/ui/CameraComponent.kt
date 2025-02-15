@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 @Composable
 fun CameraComponent(
@@ -68,7 +68,7 @@ fun CameraComponent(
     } else {
         Box(
             modifier = modifier
-                .background(FakeLiveStreamTheme.colors.surface),
+                .background(FakeLiveTheme.colors.surface),
             contentAlignment = Alignment.Center
         ) {
             AvatarImage(

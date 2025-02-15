@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FakeLiveSplashScreen"
-        tools:targetApi="34">
+        tools:targetApi="35">
+
         <activity
             android:name=".features.main.MainActivity"
             android:exported="true"

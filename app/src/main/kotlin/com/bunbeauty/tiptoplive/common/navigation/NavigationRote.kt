@@ -5,21 +5,28 @@ import kotlinx.serialization.Serializable
 interface NavigationRote {
 
     @Serializable
-    object Intro
+    data object Intro
 
     @Serializable
     data class Preparation(
         val uri: String? = null,
         val durationInSeconds: Int? = null,
+        val showStreamDurationLimits: Boolean = false
     )
-
-    @Serializable
-    object Donation
 
     @Serializable
     data class CropImage(val uri: String)
 
     @Serializable
-    object Stream
+    data object Stream
+
+    @Serializable
+    data object Subscription
+
+    @Serializable
+    data object SuccessfullyPurchased
+
+    @Serializable
+    data object PurchaseFailed
 
 }

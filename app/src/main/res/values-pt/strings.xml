@@ -16,8 +16,8 @@
     <string name="stream_question_title">Pergunta</string>
     <string name="stream_filter_not_available">Este filtro não está disponível</string>
 
-    <string name="required_camera_permisseon_title">Permitir que %s acesse sua câmera</string>
-    <string name="required_camera_permisseon_body">Isso permite iniciar o Ao Vivo.
+    <string name="required_camera_permission_title">Permitir que %s acesse sua câmera</string>
+    <string name="required_camera_permission_body">Isso permite iniciar o Ao Vivo.
         Você pode alterar isso a qualquer momento nas configurações do seu dispositivo.</string>
     <string name="settings">Configurações</string>
 
@@ -32,14 +32,35 @@
     <string name="preparation_username_hint">user_name</string>
     <string name="preparation_viewer_count">Contagem de espectadores</string>
     <string name="preparation_start_live">Iniciar Ao Vivo</string>
-
+    <string name="preparation_premium">Premium</string>
     <string name="crop_image_next">Próximo</string>
 
-    <string name="donation_title">Suporte %s</string>
-    <string name="donation_descriptio">Este aplicativo foi criado por um desenvolvedor independente sem suporte financeiro externo. Cada contribuição é muito importante e você tem o poder de influenciar o desenvolvimento deste projeto.</string>
-    <string name="donation_donate">Doar %s</string>
-    <string name="donation_success">Sucesso</string>
-    <string name="donation_ok">OK</string>
+    <string name="limits_live_has_ended">A transmissão terminou ⏳</string>
+    <string name="limits_free_session_limited">As transmissões gratuitas são limitadas a %s segundos. Faça upgrade para o Premium e tenha transmissões ilimitadas e recursos exclusivos!</string>
+    <string name="limits_upgrade">Upgrade</string>
+    <string name="limits_later">Mais tarde</string>
+
+    <string name="subscription_unlimited_possibilities">Desbloqueie possibilidades ilimitadas</string>
+    <string name="subscription_unlimited_time_title">Tempo de transmissão ilimitado</string>
+    <string name="subscription_unlimited_time_description">Transmita pelo tempo que quiser sem interrupções</string>
+    <string name="subscription_1m_viewers_title">Até 1M+ de espectadores</string>
+    <string name="subscription_1m_viewers_description">Aumente sua popularidade com enormes audiências virtuais</string>
+    <string name="subscription_ai_generated_title">Comentários e perguntas gerados por IA</string>
+    <string name="subscription_ai_generated_description">Experimente interações de fãs realistas que parecem uma transmissão ao vivo de verdade</string>
+    <string name="subscription_other_features_title">Muitos outros recursos exclusivos</string>
+    <string name="subscription_other_features_description">Novas ferramentas premium são adicionadas regularmente para melhorar sua experiência</string>
+    <string name="subscription_checkout">Continuar para o pagamento</string>
+    <string name="subscription_use_forever">Pague uma vez e use para sempre</string>
+    <string name="subscription_save">Economize %s</string>
+    <string name="subscription_checkout_failed">Falha ao concluir a operação</string>
+
+    <string name="subscription_success_title">Assinatura ativada com sucesso</string>
+    <string name="subscription_success_description">Agora você pode aproveitar todos os recursos premium e tirar o máximo proveito da sua experiência</string>
+    <string name="subscription_success_start_using">Começar a usar</string>
+
+    <string name="subscription_failed_title">Algo deu errado</string>
+    <string name="subscription_failed_description">Verifique seu pagamento ou entre em contato com o suporte para obter ajuda</string>
+    <string name="subscription_failed_retry">Tentar novamente</string>
 
     <string name="stream_join_requests_title">Solicitações para participar</string>
     <string name="stream_join_requests_body">Sem solicitações ainda</string>

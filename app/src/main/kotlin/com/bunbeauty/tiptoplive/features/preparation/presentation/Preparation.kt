@@ -4,29 +4,46 @@ import android.net.Uri
 import com.bunbeauty.tiptoplive.common.presentation.Base
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
 import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
+import kotlinx.collections.immutable.ImmutableList
 
 interface Preparation {
 
     data class State(
         val image: ImageSource<*>,
         val username: String,
+        val viewerCountList: ImmutableList<ViewerCountItem>,
         val viewerCount: ViewerCount,
-        val highlightDonate: Boolean,
+        val status: Status,
         val showFeedbackDialog: Boolean,
+        val showStreamDurationLimitsDialog: Boolean?,
     ): Base.State
 
+    data class ViewerCountItem(
+        val viewerCount: ViewerCount,
+        val isAvailable: Boolean
+    )
+
+    enum class Status {
+        LOADING,
+        FREE,
+        PREMIUM
+    }
+
     sealed interface Action: Base.Action {
-        data class ViewerCountSelect(val viewerCount: ViewerCount): Action
+        data object StartScreen: Action
+        data class ViewerCountSelect(val item: ViewerCountItem): Action
         data class UsernameUpdate(val username: String): Action
         data object AvatarClick: Action
         data class ImageSelect(val uri: Uri?): Action
+        data object ShowStreamDurationLimits: Action
         data object StartStreamClick: Action
         data class StreamFinished(val durationInSeconds: Int): Action
         data object CloseFeedbackDialogClick: Action
         data class FeedbackClick(val isPositive: Boolean): Action
+        data object PremiumLaterClick: Action
         data class NotShowFeedbackChecked(val checked: Boolean): Action
         data object ShareClick: Action
-        data object DonateClick: Action
+        data object PremiumClick: Action
     }
 
     sealed interface Event: Base.Event {
@@ -34,7 +51,7 @@ interface Preparation {
         data object HandlePositiveFeedbackClick: Event
         data object HandleAvatarClick: Event
         data object HandleShareClick: Event
-        data object HandleDonateClick: Event
+        data object NavigateToSubscription: Event
     }
 
 }

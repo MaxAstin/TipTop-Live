@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.ui.LocalePreview
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveSecondaryButton
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.features.main.presentation.Main
 
@@ -35,24 +34,24 @@ fun CameraIsRequiredDialog(
         Column(
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
-                .background(FakeLiveStreamTheme.colors.background)
+                .background(FakeLiveTheme.colors.background)
                 .padding(24.dp)
         ) {
             Text(
                 text = stringResource(
-                    R.string.required_camera_permisseon_title,
+                    R.string.required_camera_permission_title,
                     stringResource(R.string.app_name)
                 ),
-                color = FakeLiveStreamTheme.colors.onBackground,
-                style = FakeLiveStreamTheme.typography.titleMedium,
+                color = FakeLiveTheme.colors.onBackground,
+                style = FakeLiveTheme.typography.titleMedium,
             )
             Text(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .fillMaxWidth(),
-                text = stringResource(R.string.required_camera_permisseon_body),
-                color = FakeLiveStreamTheme.colors.onBackground,
-                style = FakeLiveStreamTheme.typography.bodyMedium,
+                text = stringResource(R.string.required_camera_permission_body),
+                color = FakeLiveTheme.colors.onBackground,
+                style = FakeLiveTheme.typography.bodyMedium,
             )
             FakeLiveSecondaryButton(
                 modifier = Modifier
