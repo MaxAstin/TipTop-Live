@@ -130,12 +130,12 @@ class BillingService @Inject constructor(
             .build()
 
         return suspendCancellableCoroutine { continuation ->
-            billingClient.acknowledgePurchase(acknowledgePurchaseParams) { result ->
-                if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+            billingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     analyticsManager.trackAcknowledgeProduct(productId = purchasedProduct.id)
                     continuation.resume(PurchaseResult.Success(product = purchasedProduct))
                 } else {
-                    result.toPurchaseResultError()?.let { error ->
+                    billingResult.toPurchaseResultError()?.let { error ->
                         analyticsManager.trackAcknowledgementFailed(
                             productId = purchasedProduct.id,
                             reason = error.reason
@@ -173,15 +173,22 @@ class BillingService @Inject constructor(
                     object : BillingClientStateListener {
                         override fun onBillingSetupFinished(billingResult: BillingResult) {
                             val isSuccessful = billingResult.responseCode == BillingClient.BillingResponseCode.OK
-                            try {
-                                continuation.resume(isSuccessful)
-                            } catch (exception: Exception) {
-                                continuation.resume(false)
+                            if (isSuccessful) {
+                                analyticsManager.trackBillingConnectionSuccess()
+                            } else {
+                                billingResult.toPurchaseResultError()
+                                    ?.let { error ->
+                                        analyticsManager.trackBillingConnectionFailed(
+                                            state = error.reason
+                                        )
+                                    }
                             }
+
+                            continuation.resume(isSuccessful)
                         }
 
                         override fun onBillingServiceDisconnected() {
-                            continuation.resume(false)
+                            analyticsManager.trackBillingDisconnection()
                         }
                     }
                 )

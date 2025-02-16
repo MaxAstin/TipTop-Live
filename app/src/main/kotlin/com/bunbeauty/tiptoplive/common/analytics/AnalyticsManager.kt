@@ -34,6 +34,9 @@ private const val CHECKOUT_CLICK_PREFIX = "checkout_click_"
 
 private const val USED_DAYS_PREFIX = "used_day_"
 
+private const val BILLING_CONNECTION_SUCCESS_EVENT = "billing_connection_success"
+private const val BILLING_CONNECTION_FAILED_EVENT = "billing_connection_failed_"
+private const val BILLING_DISCONNECTION_EVENT = "billing_disconnection"
 private const val PRODUCT_NOT_FOUND_EVENT = "product_not_found_"
 private const val START_BILLING_FLOW_EVENT = "start_billing_flow_"
 private const val FAIL_BILLING_FLOW_EVENT = "fail_billing_flow_"
@@ -123,6 +126,18 @@ class AnalyticsManager @Inject constructor(
 
     fun trackCheckoutClick(productId: String) {
         trackEvent(event = "$CHECKOUT_CLICK_PREFIX$productId")
+    }
+
+    fun trackBillingConnectionSuccess() {
+        trackEvent(event = BILLING_CONNECTION_SUCCESS_EVENT)
+    }
+
+    fun trackBillingConnectionFailed(state: String) {
+        trackEvent(event = "$BILLING_CONNECTION_FAILED_EVENT$state")
+    }
+
+    fun trackBillingDisconnection() {
+        trackEvent(event = BILLING_DISCONNECTION_EVENT)
     }
 
     fun trackProductNotFound(productId: String) {
