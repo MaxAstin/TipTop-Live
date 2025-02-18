@@ -56,7 +56,6 @@ import com.bunbeauty.tiptoplive.common.ui.blurTop
 import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
 import com.bunbeauty.tiptoplive.common.ui.components.CachedImage
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.bold
 import com.bunbeauty.tiptoplive.features.stream.presentation.Stream
@@ -89,12 +88,18 @@ fun StreamScreen(navController: NavHostController) {
     LaunchedEffect(Unit) {
         viewModel.event.onEach { event ->
             when (event) {
-                is Stream.Event.GoBack -> {
-                    navController.navigate(
-                        route = NavigationRote.Preparation(
-                            durationInSeconds = event.duration.value
-                        )
-                    ) {
+                is Stream.Event.NavigateBack -> {
+                    val route = when (event.type) {
+                        Stream.Event.NavigateBack.Type.Auto -> {
+                            NavigationRote.Preparation(showStreamDurationLimits = true)
+                        }
+                        is Stream.Event.NavigateBack.Type.User -> {
+                            NavigationRote.Preparation(
+                                durationInSeconds = event.type.duration.value
+                            )
+                        }
+                    }
+                    navController.navigate(route = route) {
                         popUpTo<NavigationRote.Preparation> {
                             inclusive = true
                         }
@@ -145,7 +150,7 @@ private fun StreamContent(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = FakeLiveStreamTheme.colors.surface,
+        containerColor = FakeLiveTheme.colors.surface,
     ) { padding ->
         Column(
             modifier = Modifier
@@ -317,8 +322,8 @@ private fun UsernameRow(
         Text(
             modifier = Modifier.weight(1f, false),
             text = username,
-            color = FakeLiveStreamTheme.colors.onSurface,
-            style = FakeLiveStreamTheme.typography.titleSmall,
+            color = FakeLiveTheme.colors.onSurface,
+            style = FakeLiveTheme.typography.titleSmall,
             overflow = Ellipsis,
             maxLines = 1,
         )
@@ -328,7 +333,7 @@ private fun UsernameRow(
                 .size(16.dp),
             imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_drop_down),
             contentDescription = "Dropdown",
-            tint = FakeLiveStreamTheme.colors.icon,
+            tint = FakeLiveTheme.colors.icon,
         )
     }
 }
@@ -338,13 +343,13 @@ private fun LiveCard(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(4.dp))
-            .background(FakeLiveStreamTheme.colors.instagram.accent)
+            .background(FakeLiveTheme.colors.instagram.accent)
             .padding(8.dp)
     ) {
         Text(
             text = stringResource(R.string.stream_live),
-            style = FakeLiveStreamTheme.typography.bodySmall,
-            color = FakeLiveStreamTheme.colors.onSurface
+            style = FakeLiveTheme.typography.bodySmall,
+            color = FakeLiveTheme.colors.onSurface
         )
     }
 }
@@ -357,7 +362,7 @@ private fun ViewersCard(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(4.dp))
-            .background(FakeLiveStreamTheme.colors.surface.copy(alpha = 0.5f))
+            .background(FakeLiveTheme.colors.surface.copy(alpha = 0.5f))
             .padding(8.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -365,7 +370,7 @@ private fun ViewersCard(
                 modifier = Modifier.size(12.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_eye),
                 contentDescription = "Viewers",
-                tint = FakeLiveStreamTheme.colors.icon,
+                tint = FakeLiveTheme.colors.icon,
             )
             val viewersCountText = when (viewersCount) {
                 is ViewersCountUi.UpToThousand -> viewersCount.count
@@ -378,8 +383,8 @@ private fun ViewersCard(
             Text(
                 modifier = Modifier.padding(start = 2.dp),
                 text = viewersCountText,
-                style = FakeLiveStreamTheme.typography.bodySmall,
-                color = FakeLiveStreamTheme.colors.onSurface
+                style = FakeLiveTheme.typography.bodySmall,
+                color = FakeLiveTheme.colors.onSurface
             )
         }
     }
@@ -481,7 +486,7 @@ private fun CurrentQuestion(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(FakeLiveStreamTheme.colors.surface.copy(alpha = 0.8f))
+            .background(FakeLiveTheme.colors.surface.copy(alpha = 0.8f))
     ) {
         Row(
             modifier = Modifier.padding(12.dp),
@@ -498,11 +503,11 @@ private fun CurrentQuestion(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(R.string.stream_question_title),
-                    color = FakeLiveStreamTheme.colors.onSurface,
-                    style = FakeLiveStreamTheme.typography.titleSmall,
+                    color = FakeLiveTheme.colors.onSurface,
+                    style = FakeLiveTheme.typography.titleSmall,
                 )
 
-                val usernameStyle = FakeLiveStreamTheme.typography.titleSmall
+                val usernameStyle = FakeLiveTheme.typography.titleSmall
                 val annotatedString = remember(question) {
                     buildAnnotatedString {
                         withStyle(style = usernameStyle.toSpanStyle()) {
@@ -514,8 +519,8 @@ private fun CurrentQuestion(
                 Text(
                     modifier = Modifier.padding(top = 2.dp),
                     text = annotatedString,
-                    color = FakeLiveStreamTheme.colors.onSurface,
-                    style = FakeLiveStreamTheme.typography.bodySmall,
+                    color = FakeLiveTheme.colors.onSurface,
+                    style = FakeLiveTheme.typography.bodySmall,
                 )
             }
         }
@@ -529,7 +534,7 @@ private fun CurrentQuestion(
                 },
             imageVector = ImageVector.vectorResource(R.drawable.ic_close),
             contentDescription = "Close",
-            tint = FakeLiveStreamTheme.colors.icon,
+            tint = FakeLiveTheme.colors.icon,
         )
     }
 }
@@ -554,13 +559,13 @@ private fun CommentItem(
         Column(modifier = Modifier.padding(start = 12.dp)) {
             Text(
                 text = comment.username,
-                color = FakeLiveStreamTheme.colors.onSurface,
-                style = FakeLiveStreamTheme.typography.titleSmall,
+                color = FakeLiveTheme.colors.onSurface,
+                style = FakeLiveTheme.typography.titleSmall,
             )
             Text(
                 text = comment.text,
-                color = FakeLiveStreamTheme.colors.onSurface,
-                style = FakeLiveStreamTheme.typography.bodySmall,
+                color = FakeLiveTheme.colors.onSurface,
+                style = FakeLiveTheme.typography.bodySmall,
             )
         }
     }
@@ -575,7 +580,7 @@ private fun BottomPanel(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(FakeLiveStreamTheme.colors.surface)
+            .background(FakeLiveTheme.colors.surface)
             .padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -585,7 +590,7 @@ private fun BottomPanel(
                 .weight(1f)
                 .border(
                     width = 1.dp,
-                    color = FakeLiveStreamTheme.colors.border,
+                    color = FakeLiveTheme.colors.border,
                     shape = RoundedCornerShape(24.dp)
                 )
                 .padding(
@@ -597,8 +602,8 @@ private fun BottomPanel(
             Text(
                 modifier = Modifier.weight(1f),
                 text = stringResource(R.string.stream_add_comment),
-                style = FakeLiveStreamTheme.typography.bodyMedium,
-                color = FakeLiveStreamTheme.colors.onSurface,
+                style = FakeLiveTheme.typography.bodyMedium,
+                color = FakeLiveTheme.colors.onSurface,
                 overflow = Ellipsis,
                 maxLines = 1,
             )
@@ -606,7 +611,7 @@ private fun BottomPanel(
                 modifier = Modifier.size(24.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_options),
                 contentDescription = "Options",
-                tint = FakeLiveStreamTheme.colors.icon,
+                tint = FakeLiveTheme.colors.icon,
             )
         }
         ActionIcon(
@@ -642,13 +647,13 @@ private fun BottomPanel(
             unreadQuestionCount?.let {
                 Badge(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    containerColor = FakeLiveStreamTheme.colors.important,
-                    contentColor = FakeLiveStreamTheme.colors.onSurface
+                    containerColor = FakeLiveTheme.colors.negative,
+                    contentColor = FakeLiveTheme.colors.onSurface
                 ) {
                     Text(
                         text = unreadQuestionCount.toString(),
-                        color = FakeLiveStreamTheme.colors.onSurface,
-                        style = FakeLiveStreamTheme.typography.bodySmall.bold
+                        color = FakeLiveTheme.colors.onSurface,
+                        style = FakeLiveTheme.typography.bodySmall.bold
                     )
                 }
             }
@@ -675,7 +680,7 @@ private fun ActionIcon(
         modifier = modifier.size(28.dp),
         imageVector = ImageVector.vectorResource(iconResId),
         contentDescription = contentDescription,
-        tint = FakeLiveStreamTheme.colors.icon,
+        tint = FakeLiveTheme.colors.icon,
     )
 }
 

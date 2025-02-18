@@ -16,8 +16,8 @@
     <string name="stream_question_title">Question</string>
     <string name="stream_filter_not_available">This filter is not available</string>
 
-    <string name="required_camera_permisseon_title">Allow %s to access your camera</string>
-    <string name="required_camera_permisseon_body">This lets you start the Live.
+    <string name="required_camera_permission_title">Allow %s to access your camera</string>
+    <string name="required_camera_permission_body">This lets you start the Live.
         You can change this anytime in your device settings.</string>
     <string name="settings">Settings</string>
 
@@ -32,14 +32,36 @@
     <string name="preparation_username_hint">user_name</string>
     <string name="preparation_viewer_count">Viewer count</string>
     <string name="preparation_start_live">Start Live</string>
+    <string name="preparation_premium">Premium</string>
+
+    <string name="limits_live_has_ended">Live has ended ⌛</string>
+    <string name="limits_free_session_limited">Free sessions are limited to %s seconds. Upgrade to Premium for unlimited Live streaming and more exclusive features!</string>
+    <string name="limits_upgrade">Upgrade</string>
+    <string name="limits_later">Later</string>
 
     <string name="crop_image_next">Next</string>
 
-    <string name="donation_title">Support %s</string>
-    <string name="donation_descriptio">This app is created by an indie developer without external financial support. Every contribution matters greatly, and you have the power to influence the development of this project.</string>
-    <string name="donation_donate">Donate %s</string>
-    <string name="donation_success">Success</string>
-    <string name="donation_ok">OK</string>
+    <string name="subscription_unlimited_possibilities">Unlock unlimited possibilities</string>
+    <string name="subscription_unlimited_time_title">Unlimited Live time</string>
+    <string name="subscription_unlimited_time_description">Stream for as long as you want without interruptions</string>
+    <string name="subscription_1m_viewers_title">Up to 1M+ viewers</string>
+    <string name="subscription_1m_viewers_description">Boost your popularity with massive virtual audiences</string>
+    <string name="subscription_ai_generated_title">AI-generated comments &amp; questions</string>
+    <string name="subscription_ai_generated_description">Experience authentic-looking fan interactions that feel just like a real Live stream</string>
+    <string name="subscription_other_features_title">Many other exclusive features</string>
+    <string name="subscription_other_features_description">New premium tools are added regularly to enhance your experience</string>
+    <string name="subscription_checkout">Continue to checkout</string>
+    <string name="subscription_use_forever">Pay once and use forever</string>
+    <string name="subscription_save">Save %s</string>
+    <string name="subscription_checkout_failed">Failed to complete the operation</string>
+
+    <string name="subscription_success_title">Subscription successfully activated</string>
+    <string name="subscription_success_description">Now you can enjoy all premium features and make the most of your experience</string>
+    <string name="subscription_success_start_using">Start using</string>
+
+    <string name="subscription_failed_title">Something went wrong</string>
+    <string name="subscription_failed_description">Please check your payment or contact support for assistance</string>
+    <string name="subscription_failed_retry">Retry</string>
 
     <string name="stream_join_requests_title">Requests to join</string>
     <string name="stream_join_requests_body">No Requests Yet</string>

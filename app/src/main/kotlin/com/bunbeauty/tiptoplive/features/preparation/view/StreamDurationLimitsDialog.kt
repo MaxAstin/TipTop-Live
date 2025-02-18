@@ -1,6 +1,5 @@
-package com.bunbeauty.tiptoplive.features.main.view
+package com.bunbeauty.tiptoplive.features.preparation.view
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -26,12 +23,14 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.ui.LocalePreview
 import com.bunbeauty.tiptoplive.common.ui.clickableWithoutIndication
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveDialogButton
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveSecondaryButton
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation
+import com.bunbeauty.tiptoplive.features.stream.presentation.TIME_LIMIT_FOR_FREE_VERSION
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FeedbackDialog(
+fun StreamDurationLimitsDialog(
     onAction: (Preparation.Action) -> Unit
 ) {
     BasicAlertDialog(
@@ -42,18 +41,15 @@ fun FeedbackDialog(
         Column(
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
-                .background(FakeLiveStreamTheme.colors.background)
+                .background(FakeLiveTheme.colors.background)
                 .padding(24.dp)
         ) {
             Row {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = stringResource(
-                        R.string.do_you_like,
-                        stringResource(R.string.app_name)
-                    ),
-                    color = FakeLiveStreamTheme.colors.onBackground,
-                    style = FakeLiveStreamTheme.typography.titleMedium,
+                    text = stringResource(R.string.limits_live_has_ended),
+                    color = FakeLiveTheme.colors.onBackground,
+                    style = FakeLiveTheme.typography.titleMedium,
                 )
                 Icon(
                     modifier = Modifier
@@ -63,7 +59,7 @@ fun FeedbackDialog(
                             onAction(Preparation.Action.CloseFeedbackDialogClick)
                         },
                     painter = painterResource(R.drawable.ic_close),
-                    tint = FakeLiveStreamTheme.colors.onSurfaceVariant,
+                    tint = FakeLiveTheme.colors.onSurfaceVariant,
                     contentDescription = "close"
                 )
             }
@@ -72,19 +68,11 @@ fun FeedbackDialog(
                     .padding(top = 16.dp)
                     .fillMaxWidth(),
                 text = stringResource(
-                    R.string.help_us_improve,
-                    stringResource(R.string.app_name)
+                    R.string.limits_free_session_limited,
+                    TIME_LIMIT_FOR_FREE_VERSION
                 ),
-                color = FakeLiveStreamTheme.colors.onBackground,
-                style = FakeLiveStreamTheme.typography.bodyMedium,
-            )
-            Image(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .width(160.dp)
-                    .align(Alignment.CenterHorizontally),
-                painter = painterResource(R.drawable.shy_emoji),
-                contentDescription = "feedback emoji"
+                color = FakeLiveTheme.colors.onBackground,
+                style = FakeLiveTheme.typography.bodyMedium,
             )
             Row(
                 modifier = Modifier
@@ -92,26 +80,19 @@ fun FeedbackDialog(
                     .align(Alignment.End),
                 horizontalArrangement = spacedBy(16.dp)
             ) {
-                FakeLiveDialogButton(
+                FakeLiveSecondaryButton(
                     modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.feedback_yes),
-                    background = Color(0xFF5BC589),
-                    iconId = R.drawable.thumbs_up,
+                    text = stringResource(R.string.limits_later),
                     onClick = {
-                        onAction(
-                            Preparation.Action.FeedbackClick(isPositive = true)
-                        )
+                        onAction(Preparation.Action.PremiumLaterClick)
                     },
                 )
                 FakeLiveDialogButton(
                     modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.feedback_no),
-                    background = Color(0xFFDD6962),
-                    iconId = R.drawable.thumbs_down,
+                    text = stringResource(R.string.limits_upgrade),
+                    background = FakeLiveTheme.colors.interactive,
                     onClick = {
-                        onAction(
-                            Preparation.Action.FeedbackClick(isPositive = false)
-                        )
+                        onAction(Preparation.Action.PremiumClick)
                     },
                 )
             }
@@ -122,7 +103,7 @@ fun FeedbackDialog(
 @LocalePreview
 @Composable
 private fun FeedbackDialogPreview() {
-    FeedbackDialog(
+    StreamDurationLimitsDialog(
         onAction = {}
     )
 }

@@ -16,8 +16,8 @@
     <string name="stream_question_title">Pregunta</string>
     <string name="stream_filter_not_available">Este filtro no está disponible</string>
 
-    <string name="required_camera_permisseon_title">Permitir que %s acceda a tu cámara</string>
-    <string name="required_camera_permisseon_body">Esto te permite iniciar el Directo. Puedes cambiar esto en cualquier momento en la configuración de tu dispositivo.</string>
+    <string name="required_camera_permission_title">Permitir que %s acceda a tu cámara</string>
+    <string name="required_camera_permission_body">Esto te permite iniciar el Directo. Puedes cambiar esto en cualquier momento en la configuración de tu dispositivo.</string>
     <string name="settings">Configuraciones</string>
 
     <string name="do_you_like">¿Te gusta la aplicación %s?</string>
@@ -31,14 +31,36 @@
     <string name="preparation_username_hint">nombre_de_usuario</string>
     <string name="preparation_viewer_count">Recuento de espectadores</string>
     <string name="preparation_start_live">Comenzar Directo</string>
+    <string name="preparation_premium">Premium</string>
+
+    <string name="limits_live_has_ended">La transmisión ha terminado ⏳</string>
+    <string name="limits_free_session_limited">LLas transmisiones gratuitas están limitadas a %s segundos. ¡Mejora a Premium para transmisiones ilimitadas y funciones exclusivas!</string>
+    <string name="limits_upgrade">Mejorar</string>
+    <string name="limits_later">Más tarde</string>
 
     <string name="crop_image_next">Próximo</string>
 
-    <string name="donation_title">Soporte %s</string>
-    <string name="donation_descriptio">Esta aplicación fue creada por un desarrollador independiente sin apoyo financiero externo. Cada contribución es muy importante y usted tiene el poder de influir en el desarrollo de este proyecto.</string>
-    <string name="donation_donate">Donar %s</string>
-    <string name="donation_success">Éxito</string>
-    <string name="donation_ok">OK</string>
+    <string name="subscription_unlimited_possibilities">Desbloquea posibilidades ilimitadas</string>
+    <string name="subscription_unlimited_time_title">Tiempo de transmisión ilimitado</string>
+    <string name="subscription_unlimited_time_description">Transmite tanto como quieras sin interrupciones</string>
+    <string name="subscription_1m_viewers_title">Hasta 1M+ de espectadores</string>
+    <string name="subscription_1m_viewers_description">Aumenta tu popularidad con grandes audiencias virtuales</string>
+    <string name="subscription_ai_generated_title">Comentarios y preguntas generados por IA</string>
+    <string name="subscription_ai_generated_description">Experimenta interacciones de fans realistas que se sienten como una transmisión en vivo auténtica</string>
+    <string name="subscription_other_features_title">Muchas otras funciones exclusivas</string>
+    <string name="subscription_other_features_description">Nuevas herramientas premium se añaden regularmente para mejorar tu experiencia</string>
+    <string name="subscription_checkout">Continuar al pago</string>
+    <string name="subscription_use_forever">Paga una vez y úsalo para siempre</string>
+    <string name="subscription_save">Ahorre %s</string>
+    <string name="subscription_checkout_failed">No se pudo completar la operación</string>
+
+    <string name="subscription_success_title">Suscripción activada con éxito</string>
+    <string name="subscription_success_description">Ahora puedes disfrutar de todas las funciones premium y aprovechar al máximo tu experiencia</string>
+    <string name="subscription_success_start_using">Empezar a usar</string>
+
+    <string name="subscription_failed_title">Algo salió mal</string>
+    <string name="subscription_failed_description">Por favor, verifique su pago o comuníquese con soporte para obtener ayuda</string>
+    <string name="subscription_failed_retry">Reintentar</string>
 
     <string name="stream_join_requests_title">Solicitudes para unirse</string>
     <string name="stream_join_requests_body">Aún no hay solicitudes</string>

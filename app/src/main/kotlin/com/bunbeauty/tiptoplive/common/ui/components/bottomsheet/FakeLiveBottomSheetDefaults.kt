@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 object FakeLiveBottomSheetDefaults {
 
@@ -23,7 +23,7 @@ object FakeLiveBottomSheetDefaults {
 
     @Composable
     fun DragHandle(
-        color: Color = FakeLiveStreamTheme.colors.border
+        color: Color = FakeLiveTheme.colors.border
     ) {
         Spacer(
             modifier = Modifier

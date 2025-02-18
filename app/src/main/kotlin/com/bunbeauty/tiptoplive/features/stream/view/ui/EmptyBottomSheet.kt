@@ -16,7 +16,6 @@ import com.bunbeauty.tiptoplive.R
 import com.bunbeauty.tiptoplive.common.ui.LocalePreview
 import com.bunbeauty.tiptoplive.common.ui.components.bottomsheet.FakeLiveBottomSheet
 import com.bunbeauty.tiptoplive.common.ui.components.bottomsheet.FakeLiveBottomSheetContent
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,6 +49,7 @@ private fun ColumnScope.EmptyBottomSheetContent(
         title = stringResource(id = titleResId)
     ) {
         EmptyBottomSheetContent(
+            modifier = Modifier.fillMaxWidth(),
             bodyResId = bodyResId,
             descriptionResId = descriptionResId,
         )
@@ -57,31 +57,34 @@ private fun ColumnScope.EmptyBottomSheetContent(
 }
 
 @Composable
-fun ColumnScope.EmptyBottomSheetContent(
+fun EmptyBottomSheetContent(
     @StringRes bodyResId: Int,
     @StringRes descriptionResId: Int,
+    modifier: Modifier = Modifier
 ) {
-    Text(
-        modifier = Modifier
-            .padding(top = 100.dp)
-            .fillMaxWidth(),
-        text = stringResource(bodyResId),
-        color = FakeLiveStreamTheme.colors.onSurface,
-        style = FakeLiveStreamTheme.typography.titleLarge,
-        textAlign = TextAlign.Center
-    )
-    Text(
-        modifier = Modifier
-            .padding(
-                top = 16.dp,
-                bottom = 100.dp
-            )
-            .fillMaxWidth(),
-        text = stringResource(descriptionResId),
-        color = FakeLiveStreamTheme.colors.onSurfaceVariant,
-        style = FakeLiveStreamTheme.typography.bodyMedium,
-        textAlign = TextAlign.Center
-    )
+    Column(modifier = modifier) {
+        Text(
+            modifier = Modifier
+                .padding(top = 100.dp)
+                .fillMaxWidth(),
+            text = stringResource(bodyResId),
+            color = FakeLiveTheme.colors.onSurface,
+            style = FakeLiveTheme.typography.titleLarge,
+            textAlign = TextAlign.Center
+        )
+        Text(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                    bottom = 100.dp
+                )
+                .fillMaxWidth(),
+            text = stringResource(descriptionResId),
+            color = FakeLiveTheme.colors.onSurfaceVariant,
+            style = FakeLiveTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center
+        )
+    }
 }
 
 @LocalePreview

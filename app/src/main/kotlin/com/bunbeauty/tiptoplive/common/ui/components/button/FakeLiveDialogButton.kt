@@ -18,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.tiptoplive.R
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 import com.bunbeauty.tiptoplive.common.ui.util.rememberMultipleEventsCutter
 
@@ -44,8 +43,8 @@ fun FakeLiveDialogButton(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = text,
-                color = FakeLiveStreamTheme.colors.onSurface,
-                style = FakeLiveStreamTheme.typography.titleSmall,
+                color = FakeLiveTheme.colors.onSurface,
+                style = FakeLiveTheme.typography.titleSmall,
             )
             if (iconId != null) {
                 Image(
@@ -67,7 +66,7 @@ private fun FakeLiveDialogButtonPreview() {
         FakeLiveDialogButton(
             text = "Button",
             iconId = R.drawable.thumbs_up,
-            background = FakeLiveStreamTheme.colors.interactive,
+            background = FakeLiveTheme.colors.interactive,
             onClick = {}
         )
     }

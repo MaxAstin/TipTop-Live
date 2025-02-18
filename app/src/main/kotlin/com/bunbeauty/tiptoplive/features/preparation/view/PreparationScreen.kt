@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,15 +42,14 @@ import com.bunbeauty.tiptoplive.common.ui.components.CachedImage
 import com.bunbeauty.tiptoplive.common.ui.components.FakeLiveTextField
 import com.bunbeauty.tiptoplive.common.ui.components.ImageSource
 import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveGradientButton
-import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLiveIconButton
+import com.bunbeauty.tiptoplive.common.ui.components.button.FakeLivePrimaryButton
 import com.bunbeauty.tiptoplive.common.ui.noEffectClickable
 import com.bunbeauty.tiptoplive.common.ui.rippleClickable
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
-import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
-import com.bunbeauty.tiptoplive.features.main.view.FeedbackDialog
 import com.bunbeauty.tiptoplive.features.preparation.presentation.Preparation
 import com.bunbeauty.tiptoplive.features.preparation.presentation.PreparationViewModel
+import com.bunbeauty.tiptoplive.shared.domain.model.ViewerCount
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -60,6 +60,7 @@ fun PreparationScreen(
     navController: NavHostController,
     streamDurationInSeconds: Int?,
     croppedImageUri: Uri?,
+    showStreamDurationLimits: Boolean,
     onStartStreamClick: () -> Unit,
     onPositiveFeedbackClick: () -> Unit,
     onShareClick: () -> Unit,
@@ -82,6 +83,9 @@ fun PreparationScreen(
     }
 
     LaunchedEffect(Unit) {
+        viewModel.onAction(Preparation.Action.StartScreen)
+    }
+    LaunchedEffect(Unit) {
         viewModel.event.onEach { event ->
             when (event) {
                 Preparation.Event.OpenStream -> {
@@ -100,8 +104,8 @@ fun PreparationScreen(
                     onShareClick()
                 }
 
-                Preparation.Event.HandleDonateClick -> {
-                    navController.navigate(NavigationRote.Donation)
+                Preparation.Event.NavigateToSubscription -> {
+                    navController.navigate(NavigationRote.Subscription)
                 }
             }
         }.launchIn(this)
@@ -119,6 +123,12 @@ fun PreparationScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        if (showStreamDurationLimits) {
+            viewModel.onAction(Preparation.Action.ShowStreamDurationLimits)
+        }
+    }
+
     PreparationContent(
         state = state,
         onAction = onAction,
@@ -126,6 +136,10 @@ fun PreparationScreen(
 
     if (state.showFeedbackDialog) {
         FeedbackDialog(onAction = onAction)
+    }
+
+    if (state.showStreamDurationLimitsDialog == true) {
+        StreamDurationLimitsDialog(onAction = onAction)
     }
 }
 
@@ -137,30 +151,14 @@ private fun PreparationContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(FakeLiveStreamTheme.colors.background)
+            .background(FakeLiveTheme.colors.background)
             .padding(16.dp)
     ) {
-        Row(
+        Premium(
             modifier = Modifier.align(Alignment.TopEnd),
-            horizontalArrangement = spacedBy(8.dp)
-        ) {
-            FakeLiveIconButton(
-                iconId = R.drawable.ic_share,
-                contentDescription = "share",
-                onClick = {
-                    onAction(Preparation.Action.ShareClick)
-                }
-            )
-//          TODO uncomment after adding In-App products
-//          FakeLiveIconButton(
-//              iconId = R.drawable.ic_donate,
-//              contentDescription = "donate",
-//              hasMarker = state.highlightDonate,
-//              onClick = {
-//                  onAction(Preparation.Action.DonateClick)
-//              }
-//          )
-        }
+            status = state.status,
+            onAction = onAction
+        )
 
         Column(modifier = Modifier.align(Alignment.Center)) {
             CachedImage(
@@ -185,16 +183,16 @@ private fun PreparationContent(
                 Text(
                     modifier = Modifier.padding(16.dp),
                     text = stringResource(R.string.preparation_edit_photo),
-                    color = FakeLiveStreamTheme.colors.interactive,
-                    style = FakeLiveStreamTheme.typography.titleSmall,
+                    color = FakeLiveTheme.colors.interactive,
+                    style = FakeLiveTheme.typography.titleSmall,
                 )
             }
 
             Text(
                 modifier = Modifier.padding(top = 16.dp),
                 text = stringResource(R.string.preparation_username),
-                color = FakeLiveStreamTheme.colors.onSurfaceVariant,
-                style = FakeLiveStreamTheme.typography.bodyMedium,
+                color = FakeLiveTheme.colors.onSurfaceVariant,
+                style = FakeLiveTheme.typography.bodyMedium,
             )
             FakeLiveTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -212,8 +210,8 @@ private fun PreparationContent(
             Text(
                 modifier = Modifier.padding(top = 16.dp),
                 text = stringResource(R.string.preparation_viewer_count),
-                color = FakeLiveStreamTheme.colors.onSurfaceVariant,
-                style = FakeLiveStreamTheme.typography.bodyMedium,
+                color = FakeLiveTheme.colors.onSurfaceVariant,
+                style = FakeLiveTheme.typography.bodyMedium,
             )
             Box {
                 FakeLiveTextField(
@@ -229,17 +227,20 @@ private fun PreparationContent(
                             modifier = Modifier.size(16.dp),
                             imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_right),
                             contentDescription = "Arrow",
-                            tint = FakeLiveStreamTheme.colors.iconVariant,
+                            tint = FakeLiveTheme.colors.iconVariant,
                         )
                     }
                 )
                 ViewersDropdownMenu(
                     expanded = menuExpanded,
+                    viewerCountList = state.viewerCountList,
                     onDismissRequest = {
                         menuExpanded = false
                     },
-                    onItemClick = { viewerCount ->
-                        onAction(Preparation.Action.ViewerCountSelect(viewerCount = viewerCount))
+                    onItemClick = { item ->
+                        onAction(
+                            Preparation.Action.ViewerCountSelect(item = item)
+                        )
                         menuExpanded = false
                     }
                 )
@@ -252,9 +253,9 @@ private fun PreparationContent(
                 .align(Alignment.BottomCenter),
             brush = Brush.linearGradient(
                 colors = listOf(
-                    FakeLiveStreamTheme.colors.instagram.logo1,
-                    FakeLiveStreamTheme.colors.instagram.logo2,
-                    FakeLiveStreamTheme.colors.instagram.logo3,
+                    FakeLiveTheme.colors.instagram.logo1,
+                    FakeLiveTheme.colors.instagram.logo2,
+                    FakeLiveTheme.colors.instagram.logo3,
                 ),
                 start = Offset(Float.POSITIVE_INFINITY, 0f),
                 end = Offset(0f, Float.POSITIVE_INFINITY),
@@ -269,24 +270,107 @@ private fun PreparationContent(
                     .align(Alignment.Center)
                     .padding(12.dp),
                 text = stringResource(R.string.preparation_start_live),
-                color = FakeLiveStreamTheme.colors.onSurface,
-                style = FakeLiveStreamTheme.typography.titleSmall,
+                color = FakeLiveTheme.colors.onSurface,
+                style = FakeLiveTheme.typography.titleSmall,
             )
+        }
+    }
+}
+
+@Composable
+private fun Premium(
+    status: Preparation.Status,
+    onAction: (Preparation.Action) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    when (status) {
+        Preparation.Status.LOADING -> Unit
+        Preparation.Status.FREE -> {
+            FakeLivePrimaryButton(
+                modifier = modifier,
+                text = stringResource(R.string.preparation_premium),
+                onClick = {
+                    onAction(Preparation.Action.PremiumClick)
+                },
+                contentPadding = PaddingValues(
+                    horizontal = 12.dp,
+                    vertical = 8.dp,
+                ),
+                leadingIcon = {
+                    Icon(
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(20.dp),
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_star),
+                        contentDescription = "Star",
+                        tint = FakeLiveTheme.colors.onSurface,
+                    )
+                }
+            )
+        }
+
+        Preparation.Status.PREMIUM -> {
+            Row(
+                modifier = modifier
+                    .background(
+                        FakeLiveTheme.colors.surface,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(
+                        horizontal = 12.dp,
+                        vertical = 6.dp
+                    ),
+                horizontalArrangement = spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.preparation_premium),
+                    color = FakeLiveTheme.colors.onSurface,
+                    style = FakeLiveTheme.typography.titleSmall,
+                )
+                Icon(
+                    modifier = Modifier.size(20.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_infinity),
+                    contentDescription = "Star",
+                    tint = FakeLiveTheme.colors.onSurface,
+                )
+            }
         }
     }
 }
 
 @LocalePreview
 @Composable
-private fun PreparationContentPreview() {
+private fun PreparationFreePreview() {
     FakeLiveTheme {
         PreparationContent(
             state = Preparation.State(
                 image = ImageSource.ResId(R.drawable.img_default_avatar),
                 username = "",
                 viewerCount = ViewerCount.V_100_200,
-                highlightDonate = true,
+                viewerCountList = persistentListOf(),
+                status = Preparation.Status.FREE,
                 showFeedbackDialog = false,
+                showStreamDurationLimitsDialog = false
+            ),
+            onAction = {}
+        )
+    }
+}
+
+@LocalePreview
+@Composable
+private fun PreparationPremiumPreview() {
+    FakeLiveTheme {
+        PreparationContent(
+            state = Preparation.State(
+                image = ImageSource.ResId(R.drawable.img_default_avatar),
+                username = "",
+                viewerCount = ViewerCount.V_100_200,
+                viewerCountList = persistentListOf(),
+                status = Preparation.Status.PREMIUM,
+                showFeedbackDialog = false,
+                showStreamDurationLimitsDialog = false
             ),
             onAction = {}
         )

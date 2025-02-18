@@ -15,8 +15,8 @@
     <string name="stream_question_title">Вопрос</string>
     <string name="stream_filter_not_available">Этот фильтр недоступен</string>
 
-    <string name="required_camera_permisseon_title">Разрешите %s to доступ к камере</string>
-    <string name="required_camera_permisseon_body">Это позволит начть стрим.
+    <string name="required_camera_permission_title">Разрешите %s to доступ к камере</string>
+    <string name="required_camera_permission_body">Это позволит начть стрим.
         Выбор в любое время можно изменить в настройках устройства.</string>
     <string name="settings">Настройки</string>
 
@@ -31,14 +31,36 @@
     <string name="preparation_username_hint">user_name</string>
     <string name="preparation_viewer_count">Количество зрителей</string>
     <string name="preparation_start_live">Начать стрим</string>
+    <string name="preparation_premium">Премиум</string>
+
+    <string name="limits_live_has_ended">Трансляция завершена ⏳</string>
+    <string name="limits_free_session_limited">Бесплатные трансляции ограничены %s секундами. Обновитесь до Премиум для безлимитных трансляций и эксклюзивных функций!</string>
+    <string name="limits_upgrade">Обновить</string>
+    <string name="limits_later">Позже</string>
 
     <string name="crop_image_next">Далее</string>
 
-    <string name="donation_title">Поддержите %s</string>
-    <string name="donation_descriptio">Это приложение создано независимым разработчиком без внешней финансовой поддержки. Каждый вклад имеет большое значение, и у вас есть возможность повлиять на развитие этого проекта.</string>
-    <string name="donation_donate">Пожертвовать %s</string>
-    <string name="donation_success">Успешно</string>
-    <string name="donation_ok">ОК</string>
+    <string name="subscription_unlimited_possibilities">Откройте безграничные возможности</string>
+    <string name="subscription_unlimited_time_title">Неограниченное время трансляции</string>
+    <string name="subscription_unlimited_time_description">Ведите стрим столько, сколько захотите, без прерываний</string>
+    <string name="subscription_1m_viewers_title">До 1 млн+ зрителей</string>
+    <string name="subscription_1m_viewers_description">Повышайте популярность с огромной виртуальной аудиторией</string>
+    <string name="subscription_ai_generated_title">Комментарии и вопросы, сгенерированные ИИ</string>
+    <string name="subscription_ai_generated_description">Испытайте реалистичное взаимодействие с фанатами, которое ощущается как реальная прямая трансляция</string>
+    <string name="subscription_other_features_title">Множество других эксклюзивных функций</string>
+    <string name="subscription_other_features_description">Новые премиум инструменты регулярно добавляются для улучшения вашего опыта</string>
+    <string name="subscription_checkout">Перейти к оплате</string>
+    <string name="subscription_use_forever">Заплатите один раз и пользуйтесь навсегда</string>
+    <string name="subscription_save">Сэкономьте %s</string>
+    <string name="subscription_checkout_failed">Не удалось выполнить операцию</string>
+
+    <string name="subscription_success_title">Подписка успешно активирована</string>
+    <string name="subscription_success_description">Теперь вы можете пользоваться всеми Премиум функциями</string>
+    <string name="subscription_success_start_using">Начать использовать</string>
+
+    <string name="subscription_failed_title">Что-то пошло не так</string>
+    <string name="subscription_failed_description">Пожалуйста, проверьте оплату или обратитесь в поддержку за помощью</string>
+    <string name="subscription_failed_retry">Повторить</string>
 
     <string name="stream_join_requests_title">Запросы на присоединение</string>
     <string name="stream_join_requests_body">Запросов пока нет</string>

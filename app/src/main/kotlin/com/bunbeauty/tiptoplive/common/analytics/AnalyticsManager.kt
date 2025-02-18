@@ -5,6 +5,7 @@ import com.bunbeauty.tiptoplive.common.util.Seconds
 import com.bunbeauty.tiptoplive.common.util.toTimeString
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
+import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,6 +16,7 @@ private const val VIEWER_COUNT_EVENT = "viewer_count_"
 
 private const val STREAM_STOPPED_EVENT = "stream_stopped"
 private const val STREAM_FINISHED_EVENT = "stream_finished"
+private const val STREAM_AUTO_FINISHED_EVENT = "stream_auto_finished"
 private const val STREAM_DURATION_PARAM = "stream_duration"
 private const val CAMERA_ERROR_EVENT = "camera_error"
 
@@ -25,26 +27,22 @@ private const val OPEN_QUESTIONS_EVENT = "open_questions"
 private const val SELECT_QUESTION_EVENT = "select_question"
 
 private const val SHARE_EVENT = "share"
-private const val DONATE_EVENT = "donate"
+private const val PREMIUM_LATER_CLICK_EVENT = "premium_later_click"
+private const val PREMIUM_CLICK_EVENT = "premium_click"
+private const val PREMIUM_QUITE_EVENT = "premium_quite"
+private const val CHECKOUT_CLICK_PREFIX = "checkout_click_"
 
 private const val USED_DAYS_PREFIX = "used_day_"
 
-private const val OPEN_DONATION_EVENT = "open_donation_"
 private const val PRODUCT_NOT_FOUND_EVENT = "product_not_found_"
 private const val START_BILLING_FLOW_EVENT = "start_billing_flow_"
 private const val FAIL_BILLING_FLOW_EVENT = "fail_billing_flow_"
 private const val PURCHASE_PRODUCT_EVENT = "purchase_product_"
-private const val FEATURE_NOT_SUPPORTED_EVENT = "billing_not_supported"
-private const val SERVICE_DISCONNECTED_EVENT = "billing_disconnected"
-private const val USER_CANCELED_EVENT = "billing_user_canceled"
-private const val SERVICE_UNAVAILABLE_EVENT = "billing_service_unavailable"
-private const val BILLING_UNAVAILABLE_EVENT = "billing_unavailable"
-private const val ITEM_UNAVAILABLE_EVENT = "billing_item_unavailable"
-private const val DEVELOPER_ERROR_EVENT = "billing_developer_error"
-private const val ERROR_EVENT = "billing_error"
-private const val ITEM_ALREADY_OWNED_EVENT = "billing_item_already_owned"
-private const val ITEM_NOT_OWNED_EVENT = "billing_item_not_owned"
-private const val NETWORK_ERROR_EVENT = "billing_network_error"
+private const val PURCHASE_FAILED_EVENT = "purchase_failed_"
+private const val ACKNOWLEDGE_PRODUCT_EVENT = "acknowledge_product_"
+private const val ACKNOWLEDGEMENT_FAILED_EVENT = "acknowledgement_failed_"
+
+private const val ERROR_PREFIX = "error_"
 
 private const val ANALYTICS_TAG = "analytics"
 
@@ -82,6 +80,10 @@ class AnalyticsManager @Inject constructor(
         )
     }
 
+    fun trackStreamAutoFinish() {
+        trackEvent(event = STREAM_AUTO_FINISHED_EVENT)
+    }
+
     fun trackCameraError() {
         trackEvent(event = CAMERA_ERROR_EVENT)
     }
@@ -107,12 +109,20 @@ class AnalyticsManager @Inject constructor(
         trackEvent(event = SHARE_EVENT)
     }
 
-    fun trackDonate() {
-        trackEvent(event = DONATE_EVENT)
+    fun trackPremiumLaterClick() {
+        trackEvent(event = PREMIUM_LATER_CLICK_EVENT)
     }
 
-    fun trackOpenDonation(productId: String) {
-        trackEvent(event = "$OPEN_DONATION_EVENT$productId")
+    fun trackPremiumClick() {
+        trackEvent(event = PREMIUM_CLICK_EVENT)
+    }
+
+    fun trackPremiumQuite() {
+        trackEvent(event = PREMIUM_QUITE_EVENT)
+    }
+
+    fun trackCheckoutClick(productId: String) {
+        trackEvent(event = "$CHECKOUT_CLICK_PREFIX$productId")
     }
 
     fun trackProductNotFound(productId: String) {
@@ -131,48 +141,16 @@ class AnalyticsManager @Inject constructor(
         trackEvent(event = "$PURCHASE_PRODUCT_EVENT$productId")
     }
 
-    fun trackFeatureNotSupported() {
-        trackEvent(event = FEATURE_NOT_SUPPORTED_EVENT)
+    fun trackPurchaseFailed(productId: String, reason: String) {
+        trackEvent(event = "$PURCHASE_FAILED_EVENT${productId}_$reason")
     }
 
-    fun trackServiceDisconnected() {
-        trackEvent(event = SERVICE_DISCONNECTED_EVENT)
+    fun trackAcknowledgeProduct(productId: String) {
+        trackEvent(event = "$ACKNOWLEDGE_PRODUCT_EVENT$productId")
     }
 
-    fun trackUserCanceled() {
-        trackEvent(event = USER_CANCELED_EVENT)
-    }
-
-    fun trackServiceUnavailable() {
-        trackEvent(event = SERVICE_UNAVAILABLE_EVENT)
-    }
-
-    fun trackBillingUnavailable() {
-        trackEvent(event = BILLING_UNAVAILABLE_EVENT)
-    }
-
-    fun trackItemUnavailable() {
-        trackEvent(event = ITEM_UNAVAILABLE_EVENT)
-    }
-
-    fun trackDeveloperError() {
-        trackEvent(event = DEVELOPER_ERROR_EVENT)
-    }
-
-    fun trackError() {
-        trackEvent(event = ERROR_EVENT)
-    }
-
-    fun trackItemAlreadyOwned() {
-        trackEvent(event = ITEM_ALREADY_OWNED_EVENT)
-    }
-
-    fun trackItemNotOwned() {
-        trackEvent(event = ITEM_NOT_OWNED_EVENT)
-    }
-
-    fun trackNetworkError() {
-        trackEvent(event = NETWORK_ERROR_EVENT)
+    fun trackAcknowledgementFailed(productId: String, reason: String) {
+        trackEvent(event = "$ACKNOWLEDGEMENT_FAILED_EVENT${productId}_$reason")
     }
 
     fun trackUsedDays(usedDayCount: Int) {
@@ -181,6 +159,10 @@ class AnalyticsManager @Inject constructor(
             else -> "8_and_more"
         }
         trackEvent(event = "$USED_DAYS_PREFIX$eventPostfix")
+    }
+
+    fun trackError(exception: Exception) {
+        trackEvent(event = "$ERROR_PREFIX${exception::class.simpleName}")
     }
 
     private fun trackEvent(event: String, params: Map<String, Any> = emptyMap()) {

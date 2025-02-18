@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
 import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +37,7 @@ fun FakeLiveBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     shape: Shape = FakeLiveBottomSheetDefaults.shape,
-    containerColor: Color = FakeLiveStreamTheme.colors.surfaceVariant,
+    containerColor: Color = FakeLiveTheme.colors.surfaceVariant,
     contentColor: Color = contentColorFor(containerColor),
     dragHandle: @Composable (() -> Unit)? = { FakeLiveBottomSheetDefaults.DragHandle() },
     contentWindowInsets: WindowInsets = BottomSheetDefaults.windowInsets,
@@ -105,7 +104,7 @@ fun FakeLiveBottomSheetPreview() {
                         modifier = Modifier
                             .height(40.dp)
                             .fillMaxWidth()
-                            .background(FakeLiveStreamTheme.colors.surface)
+                            .background(FakeLiveTheme.colors.surface)
                     )
                 }
             }

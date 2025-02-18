@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveStreamTheme
+import com.bunbeauty.tiptoplive.common.ui.theme.FakeLiveTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,8 +44,8 @@ fun FakeLiveTextField(
                 isError = false,
                 interactionSource = interactionSource,
                 colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = FakeLiveStreamTheme.colors.instagram.accent,
-                    unfocusedIndicatorColor = FakeLiveStreamTheme.colors.borderVariant,
+                    focusedIndicatorColor = FakeLiveTheme.colors.instagram.accent,
+                    unfocusedIndicatorColor = FakeLiveTheme.colors.borderVariant,
                 ),
                 focusedIndicatorLineThickness = 2.dp,
                 unfocusedIndicatorLineThickness = 2.dp,
@@ -71,8 +71,8 @@ fun FakeLiveTextField(
                     } else {
                         Text(
                             text = hint,
-                            style = FakeLiveStreamTheme.typography.bodyMedium,
-                            color = FakeLiveStreamTheme.colors.onSurfaceVariant,
+                            style = FakeLiveTheme.typography.bodyMedium,
+                            color = FakeLiveTheme.colors.onSurfaceVariant,
                         )
                     }
                 }
