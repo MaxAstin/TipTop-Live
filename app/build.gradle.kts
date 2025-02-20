@@ -17,9 +17,10 @@ android {
         applicationId = "com.bunbeauty.tiptoplive"
         minSdk = 27
         targetSdk = 35
-        versionCode = 310
-        versionName = "3.1.0"
+        versionCode = 322
+        versionName = "3.2.2"
         multiDexEnabled = true
+        setProperty("archivesBaseName", "FakeLive-$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -63,6 +64,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -110,4 +115,9 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter.params)
 }

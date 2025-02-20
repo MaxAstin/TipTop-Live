@@ -22,6 +22,8 @@ media3 = "1.5.1"
 navigationCompose = "2.8.5"
 review = "2.0.2"
 kotlinxSerializationJson = "1.7.3"
+junit = "4.13.2"
+junitJupiter = "5.8.1"
 
 [libraries]
 billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "billingKtx" }
@@ -65,6 +67,11 @@ media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 
 # Review
 review = { module = "com.google.android.play:review", version.ref = "review" }
+
+# Review
+junit = { module = "junit:junit", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiter" }
 
 [plugins]
 application = { id = "com.android.application", version.ref = "application" }
